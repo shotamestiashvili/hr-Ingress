@@ -16,6 +16,7 @@
                 class="form-control"
                 v-model="form.training"
               />
+            </div>
 
 
 

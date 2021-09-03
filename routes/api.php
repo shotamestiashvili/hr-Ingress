@@ -46,15 +46,17 @@ Route::GET('/export/position',     [ExportController::class, 'exportPosition']);
 
 Route::GET('/inout',   [InoutController::class, 'inout']);
 
+Route::resource('statistics/inout',   InoutController::class)
+    ->only(['index', 'store', 'destroy',]);
 
-//Personnel routes start here //
+
 Route::resource('personnel/personnellist',   PersonnelController::class)
     ->only(['index', 'store', 'destroy',]);
 
 Route::resource('personnel/schedules',    ScheduleController::class)
     ->only(['index', 'store', 'destroy',]);
 
-    
+
 Route::resource('references/absences',      AbsenceController::class)
     ->only(['index', 'store', 'destroy',]);
 

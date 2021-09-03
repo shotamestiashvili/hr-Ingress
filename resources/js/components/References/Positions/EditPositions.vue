@@ -24,7 +24,7 @@
           </div>
 
           <div class="form-outline mb-4">
-            <label class="form-label" for="code">Code/label>
+            <label class="form-label" for="code">Code </label>
             <input
               type="text"
               id="code"
@@ -118,7 +118,7 @@
 
           <div class="form-group  mb-4">
             <button class="btn btn-primary">Submit Editting</button>
-
+          </div>
         </form>
       </div>
     </div>

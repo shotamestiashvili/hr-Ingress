@@ -71,8 +71,7 @@ class AttendanceService extends ActualDate
 
         Personnel::all()->map(function ($user) use ($year, $month) {
 
-            if (!Inout::where('userid', $user['userid'])->exists())
-            {
+            if (!Inout::where('userid', $user['userid'])->exists()) {
                 $this->fetchAttDate('00001', $year, $month)->map(function ($date) use ($user) {
 
                     Inout::create([
@@ -91,51 +90,32 @@ class AttendanceService extends ActualDate
 
         Personnel::all()->map(function ($user) use ($date) {
 
-            if (Inout::where('userid', $user['userid'])
-                ->where('date', $date)
-                ->first('att_in') == Null
-            ) {
 
-                $this->fetchAttIn($user['userid'], $date)->map(function ($attIn) use ($user) {
-                    (new Inout())->where('userid', $user['userid'])
-                        ->update(['att_in'   => $attIn]);
+                $this->fetchAttIn($user['userid'], $date)->map(function ($attIn) use ($user, $date) {
+
+                     (new Inout())->where('userid', $user['userid'])
+                        ->where('date', $date)
+                        ->update([ 'att_in'   => $attIn]);
                 });
-            }
 
-            if (Inout::where('userid', $user['userid'])
-                ->where('date', $date)
-                ->first('att_break') == Null
-            ) {
-
-                $this->fetchAttBreak($user['userid'], $date)->map(function ($att_break) use ($user) {
+                $this->fetchAttBreak($user['userid'], $date)->map(function ($att_break) use ($user, $date) {
                     (new Inout())->where('userid', $user['userid'])
+                        ->where('date', $date)
                         ->update(['att_break'   => $att_break]);
                 });
-            }
 
-
-            if (Inout::where('userid', $user['userid'])
-                ->where('date', $date)
-                ->first('att_resume') == Null
-            ) {
-
-                $this->fetchAttResume($user['userid'], $date)->map(function ($att_resume) use ($user) {
+                $this->fetchAttResume($user['userid'], $date)->map(function ($att_resume) use ($user, $date) {
                     (new Inout())->where('userid', $user['userid'])
+                        ->where('date', $date)
                         ->update(['att_resume'   => $att_resume]);
                 });
-            }
 
-            if (
-                Inout::where('userid', $user['userid'])
-                ->where('date', $date)
-                ->first('att_out') == Null
-            ) {
-
-                $this->fetchAttOut($user['userid'], $date)->map(function ($att_out) use ($user) {
+                $this->fetchAttOut($user['userid'], $date)->map(function ($att_out) use ($user, $date) {
                     (new Inout())->where('userid', $user['userid'])
+                        ->where('date', $date)
                         ->update(['att_out'   => $att_out]);
                 });
-            }
+
         });
     }
 }

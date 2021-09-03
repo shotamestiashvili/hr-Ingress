@@ -13,7 +13,7 @@
 
           <div class="form-group  mb-4">
             <button class="btn btn-primary">Submit Training</button>
-          <!-- </div> -->
+          </div>
         </form>
       </div>
     </div>

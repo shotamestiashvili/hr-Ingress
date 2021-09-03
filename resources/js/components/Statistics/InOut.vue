@@ -1,53 +1,112 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-14">
+      <div class="col">
         <div class="card">
           <div class="card-header">
-            <strong> In /Out Statistics </strong>
+            <strong> In /Out </strong>
           </div>
           <div class="card-body">
-            <div class="w-100 p-3" style="background-color: #eee">
-              <table class="table table-sm table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Personnel</th>
-                    <th scope="col">Department</th>
+            <b-button
+              v-b-modal.refresh
+              variant="info"
+              ref="btnShow"
+              size="sm"
+              id="refresh"
+              >Refresh Attenance</b-button
+            >
+
+            <!-- <b-button
+              v-b-modal.importModal
+              variant="warning"
+              ref="btnShow"
+              size="sm"
+              >Import Personnel</b-button
+            > -->
+
+            <b-button
+              @click="downloadFile"
+              variant="dark"
+              ref="btnShow"
+              size="sm"
+              >Export Attenance</b-button
+            >
+
+            <input
+              type="text"
+              placeholder="Filter the table"
+              v-model="search"
+            />
+            <br>
+            <hr>
+            <br>
+
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                    <th scope="col">UserID</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Date</th>
-                    <th scope="col">In Time</th>
-                    <th scope="col">Break Started</th>
-                    <th scope="col">Break Ended</th>
-                    <th scope="col">Out Time</th>
+                    <th scope="col">In</th>
+                    <th scope="col">Break</th>
+                    <th scope="col">Resume</th>
+                    <th scope="col">Out </th>
                     <th scope="col">Start</th>
                     <th scope="col">End</th>
-                    <th scope="col">Honorary Minutes</th>
-                    <th scope="col">Delay (min)</th>
-                    <th scope="col">Unexcusable (min)</th>
+                    <th scope="col">Honor. Min</th>
+                    <th scope="col">Delay Min)</th>
+                    <th scope="col">Unexcusable</th>
                     <th scope="col">Overtime</th>
-                  </tr>
-                </thead>
-                <tbody v-for="inout in inouts.data" :key="inout.useid">
-                  <tr>
-                    <th scope="row">{{ inout.userid }}</th>
-                    <td>Operation</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <pagination :data="inouts" @pagination-change-page="getResults">
-              </pagination>
-            </div>
-           <p v-for="user in users.data" :key="user.useid">  {{user}} </p>
+                </tr>
+              </thead>
+              <tbody v-for="(data, index) in apiInout.data" :key="index">
+                <tr>
+                  <td>{{data.userid}}</td>
+                  <td>Department</td>
+                  <td>{{data.date}}</td>
+                  <td>{{data.att_in}}</td>
+                  <td>{{data.att_break}}</td>
+                  <td>{{data.att_resume}}</td>
+                  <td>{{data.att_out}}</td>
+                  <td>{{data.start}}</td>
+                  <td>{{data.end}}</td>
+                  <td>{{data.honorminutes}}</td>
+                  <td>{{data.delay}}</td>
+                  <td>{{data.unexcusable}}</td>
+                  <td>{{data.overtime}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <pagination
+              :data="apiInout"
+              @pagination-change-page="runAxiosGet"
+              :limit="5"
+            >
+              <span slot="prev-nav">&lt; Previous</span>
+              <span slot="next-nav">Next &gt;</span>
+            </pagination>
+
+            <!-- <pagination
+              :data="filteredAbsence"
+              @pagination-change-page="runAxiosGet"
+            ></pagination> -->
+
+            <b-modal id="createModal" hide-footer size="lg">
+              <create-data @exit="closeModal"> </create-data>
+            </b-modal>
+
+            <b-modal id="editModal" size="lg" hide-footer>
+              <edit-data @exit="closeModal" :editing="editing"> </edit-data>
+            </b-modal>
+
+            <b-modal id="showModal" size="xl" hide-footer>
+              <show-data @exit="closeModal" :showing="showing"> </show-data>
+            </b-modal>
+
+            <b-modal id="importModal" size="lg" hide-footer>
+              <import-data @exit="closeModal"> </import-data>
+            </b-modal>
           </div>
         </div>
       </div>
@@ -56,47 +115,164 @@
 </template>
 
 <script>
+import axios from "axios";
 import pagination from "laravel-vue-pagination";
 
 export default {
   components: {
-    pagination,
+    pagination: pagination,
   },
 
   data() {
     return {
-      inouts: {},
-      users: [],
+      showing: "",
+      editing: null,
+      apiInout: [],
+      filterText: null,
+      search: "",
     };
   },
 
-  mounted() {
-    // Fetch initial results
-    this.getResults();
-    this.getUsers();
+  computed: {},
+
+  watch: {
+    search(after, before) {
+       this.runAxiosGet();
+    },
+  },
+
+  mounted()
+  {
+      this.runAxiosGet();
   },
 
   methods: {
-
-    // Our method to GET results from a Laravel endpoint
-    getResults(page = 1) {
-      axios.get("api/inout?page=" + page).then((response) => {
-        this.inouts = response.data;
-      });
+    closeModal() {
+      this.$bvModal.hide("createModal");
+      this.$bvModal.hide("editModal");
+      this.$bvModal.hide("showModal");
+      this.$bvModal.hide("importModal");
+      this.runAxiosGet();
     },
 
-    getUsers() {
-        axios.get("api/inout?page=" + page).then((response) => {
-        this.users.push(responce.data.userid)
-      });
+    downloadFile() {
+      window.open("/api/export/personnel");
+    },
+
+    runAxiosGet(page = 1) {
+      axios
+        .get("api/statistics/inout/", {
+          params: {
+            page,
+            search: this.search,
+          },
+        })
+        .then((res) => {
+          this.apiInout = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
+    },
+
+
+    // downloadFile() {
+    //   axios
+    //     .get("api/export/personnel", { responseType: "arraybuffer" })
+    //     .then((response) => {
+    //       var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+    //       var fileLink = document.createElement("a");
+    //       fileLink.href = fileURL;
+    //       fileLink.setAttribute("download", "personnel_list.xlsx");
+    //       document.body.appendChild(fileLink);
+    //       fileLink.click();
+    //     });
+    // },
+
+    editData(data) {
+      this.editing = data;
+    },
+
+    showingData(data) {
+      this.showing = data;
+      console.log(data);
     },
   },
 };
 </script>
 
 <style scoped>
-.pagination {
-  margin-bottom: 0;
-}
-</style>
 
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 8px;
+  height: 100%;
+  table-layout: fixed;
+}
+
+td {
+  border: 1px solid black;
+  text-align: center;
+  padding: 3px;
+  font-size: 12px;
+}
+
+th {
+  border: 1px solid black;
+  text-align: center;
+  padding: 3px;
+  font-size: 14px;
+}
+
+tr:nth-child(even) {
+  background-color: #00cf45;
+}
+
+h1 {
+  color: green;
+}
+
+
+
+/* table {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 10px;
+  height: 100%;
+  table-layout: fixed;
+} */
+
+/* td {
+  border: 1px solid black;
+  text-align: center;
+  padding: 1px;
+  font-size: 12px;
+}
+
+th {
+  border: 1px solid black;
+  text-align: center;
+  padding: 1px;
+  font-size: 14px;
+}
+
+tr:nth-child(even) {
+  background-color: #00cf45;
+}
+
+h1 {
+  color: green;
+}
+
+/* #createModal {
+  border: none;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+} */
+</style> */

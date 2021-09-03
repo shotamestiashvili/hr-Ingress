@@ -65,7 +65,6 @@
                   <td>{{ data.department }}</td>
                   <td>{{ data.phone }}</td>
                   <td>{{ data.email }}</td>
-
                   <td>
                     <b-button
                       v-b-modal.showModal

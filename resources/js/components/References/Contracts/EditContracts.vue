@@ -20,7 +20,7 @@
 
           <div class="form-group  mb-4">
             <button class="btn btn-primary">Submit Update</button>
-          <!-- </div> -->
+          </div>
         </form>
       </div>
     </div>
