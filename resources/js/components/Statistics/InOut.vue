@@ -8,7 +8,7 @@
           </div>
           <div class="card-body">
             <b-button
-              v-b-modal.refresh
+              @click.prevent="runRefresh()"
               variant="info"
               ref="btnShow"
               size="sm"
@@ -37,43 +37,43 @@
               placeholder="Filter the table"
               v-model="search"
             />
-            <br>
-            <hr>
-            <br>
+            <br />
+            <hr />
+            <br />
 
             <table class="table table-sm table-hover">
               <thead>
                 <tr>
-                    <th scope="col">UserID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">In</th>
-                    <th scope="col">Break</th>
-                    <th scope="col">Resume</th>
-                    <th scope="col">Out </th>
-                    <th scope="col">Start</th>
-                    <th scope="col">End</th>
-                    <th scope="col">Honor. Min</th>
-                    <th scope="col">Delay Min)</th>
-                    <th scope="col">Unexcusable</th>
-                    <th scope="col">Overtime</th>
+                  <th scope="col">UserID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">In</th>
+                  <th scope="col">Break</th>
+                  <th scope="col">Resume</th>
+                  <th scope="col">Out</th>
+                  <th scope="col">Start</th>
+                  <th scope="col">End</th>
+                  <th scope="col">Honor. Min</th>
+                  <th scope="col">Delay Min)</th>
+                  <th scope="col">Unexcusable</th>
+                  <th scope="col">Overtime</th>
                 </tr>
               </thead>
               <tbody v-for="(data, index) in apiInout.data" :key="index">
                 <tr>
-                  <td>{{data.userid}}</td>
+                  <td>{{ data.userid }}</td>
                   <td>Department</td>
-                  <td>{{data.date}}</td>
-                  <td>{{data.att_in}}</td>
-                  <td>{{data.att_break}}</td>
-                  <td>{{data.att_resume}}</td>
-                  <td>{{data.att_out}}</td>
-                  <td>{{data.start}}</td>
-                  <td>{{data.end}}</td>
-                  <td>{{data.honorminutes}}</td>
-                  <td>{{data.delay}}</td>
-                  <td>{{data.unexcusable}}</td>
-                  <td>{{data.overtime}}</td>
+                  <td>{{ data.date }}</td>
+                  <td>{{ data.att_in }}</td>
+                  <td>{{ data.att_break }}</td>
+                  <td>{{ data.att_resume }}</td>
+                  <td>{{ data.att_out }}</td>
+                  <td>{{ data.start }}</td>
+                  <td>{{ data.end }}</td>
+                  <td>{{ data.honorminutes }}</td>
+                  <td>{{ data.delay }}</td>
+                  <td>{{ data.unexcusable }}</td>
+                  <td>{{ data.overtime }}</td>
                 </tr>
               </tbody>
             </table>
@@ -137,13 +137,12 @@ export default {
 
   watch: {
     search(after, before) {
-       this.runAxiosGet();
+      this.runAxiosGet();
     },
   },
 
-  mounted()
-  {
-      this.runAxiosGet();
+  mounted() {
+    this.runAxiosGet();
   },
 
   methods: {
@@ -176,6 +175,17 @@ export default {
         .finally(() => {});
     },
 
+    runRefresh() {
+      axios
+        .get("/fetch")
+        .then((res) => {
+          console.log("OK");
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
+    },
 
     // downloadFile() {
     //   axios
@@ -203,8 +213,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 table {
   margin-left: auto;
   margin-right: auto;
@@ -234,8 +242,6 @@ tr:nth-child(even) {
 h1 {
   color: green;
 }
-
-
 
 /* table {
   margin-left: auto;

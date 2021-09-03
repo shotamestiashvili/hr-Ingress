@@ -7,10 +7,10 @@ use App\Services\Statistics\AttendanceService;
 
 class AttendanceController extends Controller
 {
-    public function montlyFetcher($userid = 140, $year = 2021, $month = 9)
+    public function montlyFetcher()
     {
         $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->montlyFetcher($userid, $year, $month);
+        $attendanceServicenew->montlyFetcher();
     }
 
     public function newUserFetcher($userid = 140, $year = 2021, $month = 9)

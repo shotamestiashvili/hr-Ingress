@@ -44,10 +44,11 @@ Route::GET('/export/position',     [ExportController::class, 'exportPosition']);
 //Import /Export files end here //
 
 
-Route::GET('/inout',   [InoutController::class, 'inout']);
+Route::GET('/inout/index',                    [InoutController::class, 'index']);
+Route::GET('/inout/refresh',                  [InoutController::class, 'refresh']);
+Route::GET('/inout/montlyInout',              [InoutController::class, 'montlyInout']);
+Route::GET('/inout/newUserInout',             [InoutController::class, 'newUserInout']);
 
-Route::resource('statistics/inout',   InoutController::class)
-    ->only(['index', 'store', 'destroy',]);
 
 
 Route::resource('personnel/personnellist',   PersonnelController::class)

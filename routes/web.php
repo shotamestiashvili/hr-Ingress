@@ -28,8 +28,8 @@ Route::get('/vue', function () {
 
 // Route::get('/test', AttendanceController);
 
-Route::get('/fetch',   [AttendanceController::class, 'dailyAtt']);
+
 
 Route::get('/currency',   [AttendanceController::class, 'currency']);
-Route::get('/carbon',    [AttendanceController::class, 'carbon']);
+Route::get('/monthly',    [AttendanceController::class, 'montlyFetcher']);
 
