@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
+// Route::get('/test', function () {
+//     return view('test');
+// });
 
 Route::get('/vue', function () {
     return view('vue');
@@ -31,5 +31,6 @@ Route::get('/vue', function () {
 
 
 Route::get('/currency',   [AttendanceController::class, 'currency']);
-Route::get('/monthly',    [AttendanceController::class, 'montlyFetcher']);
+Route::get('/carbon',    [AttendanceController::class, 'carbon']);
 
+Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);

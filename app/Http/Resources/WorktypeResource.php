@@ -20,6 +20,7 @@ class WorktypeResource extends JsonResource
             'start' => $this->start,
             'end'   => $this->end,
             'hours' => $this->hours,
+            'in24hours' => $this->in24hours,
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 class Inout extends Model
 {
@@ -18,6 +18,13 @@ class Inout extends Model
 
     public function personnel()
     {
-        return $this->belongsToMany(Personnel::class, 'userid', 'userid');
+        return $this->belongsTo(Personnel::class, 'userid', 'userid');
     }
+
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class, 'userid', 'userid')->where('date', $this->date);
+    }
+
+
 }

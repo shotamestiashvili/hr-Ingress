@@ -6,6 +6,22 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class InoutResource extends JsonResource
 {
+
+
+    protected function delay($request)
+    {
+        return "delay";
+    }
+
+    protected function unexcusable($request)
+    {
+        return "unexcusable";
+    }
+
+    protected function overtime($request)
+    {
+        return "overtime";
+    }
     /**
      * Transform the resource into an array.
      *
@@ -14,6 +30,7 @@ class InoutResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'userid'      => $this->userid,
             'date'        => $this->date,
@@ -21,12 +38,24 @@ class InoutResource extends JsonResource
             'att_break'   => $this->att_break,
             'att_resume'  => $this->att_resume,
             'att_out'     => $this->att_out,
-            'start'       => '$this->',
-            'end'         => '$this->',
-            'honorminutes'       => '$this->',
-            'delay'              => '$this->',
-            'unexcusable'        => '$this->',
-            'overtime'           => '$this->',
+
+            'start'       =>  $this->schedule->map(function ($schedule) {
+                return $schedule->start;
+            }),
+
+            'end'       =>  $this->schedule->map(function ($schedule) {
+                return $schedule->end;
+            }),
+
+            'honorminutes'       =>  $this->schedule->map(function ($schedule) {
+                return $schedule->honorMinutes;
+            }),
+
+            'delay'              =>  $this->delay($this),
+
+            'unexcusable'        =>  $this->unexcusable($this),
+
+            'overtime'           => $this->overtime($this),
 
         ];
     }

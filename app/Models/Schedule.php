@@ -11,6 +11,7 @@ class Schedule extends Model
 
     protected $fillable = [
         'userid',
+        'date',
         'honorMinutes',
         'selectedAbsence',
         'selectedDay',
@@ -20,4 +21,14 @@ class Schedule extends Model
         'selectedWorktype',
     ];
 
+    public function inout()
+    {
+        return $this->belongsTo(Inout::class, 'userid', 'userid')->where('date', $this->date);
+    }
+
+
+    public function worktype()
+    {
+        return $this->hasMany(Worktype::class, 'code', 'selectedWorktype');
+    }
 }

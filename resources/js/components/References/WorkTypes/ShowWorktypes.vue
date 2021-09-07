@@ -35,6 +35,7 @@
                   <th scope="col">Start</th>
                   <th scope="col">End</th>
                   <th scope="col">Hours</th>
+                  <th scope="col">In24</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -44,6 +45,10 @@
                   <td>{{ data.start }}</td>
                   <td>{{ data.end }}</td>
                   <td>{{ data.hours }}</td>
+                  <td>
+                    <div v-if="data.in24hours == 1">YES</div>
+                    <div v-else>No</div>
+                  </td>
 
                   <td>
                     <b-button

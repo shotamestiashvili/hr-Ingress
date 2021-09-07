@@ -16,18 +16,6 @@ class WorktypeController extends Controller
 
     public function index(Request $request)
     {
-        // $worktype = Worktype::when(request('search') == 'comp', function ($query) {
-        //     return $query->get();
-        // })
-        //     ->when(request('searchFromWorktype') != '', function ($query) {
-        //         return $query->where('code', 'LIKE', '%' . request('search') . '%')
-        //             ->orWhere('start', 'LIKE', '%' . request('search') . '%')
-        //             ->orWhere('end', 'LIKE', '%' . request('search') . '%')->paginate(20);
-        //     })
-        //     ->when(request('searchFromWorktype') == '', function ($query) {
-        //         return $query->paginate(20);
-        //     });
-
         if ($request->search == 'comp'){
             $worktype =  Worktype::all();
         }elseif($request->searchFromWorktype !== ''){

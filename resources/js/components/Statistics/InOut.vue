@@ -68,12 +68,12 @@
                   <td>{{ data.att_break }}</td>
                   <td>{{ data.att_resume }}</td>
                   <td>{{ data.att_out }}</td>
-                  <td>{{ data.start }}</td>
-                  <td>{{ data.end }}</td>
-                  <td>{{ data.honorminutes }}</td>
-                  <td>{{ data.delay }}</td>
-                  <td>{{ data.unexcusable }}</td>
-                  <td>{{ data.overtime }}</td>
+                  <td>{{ data.start[0] }}</td>
+                  <td>{{ data.end[0] }}</td>
+                  <td>{{ data.honorminutes[0] }}</td>
+                  <td>{{ data.delay[0] }}</td>
+                  <td>{{ data.unexcusable[0] }}</td>
+                  <td>{{ data.overtime[0] }}</td>
                 </tr>
               </tbody>
             </table>
@@ -160,7 +160,7 @@ export default {
 
     runAxiosGet(page = 1) {
       axios
-        .get("api/statistics/inout/", {
+        .get("api/inout/index", {
           params: {
             page,
             search: this.search,
@@ -168,6 +168,7 @@ export default {
         })
         .then((res) => {
           this.apiInout = res.data;
+          console.log(res.data);
         })
         .catch((error) => {
           console.log(error);

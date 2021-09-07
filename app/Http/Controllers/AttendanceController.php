@@ -2,38 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\InoutResource;
+use App\Models\Inout;
+use App\Models\Schedule;
+use App\Models\Worktype;
 use App\Services\DateTime\DateTimeFormater;
+use App\Services\DateTime\HourCalculator;
+use App\Services\DateTime\WorkTypeFormater;
 use App\Services\Statistics\AttendanceService;
+use App\Services\TimeCalculator\TimeConstructor;
 
 class AttendanceController extends Controller
 {
-    public function montlyFetcher()
+    public function carbon()
     {
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->montlyFetcher();
+        return (new WorkTypeFormater('09:30', "10:30"))->worktypeHoursGen(3);
     }
 
-    public function newUserFetcher($userid = 140, $year = 2021, $month = 9)
+    public function worktypeTime()
     {
+        $worktype = new Worktype();
+        return $worktype->all()->map(function ($worktype) {
+            $object = (new WorkTypeFormater($worktype['start'], $worktype['end']));
+            $worktype->where('end', $worktype['end'])
+                ->where('start', $worktype['start'])
+                ->update([
+                    'in24hours' => $object->in24Hours($object->worktypeHoursGen())
 
+                ]);
+        });
     }
-
-    public function dailyAtt()
-    {
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyAtt(DateTimeFormater::date('2021-9-1'));
-    }
-
-    public function fetchAttIn()
-    {
-        $attendanceServicenew = new AttendanceService();
-        return $attendanceServicenew->fetchAttIn('140', DateTimeFormater::date('2021-9-1'));
-    }
-
-
-    public function carbon($date = '2021-9-1')
-    {
-        return DateTimeFormater::date($date);
-    }
-
 }

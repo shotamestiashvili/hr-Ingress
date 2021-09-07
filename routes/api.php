@@ -90,6 +90,4 @@ Route::resource('references/trainings',   TrainingController::class)
 
 Route::resource('references/worktypes',   WorktypeController::class)
     ->only(['index', 'store', 'destroy',]);
-
-
 //References routes end here//

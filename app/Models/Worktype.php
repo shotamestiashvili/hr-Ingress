@@ -14,5 +14,11 @@ class Worktype extends Model
         'start',
         'end',
         'hours',
+        'in24hours',
     ];
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class, 'code', 'selectedWorktype',);
+    }
 }

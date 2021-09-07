@@ -19,6 +19,7 @@ class CreateWorktypesTable extends Migration
             $table->string('start');
             $table->string('end');
             $table->string('hours');
+            $table->string('in24hours');
             $table->timestamps();
         });
     }
