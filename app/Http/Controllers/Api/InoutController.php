@@ -7,6 +7,8 @@ use App\Http\Resources\InoutResource;
 use App\Models\Inout;
 use App\Services\DateTime\DateTimeFormater;
 use App\Services\Statistics\AttendanceService;
+use App\Services\TimeCalculator\StatisticGenerator;
+use Carbon\Carbon;
 
 class InoutController extends Controller
 {
@@ -14,10 +16,12 @@ class InoutController extends Controller
     {
         $inout = Inout::when(request('search') != '', function ($query) {
             return  $query->where('userid', 'LIKE', '%' . request('search') . '%')
-                ->orWhere('date', 'LIKE', '%' . request('search') . '%')->paginate(30);
+                ->orWhere('date', 'LIKE', '%' . request('search') . '%')
+                ->orderBy('updated_at', "desc")
+                ->paginate(31);
         })
             ->when(request('search') == '', function ($query) {
-                return $query->paginate(30);
+                return $query->orderBy('updated_at', "desc")->paginate(31);
             });
 
         return  InoutResource::collection($inout);
@@ -39,6 +43,13 @@ class InoutController extends Controller
     public function refresh(): void
     {
         $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyInout(DateTimeFormater::date('2021-9-1'));
+        $attendanceServicenew->dailyInout(DateTimeFormater::date('2021-09-04'));
     }
+
+    public function generate()
+    {
+        $attendanceServicenew = new StatisticGenerator();
+       return $attendanceServicenew->generate(DateTimeFormater::date('2021-9-4'));
+    }
+
 }

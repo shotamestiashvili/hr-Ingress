@@ -29,12 +29,19 @@ class CreatePersonnelsTable extends Migration
             $table->string('position');
             $table->string('department');
             $table->string('head');
+            $table->string('companyid');
+            $table->string('food');
             $table->string('subordinate_stuff')->nullable();
             $table->string('military_info')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('registration_date')->nullable()->default('Null');
             $table->string('author')->nullable();
+            $table->string('food')->nullable();
+            $table->string('ensuarence')->nullable();
+            $table->string('additional')->nullable();
+            $table->string('bank_account')->nullable()->default('Null');
+            $table->string('companyid')->nullable();
             $table->timestamps();
         });
     }

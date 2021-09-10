@@ -22,24 +22,28 @@ class TimeConstructor extends TimeExploder
     public function __construct($userid, $date)
     {
         $this->timeFetcher($userid, $date);
-        $this->hourMinutsExploder($this->att_in, $this->att_out, $this->start, $this->end);
     }
+
 
     public function timeFetcher($userid, $date)
     {
-        $inout    = Inout::where('date', $date)->where('userid', $userid)->first();
+        $inout = Inout::where('date', $date)->where('userid', $userid)->first();
 
-        $hoursArray = ($inout->schedule()->get()->map(function ($schedule) {
-            return $schedule->worktype()->value('hours');
-        }));
+        // $hoursArray = ($inout->schedule()->get()->map(function ($schedule) {
+        //     return $schedule->worktype()->value('hours');
+        // }));
+        // $in24Array = ($inout->schedule()->get()->map(function ($schedule) {
+        //     return $schedule->worktype()->value('in24hours');
+        // }));
 
-        $this->worktypeHour = ($hoursArray[0]);
+        // $this->worktypeHour = ($hoursArray[0]);
+        // $this->in24 =         ($in24Array[0]);
 
         $this->att_in  = DateTimeFormater::time(($inout->att_in));
         $this->att_out = DateTimeFormater::time($inout->att_out);
+
         $this->start   = DateTimeFormater::time($inout->schedule()->value('start'));
         $this->end     = DateTimeFormater::time($inout->schedule()->value('end'));
     }
-
 
 }

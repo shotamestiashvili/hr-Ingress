@@ -47,11 +47,11 @@ class AttendanceService extends ActualDate
 
     public function montlyInout(): void
     {
-        //00001 is an admin user at Ingress system for grid fetching
+        //352 is an admin user at Ingress system for grid fetching
         if (!Inout::whereYear('date', $this->actualYear)
             ->whereMonth('date', $this->actualMonth)
             ->exists()) {
-            $this->fetchAttDate('00001', $this->actualYear, $this->actualMonth)
+            $this->fetchAttDate(352, $this->actualYear, $this->actualMonth)
 
                 ->map(function ($date) {
 
@@ -67,9 +67,9 @@ class AttendanceService extends ActualDate
 
     public function newUserInout($user): void
     {
-        //00001 is an admin user at Ingress system for grid fetching
+        //352 is an admin user at Ingress system for grid fetching
 
-        $this->fetchAttDate('00001', $this->actualYear, $this->actualMonth)
+        $this->fetchAttDate(352, $this->actualYear, $this->actualMonth)
              ->map(function ($date) use ($user) {
 
                 Inout::create([
@@ -83,33 +83,16 @@ class AttendanceService extends ActualDate
 
     public function dailyInout($date): void
     {
-
         Personnel::all()->map(function ($user) use ($date) {
-
-            $this->fetchAttIn($user['userid'], $date)->map(function ($attIn) use ($user, $date) {
-
-                (new Inout())->where('userid', $user['userid'])
+                Inout::where('userid', $user['userid'])
                     ->where('date', $date)
-                    ->update(['att_in'   => $attIn]);
+                    ->update([
+                           'att_in' => $this->fetchAttIn($user['userid'], $date),
+                           'att_break' => $this->fetchAttBreak($user['userid'], $date),
+                           'att_resume' => $this->fetchAttResume($user['userid'], $date),
+                           'att_out' => $this->fetchAttOut($user['userid'], $date),
+                ]);
             });
-
-            $this->fetchAttBreak($user['userid'], $date)->map(function ($att_break) use ($user, $date) {
-                (new Inout())->where('userid', $user['userid'])
-                    ->where('date', $date)
-                    ->update(['att_break'   => $att_break]);
-            });
-
-            $this->fetchAttResume($user['userid'], $date)->map(function ($att_resume) use ($user, $date) {
-                (new Inout())->where('userid', $user['userid'])
-                    ->where('date', $date)
-                    ->update(['att_resume'   => $att_resume]);
-            });
-
-            $this->fetchAttOut($user['userid'], $date)->map(function ($att_out) use ($user, $date) {
-                (new Inout())->where('userid', $user['userid'])
-                    ->where('date', $date)
-                    ->update(['att_out'   => $att_out]);
-            });
-        });
     }
+
 }

@@ -12,6 +12,8 @@ class Schedule extends Model
     protected $fillable = [
         'userid',
         'date',
+        'start',
+        'end',
         'honorMinutes',
         'selectedAbsence',
         'selectedDay',

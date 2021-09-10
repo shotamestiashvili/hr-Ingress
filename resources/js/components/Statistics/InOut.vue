@@ -6,6 +6,7 @@
           <div class="card-header">
             <strong> In /Out </strong>
           </div>
+
           <div class="card-body">
             <b-button
               @click.prevent="runRefresh()"
@@ -44,9 +45,9 @@
             <table class="table table-sm table-hover">
               <thead>
                 <tr>
-                  <th scope="col">UserID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Date</th>
+                  <th scope="col">ID</th>
+                  <th width="17%" scope="col">Name</th>
+                  <th width="11%" scope="col">Date</th>
                   <th scope="col">In</th>
                   <th scope="col">Break</th>
                   <th scope="col">Resume</th>
@@ -54,15 +55,16 @@
                   <th scope="col">Start</th>
                   <th scope="col">End</th>
                   <th scope="col">Honor. Min</th>
-                  <th scope="col">Delay Min)</th>
-                  <th scope="col">Unexcusable</th>
-                  <th scope="col">Overtime</th>
+                  <th scope="col">Early In</th>
+                  <th scope="col">Delay</th>
+                  <th scope="col">Early Out</th>
+                  <th scope="col">Late Out</th>
                 </tr>
               </thead>
               <tbody v-for="(data, index) in apiInout.data" :key="index">
                 <tr>
                   <td>{{ data.userid }}</td>
-                  <td>Department</td>
+                  <td >{{data.first_name[0] }} {{data.last_name [0]}}}</td>
                   <td>{{ data.date }}</td>
                   <td>{{ data.att_in }}</td>
                   <td>{{ data.att_break }}</td>
@@ -71,9 +73,10 @@
                   <td>{{ data.start[0] }}</td>
                   <td>{{ data.end[0] }}</td>
                   <td>{{ data.honorminutes[0] }}</td>
-                  <td>{{ data.delay[0] }}</td>
-                  <td>{{ data.unexcusable[0] }}</td>
-                  <td>{{ data.overtime[0] }}</td>
+                  <td>{{ data.earlyIn[0]  }}</td>
+                  <td>{{ data.delayIn[0]  }}</td>
+                  <td>{{ data.earlyOut[0]  }}</td>
+                  <td>{{ data.lateOut [0] }}</td>
                 </tr>
               </tbody>
             </table>
@@ -226,14 +229,14 @@ td {
   border: 1px solid black;
   text-align: center;
   padding: 3px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 th {
   border: 1px solid black;
   text-align: center;
   padding: 3px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 tr:nth-child(even) {

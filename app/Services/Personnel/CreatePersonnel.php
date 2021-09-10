@@ -31,6 +31,13 @@ class CreatePersonnel implements CreatorInterface
             'phone' => $request->phone,
             'email' => $request->email,
             'author' => $request->author,
+            'food'=> $request->food,
+            'ensuarence' => $request->ensuarence,
+            'additional' => $request->additional,
+            'bank_account' => $request->bank_account,
+            'companyid' => $request->companyid,
+            'additional'  => $request->additional,
+            'avatar_url' => '/storage/'.$request->avatar_url
         ]);
     }
 }

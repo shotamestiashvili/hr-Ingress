@@ -35,6 +35,12 @@ class PersonnelResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'author' => $this->author,
+            'food' => $this->food,
+            'ensuarence' => $this->ensuarence,
+            'additional' => $this->additional,
+            'bank_account' => $this->bank_account,
+            'companyid' => $this->companyid,
+            'avatar_url' => $this->avatar_url
         ];
     }
 }

@@ -17,7 +17,7 @@ Class AttDate implements MonthlyFetcherInterface {
         $this->att_date =  Attendance::where('userid', $userid)
                                       ->whereYear('date',  $year)
                                       ->whereMonth('date', $month)
-                                      ->pluck('date');
+                                      ->value('date');
                                       return $this->att_date;
     }
 

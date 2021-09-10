@@ -18,12 +18,17 @@ class Inout extends Model
 
     public function personnel()
     {
-        return $this->belongsTo(Personnel::class, 'userid', 'userid');
+        return $this->hasMany(Personnel::class, 'userid', 'userid');
     }
 
     public function schedule()
     {
         return $this->hasMany(Schedule::class, 'userid', 'userid')->where('date', $this->date);
+    }
+
+    public function statistic()
+    {
+        return $this->hasMany(Statistic::class, 'userid', 'userid')->where('date', $this->date);
     }
 
 

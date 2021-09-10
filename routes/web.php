@@ -31,6 +31,6 @@ Route::get('/vue', function () {
 
 
 Route::get('/currency',   [AttendanceController::class, 'currency']);
-Route::get('/carbon',    [AttendanceController::class, 'carbon']);
+Route::get('/carbon',    [AttendanceController::class, 'test']);
 
 Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);

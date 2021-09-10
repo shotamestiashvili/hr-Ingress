@@ -6,10 +6,10 @@ namespace App\Services\TimeCalculator;
 class TimeExploder
 {
 
-    protected $startHour;
-    protected $startMin;
-    protected $endHour;
-    protected $endMin;
+    public $startHour;
+    public $startMin;
+    public $endHour;
+    public $endMin;
 
 
     public function __construct($start, $end)

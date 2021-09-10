@@ -32,7 +32,6 @@ class PersonnelController extends Controller
 
     public function store(Request $request): void
     {
-
         if ($request->id) {
             (new Updater((new UpdatePersonnel()), $request));
         } else {

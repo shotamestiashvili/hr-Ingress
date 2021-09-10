@@ -29,6 +29,13 @@ class Personnel extends Model
             'email',
             'registration_date',
             'author',
+            'food',
+            'ensuarence',
+            'additional',
+            'bank_account',
+            'companyid',
+            'additional',
+            'avatar_url',
     ];
 
 

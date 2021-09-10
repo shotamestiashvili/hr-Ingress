@@ -6,5 +6,5 @@ namespace App\Http\Interfaces;
 interface OvertimeInterface
 {
 
-    public function overtime($object);
+    public function overtime($userid, $date);
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\TrainingController;
 use App\Http\Controllers\Api\WorktypeController;
 use App\Http\Controllers\Api\ImportController;
 use App\Http\Controllers\Api\ExportController;
+use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //Import /Export files start here //
+Route::POST('/upload',   [FileUploadController::class, 'store']);
+//File Upload
+
+//
 
 Route::POST('/import/personnel',   [ImportController::class, 'importPersonnel']);
 Route::POST('/import/worktype',    [ImportController::class, 'importWorktype']);
@@ -46,6 +51,7 @@ Route::GET('/export/position',     [ExportController::class, 'exportPosition']);
 
 Route::GET('/inout/index',                    [InoutController::class, 'index']);
 Route::GET('/inout/refresh',                  [InoutController::class, 'refresh']);
+Route::GET('/inout/generate',                 [InoutController::class, 'generate']);
 Route::GET('/inout/montlyInout',              [InoutController::class, 'montlyInout']);
 Route::GET('/inout/newUserInout',             [InoutController::class, 'newUserInout']);
 

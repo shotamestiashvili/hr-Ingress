@@ -15,7 +15,7 @@ class AttOut implements InoutInterface
 
         $this->att_out =  Attendance::where('userid', $userid)
             ->where('date',   $date)
-            ->pluck('att_out');
+            ->value('att_out');
 
         return $this->att_out;
     }

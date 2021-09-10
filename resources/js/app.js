@@ -41,7 +41,8 @@ import App from './components/App.vue'
 
 
 export const eventBus = new Vue();
-
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+    // axios.defaults.baseURL = 'http://api.project.test' // Backend URL for API
 
 const app = new Vue({
     el: '#app',

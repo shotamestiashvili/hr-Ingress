@@ -15,7 +15,7 @@ Class AttBreak implements InoutInterface {
 
         $this->att_break =  Attendance::where('userid', $userid)
                                       ->where('date',   $date)
-                                      ->pluck('att_break');
+                                      ->value('att_break');
 
                                       return $this->att_break;
     }

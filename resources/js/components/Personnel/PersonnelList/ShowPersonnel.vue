@@ -41,10 +41,10 @@
             <hr>
             <br>
 
-            <table class="table table-sm table-bordered">
+            <table class="table table-sm table-hover">
               <thead>
                 <tr>
-                  <th scope="col">UserID</th>
+                  <th scope="col">ID</th>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col">Position</th>
@@ -110,7 +110,7 @@
               @pagination-change-page="runAxiosGet"
             ></pagination> -->
 
-            <b-modal id="createModal" hide-footer size="lg">
+            <b-modal id="createModal" hide-footer size="xl">
               <create-data @exit="closeModal"> </create-data>
             </b-modal>
 
@@ -239,13 +239,13 @@ export default {
 </script>
 
 <style scoped>
-/* table {
+table {
   margin-left: auto;
   margin-right: auto;
-  font-size: 10px;
+  font-size: 9px;
   height: 100%;
   table-layout: fixed;
-} */
+}
 
 td {
   border: 1px solid black;

@@ -7,6 +7,6 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 
     state: {
-        personnelmodal: true,
+        avatar_url: '',
     }
 });
