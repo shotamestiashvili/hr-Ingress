@@ -17,9 +17,6 @@ class TimeService
 
     public function __construct($userid, $date)
     {
-        $time      = new TimeConstructor($userid, $date);
-        $att       = new AttExploder($time->att_in, $time->att_out);
-        $worktype  = new TimeExploder($time->start, $time->end);
 
         if (
             Schedule::where('userid', $userid)->where('date', $date)->exists() &&
@@ -27,6 +24,11 @@ class TimeService
             Inout::where('userid', $userid)->where('date', $date)->value('att_out') !== Null
 
         ) {
+
+            $time      = new TimeConstructor($userid, $date);
+        $att       = new AttExploder($time->att_in, $time->att_out);
+        $worktype  = new TimeExploder($time->start, $time->end);
+
             $this->conditionValidation($time, $att, $worktype);
         } else {
 

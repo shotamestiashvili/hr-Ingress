@@ -14,7 +14,7 @@ class StatisticGenerator
         //  $carbon = Carbon::now()->toString();
         //  $date = DateTimeFormater::date($carbon);
 
-     $date = '2021-09-02';
+     $date = '2021-09-10';
 
 
        return Personnel::all()->map(function ($user) use ($date) {

@@ -29,15 +29,7 @@ class TimeConstructor extends TimeExploder
     {
         $inout = Inout::where('date', $date)->where('userid', $userid)->first();
 
-        // $hoursArray = ($inout->schedule()->get()->map(function ($schedule) {
-        //     return $schedule->worktype()->value('hours');
-        // }));
-        // $in24Array = ($inout->schedule()->get()->map(function ($schedule) {
-        //     return $schedule->worktype()->value('in24hours');
-        // }));
-
-        // $this->worktypeHour = ($hoursArray[0]);
-        // $this->in24 =         ($in24Array[0]);
+       
 
         $this->att_in  = DateTimeFormater::time(($inout->att_in));
         $this->att_out = DateTimeFormater::time($inout->att_out);

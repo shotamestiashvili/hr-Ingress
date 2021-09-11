@@ -316,8 +316,7 @@
 import axios from "axios";
 
 export default {
-
-    props: ["editing"],
+  props: ["editing"],
 
   data() {
     return {
@@ -338,6 +337,7 @@ export default {
       departmentData: "",
 
       form: {
+        id: this.editing.id,
         userid: this.editing.userid,
         first_name: this.editing.first_name,
         last_name: this.editing.last_name,
@@ -374,8 +374,7 @@ export default {
     this.educationApi();
   },
 
-
-   methods: {
+  methods: {
     submit() {
       this.errors = null;
       let formData = new FormData();
@@ -419,10 +418,10 @@ export default {
 
     submitForm() {
       axios
-        .post('api/personnel/personnellist', this.form)
+        .post("api/personnel/personnellist", this.form)
         .then((res) => {
           this.$emit("exit", true);
-          console.log(this.form.userid)
+          console.log(this.form.userid);
         })
         .catch((error) => {
           console.log(error);

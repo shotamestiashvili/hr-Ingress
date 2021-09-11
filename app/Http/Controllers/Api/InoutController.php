@@ -43,13 +43,14 @@ class InoutController extends Controller
     public function refresh(): void
     {
         $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyInout(DateTimeFormater::date('2021-09-04'));
+        $attendanceServicenew->dailyInout(DateTimeFormater::date('2021-09-10'));
+
     }
 
     public function generate()
     {
         $attendanceServicenew = new StatisticGenerator();
-       return $attendanceServicenew->generate(DateTimeFormater::date('2021-9-4'));
+       return $attendanceServicenew->generate(DateTimeFormater::date('2021-9-10'));
     }
 
 }

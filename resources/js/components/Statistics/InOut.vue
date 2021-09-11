@@ -17,6 +17,15 @@
               >Refresh Attenance</b-button
             >
 
+                        <b-button
+              @click.prevent="runGenerate()"
+              variant="info"
+              ref="btnShow"
+              size="sm"
+              id="refresh"
+              >Calculate Hours</b-button
+            >
+
             <!-- <b-button
               v-b-modal.importModal
               variant="warning"
@@ -181,7 +190,19 @@ export default {
 
     runRefresh() {
       axios
-        .get("/fetch")
+        .get("api/inout/refresh")
+        .then((res) => {
+          console.log("OK");
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
+    },
+
+        runGenerate() {
+      axios
+        .get("api/inout/generate")
         .then((res) => {
           console.log("OK");
         })
