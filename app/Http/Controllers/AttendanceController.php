@@ -14,6 +14,7 @@ use App\Services\Statistics\AttendanceService;
 use App\Services\Statistics\InoutService;
 use App\Services\TimeCalculator\In;
 use App\Services\TimeCalculator\Out;
+use App\Services\TimeCalculator\StatisticGenerator;
 use App\Services\TimeCalculator\Time;
 use App\Services\TimeCalculator\TimeConstructor;
 use App\Services\TimeCalculator\TimeService;
@@ -25,10 +26,9 @@ class AttendanceController extends Controller
     public function test()
     {
 
-        $time = new TimeService(352, '2021-09-01');
-
-        return $time->lateOut;
-
+        $today =  (Carbon::now())->toDateTimeString();
+        $attendanceServicenew = new StatisticGenerator();
+        return $attendanceServicenew->generate(DateTimeFormater::date($today));
     }
 
     public function worktypeTime()

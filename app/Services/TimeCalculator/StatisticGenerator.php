@@ -9,13 +9,10 @@ use Carbon\Carbon;
 
 class StatisticGenerator
 {
-    public function Generate ()
+    public function Generate ($date)
     {
         //  $carbon = Carbon::now()->toString();
         //  $date = DateTimeFormater::date($carbon);
-
-     $date = '2021-09-10';
-
 
        return Personnel::all()->map(function ($user) use ($date) {
             $time = (new TimeService($user->userid, $date));

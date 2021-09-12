@@ -10,6 +10,7 @@ use App\Services\Statistics\AttendanceService;
 use App\Services\TimeCalculator\StatisticGenerator;
 use Carbon\Carbon;
 
+
 class InoutController extends Controller
 {
     public function index()
@@ -42,15 +43,18 @@ class InoutController extends Controller
 
     public function refresh(): void
     {
+        $today =  (Carbon::now())->toDateTimeString();
         $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyInout(DateTimeFormater::date('2021-09-10'));
+        $attendanceServicenew->dailyInout(DateTimeFormater::date($today));
+
 
     }
 
-    public function generate()
+    public function generate(): void
     {
+        $today =  (Carbon::now())->toDateTimeString();
         $attendanceServicenew = new StatisticGenerator();
-       return $attendanceServicenew->generate(DateTimeFormater::date('2021-9-10'));
+        $attendanceServicenew->generate(DateTimeFormater::date($today));
     }
 
 }

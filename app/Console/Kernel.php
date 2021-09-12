@@ -2,9 +2,13 @@
 
 namespace App\Console;
 
+use App\Jobs\InoutRefresh;
+use App\Jobs\StatisticsGenerate;
+use App\Models\Inout;
+use App\Services\TimeCalculator\StatisticGenerator;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Services\FetchInout;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,9 +29,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command(FetchInout::fetchInout())->everyFiveMinutes();
+        $schedule->job(new StatisticsGenerate)->everyFourHours();
+        $schedule->job(new InoutRefresh)->everyFourHours();
+        $schedule->command('queue:work --daemon')->everySixHours();
     }
-
     /**
      * Register the commands for the application.
      *
