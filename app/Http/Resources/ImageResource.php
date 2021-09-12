@@ -15,7 +15,7 @@ class ImageResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
-            'avatar_url' => 'http://hr/storage/'.$this->avatar
+            'avatar_url' => 'http://hr.bict.ge/storage'.$this->avatar
         ]);;
     }
 }
