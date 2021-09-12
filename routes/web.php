@@ -32,5 +32,11 @@ Route::get('/', function () {
 
 Route::get('/currency',   [AttendanceController::class, 'currency']);
 Route::get('/carbon',    [AttendanceController::class, 'test']);
-
 Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);
+
+Route::get('/refresh',    [AttendanceController::class, 'refresh']);
+Route::get('/generate',   [AttendanceController::class, 'statisticGenerate']);
+Route::get('/monthly',    [AttendanceController::class, 'monthlyGrid']);
+Route::get('/newuser',    [AttendanceController::class, 'newUserGrid']);
+
+

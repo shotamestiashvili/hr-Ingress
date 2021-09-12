@@ -40,6 +40,7 @@ class CreatePersonnelsTable extends Migration
             $table->string('ensuarence')->nullable();
             $table->string('additional')->nullable();
             $table->string('bank_account')->nullable()->default('Null');
+            $table->string('avatar_url')->nullable();
             $table->timestamps();
         });
     }

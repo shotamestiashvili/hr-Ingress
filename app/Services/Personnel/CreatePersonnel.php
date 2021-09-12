@@ -5,12 +5,15 @@ namespace App\Services\Personnel;
 
 use App\Http\Interfaces\CreatorInterface;
 use App\Models\Personnel;
+use App\Services\Statistics\AttendanceService;
 
 class CreatePersonnel implements CreatorInterface
 {
 
     public  function create($request)
     {
+        (new AttendanceService())->newUserInout($request->userid);
+
         Personnel::create([
             'userid' => $request->userid,
             'first_name' => $request->first_name,

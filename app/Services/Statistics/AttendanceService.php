@@ -2,7 +2,7 @@
 
 namespace App\Services\Statistics;
 
-
+use App\Models\Attendance;
 use App\Services\Statistics\InoutService;
 use App\Models\Inout;
 use App\Models\Personnel;
@@ -38,11 +38,6 @@ class AttendanceService extends ActualDate
     }
 
 
-    public function fetchAttDate($userid,  $year, $month)
-    {
-        $worker = new FetcherService($userid, $year, $month);
-        return $worker->att_date;
-    }
 
 
     public function montlyInout(): void
@@ -51,30 +46,36 @@ class AttendanceService extends ActualDate
         if (!Inout::whereYear('date', $this->actualYear)
             ->whereMonth('date', $this->actualMonth)
             ->exists()) {
-            $this->fetchAttDate(352, $this->actualYear, $this->actualMonth)
 
+            Attendance::where('userid', 352)
+                ->whereYear('date',  $this->actualYear)
+                ->whereMonth('date',  $this->actualMonth)
+                ->get()
                 ->map(function ($date) {
 
                     Personnel::all()->map(function ($user) use ($date) {
                         Inout::create([
                             'userid' => $user['userid'],
-                            'date'   => $date
+                            'date'   => $date->date
                         ]);
                     });
                 });
         }
     }
 
-    public function newUserInout($user): void
+    public  function newUserInout($userId): void
     {
         //352 is an admin user at Ingress system for grid fetching
 
-        $this->fetchAttDate(352, $this->actualYear, $this->actualMonth)
-             ->map(function ($date) use ($user) {
+        Attendance::where('userid', 352)
+            ->whereYear('date',  $this->actualYear)
+            ->whereMonth('date',  $this->actualMonth)
+            ->get()
+            ->map(function ($date) use ($userId) {
 
                 Inout::create([
-                    'userid' => $user,
-                    'date'   => $date,
+                    'userid' => $userId,
+                    'date'   => $date->date,
                 ]);
             });
     }
@@ -84,15 +85,14 @@ class AttendanceService extends ActualDate
     public function dailyInout($date): void
     {
         Personnel::all()->map(function ($user) use ($date) {
-                Inout::where('userid', $user['userid'])
-                    ->where('date', $date)
-                    ->update([
-                           'att_in' => $this->fetchAttIn($user['userid'], $date),
-                           'att_break' => $this->fetchAttBreak($user['userid'], $date),
-                           'att_resume' => $this->fetchAttResume($user['userid'], $date),
-                           'att_out' => $this->fetchAttOut($user['userid'], $date),
+            Inout::where('userid', $user['userid'])
+                ->where('date', $date)
+                ->update([
+                    'att_in' => $this->fetchAttIn($user['userid'], $date),
+                    'att_break' => $this->fetchAttBreak($user['userid'], $date),
+                    'att_resume' => $this->fetchAttResume($user['userid'], $date),
+                    'att_out' => $this->fetchAttOut($user['userid'], $date),
                 ]);
-            });
+        });
     }
-
 }

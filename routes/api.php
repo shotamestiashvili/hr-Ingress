@@ -36,9 +36,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 //Import /Export files start here //
 Route::POST('/upload',   [FileUploadController::class, 'store']);
-//File Upload
 
-//
 
 Route::POST('/import/personnel',   [ImportController::class, 'importPersonnel']);
 Route::POST('/import/worktype',    [ImportController::class, 'importWorktype']);

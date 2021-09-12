@@ -46,8 +46,33 @@ class AttendanceController extends Controller
 
     public function monthlyGrid()
     {
-
+        $attendanceServicenew = new AttendanceService();
+        $attendanceServicenew->montlyInout();
     }
 
-    
+    public function refresh()
+    {
+        $today =  (Carbon::now())->toDateTimeString();
+        $attendanceServicenew = new AttendanceService();
+        $attendanceServicenew->dailyInout(DateTimeFormater::date( $today ));
+    }
+
+
+    public function statisticGenerate()
+    {
+        $today =  (Carbon::now())->toDateTimeString();
+        $attendanceServicenew = new StatisticGenerator();
+        $attendanceServicenew->generate(DateTimeFormater::date($today));
+    }
+
+    public function newUserGrid()
+    {
+        $userid = 99999;
+        $attendanceServicenew = new AttendanceService();
+        $attendanceServicenew->newUserInout($userid);
+    }
+
+
+
+
 }
