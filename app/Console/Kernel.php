@@ -30,11 +30,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new MonthlyGridFetcher)->everySixHours();
+        $schedule->job(new MonthlyGridFetcher)->everyTwoMinutes();
         $schedule->job(new InoutRefresh)->everyTwoMinutes();
         $schedule->job(new StatisticsGenerate)->everyFiveMinutes();
 
-        $schedule->command('queue:work --daemon')->everyMinute();
+        $schedule->command('queue:work --daemon')->everyTwoMinutes();
     }
     /**
      * Register the commands for the application.
