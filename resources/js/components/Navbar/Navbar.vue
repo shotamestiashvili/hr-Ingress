@@ -105,9 +105,9 @@ import ShowHolidays from "../References/Holidays/ShowHolidays.vue";
 import ShowPositions from "../References/Positions/ShowPositions.vue";
 import ShowFamily from "../References/Family/ShowFamily.vue";
 import ShowQualifications from "../References/Qualifications/ShowQualifications.vue";
-import ShowSalarydates from "../References/Salarydates/ShowSalarydates.vue";
+import ShowSalarydates from "../References/SalaryDates/ShowSalarydates.vue";
 import ShowTrainings from "../References/Trainings/ShowTrainings.vue";
-import ShowWorktypes from "../References/Worktypes/ShowWorktypes.vue";
+import ShowWorktypes from "../References/WorkTypes/ShowWorktypes.vue";
 // References component  ends here
 
 export default {
