@@ -17,18 +17,18 @@ class ImportPersonnel implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Personnel([
-            'userid' => $row['userid'],
+            'userid' => $row['code'],
             'first_name' => $row['first_name'],
             'last_name' => $row['last_name'],
             'personal_id' => $row['personal_id'],
-            'birth_day' => $row['birth_day'],
+            'birth_day' => $row['date_of_birth'],
             'gender' => $row['gender'],
             'address' => $row['address'],
-            'retirement' => $row['retirement'],
+            'retirement' => $row['retirement_age'],
             'family_status' => $row['family_status'],
             'education' => $row['education'],
             'contact_info' => $row['contact_info'],
-            'position' => $row['position'],
+            'position' => $row['current_position'],
             'department' => $row['department'],
             'head' => $row['head'],
             'subordinate_stuff' => $row['subordinate_stuff'],

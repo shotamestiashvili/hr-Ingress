@@ -13,6 +13,8 @@
         />
         <br />
         <hr />
+
+        <button class="btn btn-info" type="submit"> Upload </button>
       </div>
     </div>
   </div>

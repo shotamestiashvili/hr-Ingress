@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\InoutRefresh;
+use App\Jobs\MonthlyGridFetcher;
 use App\Jobs\StatisticsGenerate;
 use App\Models\Inout;
 use App\Services\TimeCalculator\StatisticGenerator;
@@ -29,8 +30,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new StatisticsGenerate)->everyFourHours();
+        $schedule->job(new MonthlyGridFetcher)->everySixHours();
         $schedule->job(new InoutRefresh)->everyFourHours();
+        $schedule->job(new StatisticsGenerate)->everyFourHours();
+        
+
         $schedule->command('queue:work --daemon')->everySixHours();
     }
     /**
