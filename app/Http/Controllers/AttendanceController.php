@@ -43,4 +43,11 @@ class AttendanceController extends Controller
                 ]);
         });
     }
+
+    public function monthlyGrid()
+    {
+
+    }
+
+    
 }

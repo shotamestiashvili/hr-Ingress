@@ -32,7 +32,7 @@
               v-model="form.end"
             />
           </div>
-          <div class="form-outline mb-4">
+          <!-- <div class="form-outline mb-4">
             <label class="form-label" for="hours">Hours</label>
             <input
               type="text"
@@ -40,7 +40,7 @@
               class="form-control"
               v-model="form.hours"
             />
-          </div>
+          </div> -->
 
           <button type="submit" class="btn btn-info">Submit</button>
         </form>
