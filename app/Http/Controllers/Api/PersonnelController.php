@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PersonnelResource;
-use App\Models\Inout;
 use App\Models\Personnel;
 use App\Services\Personnel\UpdatePersonnel;
 use App\Services\Personnel\CreatePersonnel;
@@ -43,8 +42,6 @@ class PersonnelController extends Controller
 
     public function destroy($id): void
     {
-        $userid = Personnel::where('id', $id)->value('usreid');
-        Inout::where('userid', $userid)->delete();
         Personnel::where('id', $id)->delete();
     }
 }
