@@ -37,11 +37,11 @@ class CreatePersonnelsTable extends Migration
             $table->string('email')->nullable();
             $table->string('registration_date')->nullable()->default('Null');
             $table->string('author')->nullable();
-           
+
             $table->string('ensuarence')->nullable();
             $table->string('additional')->nullable();
             $table->string('bank_account')->nullable()->default('Null');
-            $table->string('companyid')->nullable();
+            
             $table->timestamps();
         });
     }
