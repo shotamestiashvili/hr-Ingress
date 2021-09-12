@@ -29,8 +29,8 @@ class CreatePersonnelsTable extends Migration
             $table->string('position');
             $table->string('department');
             $table->string('head')->nullable();
-            $table->string('companyid')->nullable();
             $table->string('food')->nullable();
+            $table->string('companyid')->nullable();
             $table->string('subordinate_stuff')->nullable();
             $table->string('military_info')->nullable();
             $table->string('phone')->nullable();
