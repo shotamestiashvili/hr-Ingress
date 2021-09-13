@@ -73,7 +73,7 @@
               <tbody v-for="(data, index) in apiInout.data" :key="index">
                 <tr>
                   <td>{{ data.userid }}</td>
-                  <td >{{data.first_name[0] }} {{data.last_name [0]}}}</td>
+                  <td >{{data.first_name[0] }} {{data.last_name [0]}}</td>
                   <td>{{ data.date }}</td>
                   <td>{{ data.att_in }}</td>
                   <td>{{ data.att_break }}</td>
