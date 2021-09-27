@@ -27,9 +27,9 @@ class TimeConstructor extends TimeExploder
 
     public function timeFetcher($userid, $date)
     {
-        $inout = Inout::where('date', $date)->where('userid', $userid)->first();
+        $inout = Inout::with(['schedule', 'personnel', 'statistic'])->where('date', $date)->where('userid', $userid)->first();
 
-       
+
 
         $this->att_in  = DateTimeFormater::time(($inout->att_in));
         $this->att_out = DateTimeFormater::time($inout->att_out);

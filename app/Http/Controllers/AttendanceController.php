@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\InoutResource;
 use App\Models\Inout;
+use App\Models\Personnel;
 use App\Models\Schedule;
 use App\Models\Training;
 use App\Models\Worktype;
@@ -20,15 +21,44 @@ use App\Services\TimeCalculator\TimeConstructor;
 use App\Services\TimeCalculator\TimeService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceController extends Controller
 {
     public function test()
     {
 
-        $today =  (Carbon::now())->toDateTimeString();
-        $attendanceServicenew = new StatisticGenerator();
-        return $attendanceServicenew->generate(DateTimeFormater::date($today));
+
+        $personnel = Personnel::with('inout')->get();
+
+        $monthDays = Personnel::with('inout')->where('userid', 352)
+        ->get()
+        ->map(function($user){
+            return $user->inout->map(function($inout){
+                return $inout->date;
+            })->count();
+        });
+
+            return Excel::raw('laravelcode', function($excel) use ($personnel, $monthDays) {
+                $excel->sheet('mySheet', function($sheet) use ($personnel, $monthDays )
+                {
+                    $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
+                    $sheet->cell('B1', function($cell) {$cell->setValue('Last Name');   });
+                    $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });
+
+                    if (!empty($data)) {
+                        foreach ($personnel as $key => $value) {
+                            $i= $key+2;
+                            $sheet->cell('A'.$i, $value['first_name']);
+                            $sheet->cell('B'.$i, $value['userid']);
+
+                        }
+                    }
+                });
+            })::download('xls');
+
+
+
     }
 
     public function worktypeTime()

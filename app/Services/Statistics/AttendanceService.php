@@ -84,7 +84,7 @@ class AttendanceService extends ActualDate
 
     public function dailyInout($date): void
     {
-        Personnel::all()->map(function ($user) use ($date) {
+        Personnel::with('inout')->get()->map(function ($user) use ($date) {
             Inout::where('userid', $user['userid'])
                 ->where('date', $date)
                 ->update([

@@ -26,12 +26,14 @@ class ScheduleController extends Controller
             ->where('selectedDay', request('selectedDay'))
             ->where('selectedMonth', request('selectedMonth'))
             ->where('selectedYear', request('selectedYear'))
-            ->get();
+
+                ->get();
 
         })->when(request('userid') == '', function ($query) {
            return $query->where('selectedMonth', request('selectedMonth'))
             ->where('selectedYear', request('selectedYear'))
-            ->get();
+
+               ->get();
         });
         return ScheduleResource::collection($schedule);
     }

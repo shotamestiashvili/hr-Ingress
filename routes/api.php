@@ -41,6 +41,7 @@ Route::POST('/upload',   [FileUploadController::class, 'store']);
 Route::POST('/import/personnel',   [ImportController::class, 'importPersonnel']);
 Route::POST('/import/worktype',    [ImportController::class, 'importWorktype']);
 Route::POST('/import/position',    [ImportController::class, 'importPosition']);
+Route::POST('/import/schedule',    [ImportController::class, 'importSchedule']);
 Route::GET('/export/personnel',    [ExportController::class, 'exportPersonnel']);
 Route::GET('/export/worktype',     [ExportController::class, 'exportWorktype']);
 Route::GET('/export/position',     [ExportController::class, 'exportPosition']);

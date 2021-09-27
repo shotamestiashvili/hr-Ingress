@@ -26,8 +26,8 @@ class TimeService
         ) {
 
             $time      = new TimeConstructor($userid, $date);
-        $att       = new AttExploder($time->att_in, $time->att_out);
-        $worktype  = new TimeExploder($time->start, $time->end);
+            $att       = new AttExploder($time->att_in, $time->att_out);
+            $worktype  = new TimeExploder($time->start, $time->end);
 
             $this->conditionValidation($time, $att, $worktype);
         } else {

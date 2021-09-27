@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exports\ExportPersonnel;
 use App\Exports\ExportWorktype;
 use App\Exports\ExportPosition;
+use App\Exports\ExportSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,6 +27,12 @@ class ExportController extends Controller
     {
         return Excel::download(new ExportPosition, 'position_list.xlsx');
     }
+
+    public function exportSchedule()
+    {
+        return Excel::download(new ExportSchedule, 'position_list.xlsx');
+    }
+
 
 
 }

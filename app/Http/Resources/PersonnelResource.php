@@ -40,7 +40,10 @@ class PersonnelResource extends JsonResource
             'additional' => $this->additional,
             'bank_account' => $this->bank_account,
             'companyid' => $this->companyid,
-            'avatar_url' => $this->avatar_url
+            'avatar_url' => $this->avatar_url,
+            'selectedWorktype' => $this->schedule->map(function($schedule){
+                return $schedule->selectedWorktype;
+            }),
         ];
     }
 }

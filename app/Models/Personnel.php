@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Schedule as ModelsSchedule;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Console\Scheduling\Schedule;
+
+
 
 class Personnel extends Model
 {
@@ -42,6 +44,11 @@ class Personnel extends Model
     public function inout()
     {
         return $this->hasMany(Inout::class, 'userid', 'userid');
+    }
+
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class, 'userid', 'userid');
     }
 
 }

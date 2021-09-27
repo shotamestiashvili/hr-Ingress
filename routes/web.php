@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,9 @@ Route::get('/', function () {
     return view('vue');
 });
 
-// Route::get('/test', function () {
-//     return view('test');
-// });
+Route::get('/test', function () {
+    return view('test');
+});
 
 // Route::get('/vue', function () {
 //     return view('vue');
@@ -28,11 +29,15 @@ Route::get('/', function () {
 
 // Route::get('/test', AttendanceController);
 
+//Route::get('/upload-file', [FileUpload::class, 'createForm']);
+
+Route::post('/upload-file', [\App\Http\Controllers\Api\ImportController::class, 'importSchedule'])->name('fileUpload');
 
 
 Route::get('/currency',   [AttendanceController::class, 'currency']);
 Route::get('/carbon',    [AttendanceController::class, 'test']);
 Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);
+Route::get('/export',    [ExportController::class, 'exportSchedule']);
 
 Route::get('/refresh',    [AttendanceController::class, 'refresh']);
 Route::get('/generate',   [AttendanceController::class, 'statisticGenerate']);

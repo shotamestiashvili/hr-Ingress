@@ -16,14 +16,16 @@ class PersonnelController extends Controller
 {
     public function index(): Object
     {
-        $personnel = Personnel::when(request('search') != '', function ($query) {
+        $personnel = Personnel::with('schedule')->when(request('search') != '', function ($query) {
             return $query->where('first_name', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('last_name', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('department', 'LIKE', '%' . request('search') . '%')
-                ->orWhere('userid', 'LIKE', '%' . request('search') . '%')->paginate(30);
+                ->orWhere('userid', 'LIKE', '%' . request('search') . '%')
+
+                ->paginate(31);
         })
             ->when(request('search') == '', function ($query) {
-                return $query->paginate(30);
+                return $query->paginate(31);
             });
 
         return PersonnelResource::collection($personnel);

@@ -14,7 +14,7 @@ class StatisticController extends Controller
      */
     public function index()
     {
-        
+
     }
 
 
@@ -41,4 +41,7 @@ class StatisticController extends Controller
     {
 
     }
+
+
+    
 }

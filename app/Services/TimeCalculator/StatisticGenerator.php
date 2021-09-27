@@ -14,7 +14,7 @@ class StatisticGenerator
         //  $carbon = Carbon::now()->toString();
         //  $date = DateTimeFormater::date($carbon);
 
-       return Personnel::all()->map(function ($user) use ($date) {
+       return Personnel::with('inout')->all()->map(function ($user) use ($date) {
             $time = (new TimeService($user->userid, $date));
             if(Statistic::where('userid', $user->userid)->where('date', $date)->exists()){
 
