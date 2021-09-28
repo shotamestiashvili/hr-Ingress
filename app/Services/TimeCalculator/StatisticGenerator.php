@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class StatisticGenerator
 {
-    public function Generate ($date)
+    public function Generate ($date = '2021-09-21')
     {
         //  $carbon = Carbon::now()->toString();
         //  $date = DateTimeFormater::date($carbon);
