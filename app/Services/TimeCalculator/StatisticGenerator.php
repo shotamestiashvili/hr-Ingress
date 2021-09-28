@@ -12,7 +12,7 @@ class StatisticGenerator
     public function Generate ($date = '2021-09-21')
     {
         //  $carbon = Carbon::now()->toString();
-        //  $date = DateTimeFormater::date($carbon);
+          $date = DateTimeFormater::date($date);
 
        return Personnel::with('inout')->get()->map(function ($user) use ($date) {
             $time = (new TimeService($user->userid, $date));
