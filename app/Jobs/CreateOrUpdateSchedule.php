@@ -47,12 +47,11 @@ class CreateOrUpdateSchedule implements ShouldQueue
 
             for ($s = 3; $s < $countOfDays; $s++) {
 
-                ScheduleCreatorUpdater::dispatch($array, $i, $s, $year, $month);
-//                    ->delay(now()->addSecond(1));
+                ScheduleCreatorUpdater::dispatch($array, $i, $s, $year, $month)->delay(now()->addMinute(3));
             }
         }
 
-       Artisan::command('queue:work --daemon');
+       Artisan::command('queue:work --daemon --tries=5 --timeout=10', 'OK');
     }
 
 }

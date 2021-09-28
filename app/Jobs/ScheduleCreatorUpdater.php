@@ -47,12 +47,13 @@ class ScheduleCreatorUpdater implements ShouldQueue
     {
         Schedule::updateOrCreate(
             ['userid' => $this->array[0][$this->i][0], 'selectedDay' => ($this->s - 2)],
-            ['selectedWorktype' => $this->array[0][$this->i][$this->s],
+            ['selectedWorktype' => $this->array[0][$this->i][$this->s ],
                 'selectedMonth' => $this->month,
                 'selectedYear' => $this->year,
-                'date' => $this->year . '-' . $this->month . '-' . $this->s,
+                'date' => $this->year . '-' . $this->month . '-' . ($this->s-2),
                 'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
-                'end' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
+                'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
         );
+
     }
 }

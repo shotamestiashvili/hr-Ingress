@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new InoutRefresh)->everyTwoHours();
         $schedule->job(new StatisticsGenerate)->everyThreeHours();
 
-        $schedule->command('queue:work --daemon')->everyThirtyMinutes();
+//        $schedule->command('queue:work --daemon')->everyThirtyMinutes();
     }
     /**
      * Register the commands for the application.

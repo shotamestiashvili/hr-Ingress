@@ -41,7 +41,7 @@ class ImportController extends Controller
 
         $array = Excel::toCollection(new ImportSchedule, $request->import_file);
 
-        CreateOrUpdateSchedule::dispatch($array, $request->selectedYear, $request->selectedMonth);
+        new CreateOrUpdateSchedule($array, $request->selectedYear, $request->selectedMonth);
 
         return response()->json(['data' => 'Data is uploading, please wait'], 200);
 

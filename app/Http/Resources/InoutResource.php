@@ -28,6 +28,7 @@ class InoutResource extends JsonResource
             'att_break'   => $this->att_break,
             'att_resume'  => $this->att_resume,
             'att_out'     => $this->att_out,
+            'schedule'    => $this->schedule,
             'first_name'  => $this->personnel->map(function ($personnel) {
                 return $personnel->first_name;
             }),

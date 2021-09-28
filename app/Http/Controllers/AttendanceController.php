@@ -28,7 +28,6 @@ class AttendanceController extends Controller
     public function test()
     {
 
-
         $personnel = Personnel::with('inout')->get();
 
         $monthDays = Personnel::with('inout')->where('userid', 352)
@@ -38,25 +37,6 @@ class AttendanceController extends Controller
                 return $inout->date;
             })->count();
         });
-
-            return Excel::raw('laravelcode', function($excel) use ($personnel, $monthDays) {
-                $excel->sheet('mySheet', function($sheet) use ($personnel, $monthDays )
-                {
-                    $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-                    $sheet->cell('B1', function($cell) {$cell->setValue('Last Name');   });
-                    $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });
-
-                    if (!empty($data)) {
-                        foreach ($personnel as $key => $value) {
-                            $i= $key+2;
-                            $sheet->cell('A'.$i, $value['first_name']);
-                            $sheet->cell('B'.$i, $value['userid']);
-
-                        }
-                    }
-                });
-            })::download('xls');
-
 
 
     }

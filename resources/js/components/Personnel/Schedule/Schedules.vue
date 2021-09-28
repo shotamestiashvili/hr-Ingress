@@ -141,7 +141,7 @@ export default {
     data() {
         return {
             scheduledData: [],
-            apiData: [],
+            apiData: "",
             search: "",
             monthDays: [],
             schedule: {
