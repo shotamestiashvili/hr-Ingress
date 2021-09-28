@@ -73,7 +73,7 @@ class TimeService
             ->diff(DateTimeFormater::timeFormat($startHour))
             ->format('%H:%i');
 
-        $this->earlyIn = 0;
+//        $this->earlyIn = 0;
     }
 
 
@@ -84,7 +84,7 @@ class TimeService
             ->diff(DateTimeFormater::timeFormat($inHour))
             ->format('%H:%i');
 
-        $this->delayIn = 0;
+//        $this->delayIn = 0;
     }
 
     public function LateOut($outHour, $endHour)
@@ -94,7 +94,7 @@ class TimeService
             ->diff(DateTimeFormater::timeFormat($outHour))
             ->format('%H:%i');
 
-        $this->earlyOut = 0;
+//        $this->earlyOut = 0;
     }
 
 
@@ -105,6 +105,6 @@ class TimeService
             ->diff(DateTimeFormater::timeFormat($outHour))
             ->format('%H:%i');
 
-        $this->lateOut = 0;
+//        $this->lateOut = 0;
     }
 }
