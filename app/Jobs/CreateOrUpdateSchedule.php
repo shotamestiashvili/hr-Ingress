@@ -22,7 +22,8 @@ class CreateOrUpdateSchedule implements ShouldQueue
     private $year;
     private $month;
 
-    public $tries = 25;
+    public $tries = 3;
+
     /**
      * Create a new job instance.
      *
@@ -40,8 +41,9 @@ class CreateOrUpdateSchedule implements ShouldQueue
      */
     public function handle($array, $year, $month)
     {
-        $countOfUsers = $array[0]->count();
-        $countOfDays = $array[0][0]->count();
+        $countOfUsers = $array[0]->count(); // cell of the userid's name
+        $countOfDays  = $array[0][0]->count(); //cells of the users, dep and positions
+
 
         for ($i = 1; $i < $countOfUsers; $i++) {
 
@@ -50,8 +52,7 @@ class CreateOrUpdateSchedule implements ShouldQueue
                 ScheduleCreatorUpdater::dispatch($array, $i, $s, $year, $month)->delay(now()->addMinute(3));
             }
         }
-
-       Artisan::command('queue:work --daemon --tries=5 --timeout=10', 'OK');
+        Artisan::command('queue:work --daemon --tries=5 --timeout=10', 'OK');
     }
 
 }

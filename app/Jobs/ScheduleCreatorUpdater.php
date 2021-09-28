@@ -15,13 +15,14 @@ class ScheduleCreatorUpdater implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $tries = 25;
+    public $tries = 3;
 
     private $array;
     private $i;
     private $s;
     private $year;
     private $month;
+    private $day;
 
     /**
      * Create a new job instance.
@@ -35,6 +36,9 @@ class ScheduleCreatorUpdater implements ShouldQueue
         $this->s = $s;
         $this->year = $year;
         $this->month = $month;
+        $this->day = $this->s - 2;
+
+
 
     }
 
@@ -46,14 +50,15 @@ class ScheduleCreatorUpdater implements ShouldQueue
     public function handle()
     {
         Schedule::updateOrCreate(
-            ['userid' => $this->array[0][$this->i][0], 'selectedDay' => ($this->s - 2)],
-            ['selectedWorktype' => $this->array[0][$this->i][$this->s ],
+                ['userid'       => $this->array[0][$this->i][0],
+                'selectedDay'   => ($this->day),
                 'selectedMonth' => $this->month,
-                'selectedYear' => $this->year,
-                'date' => $this->year . '-' . $this->month . '-' . ($this->s-2),
+                'selectedYear'  => $this->year,],
+
+               ['selectedWorktype' => $this->array[0][$this->i][$this->s],
+                'date'  => $this->year . '-' . $this->month . '-' .$this->day,
                 'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
                 'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
         );
-
     }
 }

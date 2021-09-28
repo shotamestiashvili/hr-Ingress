@@ -35,7 +35,7 @@ Route::post('/upload-file', [\App\Http\Controllers\Api\ImportController::class, 
 
 
 Route::get('/currency',   [AttendanceController::class, 'currency']);
-Route::get('/carbon',    [AttendanceController::class, 'test']);
+Route::get('/job',    [AttendanceController::class, 'test']);
 Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);
 Route::get('/export',    [ExportController::class, 'exportSchedule']);
 
