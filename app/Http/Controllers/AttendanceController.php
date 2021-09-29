@@ -9,6 +9,7 @@ use App\Services\DateTime\DateTimeFormater;
 use App\Services\DateTime\WorkTypeFormater;
 use App\Services\Statistics\AttendanceService;
 use App\Services\TimeCalculator\StatisticGenerator;
+use App\Services\TimeCalculator\TimeConstructor;
 use App\Services\TimeCalculator\TimeService;
 use Carbon\Carbon;
 
@@ -17,7 +18,10 @@ class AttendanceController extends Controller
 {
     public function timeService()
     {
-        return (new TimeService(133, date('2021-09-01')))->lateOut;
+        $time = new TimeConstructor(352, date('2021-09-09'));
+//        return (new TimeService(133, date('2021-09-01')))->lateOut;
+
+        return $time->in24;
     }
 
 
