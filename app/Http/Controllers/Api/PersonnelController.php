@@ -7,6 +7,7 @@ use App\Http\Resources\PersonnelResource;
 use App\Models\Personnel;
 use App\Services\Personnel\UpdatePersonnel;
 use App\Services\Personnel\CreatePersonnel;
+use App\Services\Statistics\AttendanceService;
 use Illuminate\Http\Request;
 use App\Services\Updater;
 use App\Services\Creator;
@@ -27,6 +28,7 @@ class PersonnelController extends Controller
             ->when(request('search') == '', function ($query) {
                 return $query->paginate(31);
             });
+
 
         return PersonnelResource::collection($personnel);
     }

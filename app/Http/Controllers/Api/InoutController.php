@@ -35,26 +35,35 @@ class InoutController extends Controller
         $attendanceServicenew->newUserInout($userid);
     }
 
-    public function montlyInout(): void
+    public function dailyInout()
     {
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->montlyInout();
+        $att = new AttendanceService();
+        $att->dailyInout();
     }
 
-    public function refresh(): void
+    public function monthlyInout()
     {
-        $today =  (Carbon::now())->toDateTimeString();
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyInout(DateTimeFormater::date($today));
-
-
+        $att = new AttendanceService();
+        $att->monthlyInout();
     }
 
-    public function generate(): void
+    public function monthlyGrid()
     {
-        $today =  (Carbon::now())->toDateTimeString();
-        $attendanceServicenew = new StatisticGenerator();
-        $attendanceServicenew->generate(DateTimeFormater::date($today));
+        $att = new AttendanceService();
+        $att->monthlyGrid();
     }
+
+    public function dailyGenerate()
+    {
+        $statistic = new  StatisticGenerator();
+        $statistic->generateDaily();
+    }
+
+    public function monthlyGenerate()
+    {
+        $statistic = new  StatisticGenerator();
+        $statistic->generateMonthly();
+    }
+
 
 }

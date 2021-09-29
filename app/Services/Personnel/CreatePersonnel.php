@@ -12,7 +12,7 @@ class CreatePersonnel implements CreatorInterface
 
     public  function create($request)
     {
-        (new AttendanceService())->newUserInout($request->userid);
+
 
         Personnel::create([
             'userid' => $request->userid,
@@ -42,5 +42,8 @@ class CreatePersonnel implements CreatorInterface
             'additional'  => $request->additional,
             'avatar_url' => '/storage/'.$request->avatar_url
         ]);
+
+        $attendance = new AttendanceService();
+        $attendance->newUserInout($request->userid);
     }
 }

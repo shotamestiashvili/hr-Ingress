@@ -9,25 +9,17 @@ use App\Services\DateTime\DateTimeFormater;
 use App\Services\DateTime\WorkTypeFormater;
 use App\Services\Statistics\AttendanceService;
 use App\Services\TimeCalculator\StatisticGenerator;
+use App\Services\TimeCalculator\TimeService;
 use Carbon\Carbon;
 
 
 class AttendanceController extends Controller
 {
-    public function test()
+    public function timeService()
     {
-
-        ScheduleDateColumnFormater::dispatch();
-//        $personnel = Personnel::with('inout')->get();
-//
-//        $monthDays = Personnel::with('inout')->where('userid', 352)
-//        ->get()
-//        ->map(function($user){
-//            return $user->inout->map(function($inout){
-//                return $inout->date;
-//            })->count();
-//        });
+        return (new TimeService(133, date('2021-09-01')))->lateOut;
     }
+
 
     public function worktypeTime()
     {
@@ -42,32 +34,34 @@ class AttendanceController extends Controller
         });
     }
 
+    public function dailyInout()
+    {
+        $att = new AttendanceService();
+        $att->dailyInout();
+    }
+
+    public function monthlyInout()
+    {
+        $att = new AttendanceService();
+        $att->monthlyInout();
+    }
+
     public function monthlyGrid()
     {
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->montlyInout();
+        $att = new AttendanceService();
+        $att->monthlyGrid();
     }
 
-    public function refresh()
+    public function dailyGenerate()
     {
-        $today =  (Carbon::now())->toDateTimeString();
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyInout(DateTimeFormater::date( $today ));
+        $statistic = new  StatisticGenerator();
+        $statistic->generateDaily();
     }
 
-
-    public function statisticGenerate()
+    public function monthlyGenerate()
     {
-        $today =  (Carbon::now())->toDateTimeString();
-        $attendanceServicenew = new StatisticGenerator();
-        $attendanceServicenew->generate(DateTimeFormater::date($today));
-    }
-
-    public function newUserGrid()
-    {
-        $userid = 99999;
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->newUserInout($userid);
+        $statistic = new  StatisticGenerator();
+        $statistic->generateMonthly();
     }
 
 

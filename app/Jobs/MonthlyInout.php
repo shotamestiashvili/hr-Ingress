@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Services\DateTime\DateTimeFormater;
 use App\Services\Statistics\AttendanceService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -11,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class MonthlyGridFetcher implements ShouldQueue
+class MonthlyInout implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,7 +21,7 @@ class MonthlyGridFetcher implements ShouldQueue
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -32,8 +31,7 @@ class MonthlyGridFetcher implements ShouldQueue
      */
     public function handle()
     {
-
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->montlyInout();
+        $att = new AttendanceService();
+        $att->monthlyInout();
     }
 }

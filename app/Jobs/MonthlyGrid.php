@@ -2,10 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Inout;
-use App\Services\DateTime\DateTimeFormater;
 use App\Services\Statistics\AttendanceService;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class InoutRefresh implements ShouldQueue
+class MonthlyGrid implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -34,8 +31,7 @@ class InoutRefresh implements ShouldQueue
      */
     public function handle()
     {
-        $today =  (Carbon::now())->toDateTimeString();
-        $attendanceServicenew = new AttendanceService();
-        $attendanceServicenew->dailyInout(DateTimeFormater::date( $today ));
+        $att = new AttendanceService();
+        $att->monthlyGrid();
     }
 }

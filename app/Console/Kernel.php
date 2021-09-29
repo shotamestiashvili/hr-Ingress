@@ -2,8 +2,12 @@
 
 namespace App\Console;
 
+use App\Jobs\DailyInout;
+use App\Jobs\DailyStatistic;
 use App\Jobs\InoutRefresh;
 use App\Jobs\MonthlyGridFetcher;
+use App\Jobs\MonthlyInout;
+use App\Jobs\MonthlyStatistic;
 use App\Jobs\StatisticsGenerate;
 use App\Models\Inout;
 use App\Services\TimeCalculator\StatisticGenerator;
@@ -30,11 +34,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new MonthlyGridFetcher)->everySixHours();
-        $schedule->job(new InoutRefresh)->everyTwoHours();
-        $schedule->job(new StatisticsGenerate)->everyThreeHours();
+        $schedule->job(new DailyInout())->everyFourHours();
+        $schedule->job(new DailyStatistic())->everySixHours();
+        $schedule->job(new MonthlyInout())->monthly();
+        $schedule->job(new MonthlyStatistic())->monthly();
 
-//        $schedule->command('queue:work --daemon')->everyThirtyMinutes();
+        $schedule->command('queue:work --daemon')->everyFifteenMinutes();
     }
     /**
      * Register the commands for the application.

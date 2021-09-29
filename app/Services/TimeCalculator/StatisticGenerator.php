@@ -2,39 +2,65 @@
 
 namespace App\Services\TimeCalculator;
 
+use App\Jobs\StatisticCreator;
+use App\Jobs\StatisticUpdater;
+use App\Models\Inout;
 use App\Models\Personnel;
 use App\Models\Statistic;
 use App\Services\DateTime\DateTimeFormater;
+use App\Services\Statistics\ActualDate;
 use Carbon\Carbon;
 
-class StatisticGenerator
+class StatisticGenerator extends ActualDate
 {
-    public function Generate ($date = '2021-09-21')
+    public function generateMonthly() :void
     {
-        //  $carbon = Carbon::now()->toString();
-          $date = DateTimeFormater::date($date);
+        $month = $this->actualMonth;
+        $year = $this->actualYear;
+        Personnel::get('userid')->map(function ($user) use ($month, $year) {
+            return Inout::whereMonth('date', $month)
+                ->whereYear('date', $year)
+                ->where('userid', 352)
+                ->get('date')
+                ->map(function ($date) use ($user) {
 
-       return Personnel::with('inout')->get()->map(function ($user) use ($date) {
-            $time = (new TimeService($user->userid, $date));
-            if(Statistic::where('userid', $user->userid)->where('date', $date)->exists()){
+                    $time = (new TimeService($user->userid, $date->date));
 
-                Statistic::where('userid', $user->userid)->where('date', $date)->update([
+                    if (Statistic::where('userid', $user->userid)
+                        ->where('date', $date->date)
+                        ->exists()) {
+                        StatisticUpdater::dispatch($time->earlyIn, $time->delayIn, $time->lateOut, $time->earlyOut, $user->userid, $date->date)
+                            ->delay(10);
+                    } else
+                        StatisticCreator::dispatch($time->earlyIn, $time->delayIn, $time->lateOut, $time->earlyOut, $user->userid, $date->date)
+                            ->delay(10);
 
-                    'earlyIn' =>  $time->earlyIn,
-                    'delayIn' =>  $time->delayIn,
-                    'lateOut' =>  $time->lateOut,
-                    'earlyOut'=>  $time->earlyOut,
-                ]);
-            }else{
-                Statistic::create([
-                       'userid'  =>  $user->userid,
-                       'date'    =>  $date,
-                       'earlyIn' =>  $time->earlyIn,
-                       'delayIn' =>  $time->delayIn,
-                       'lateOut' =>  $time->lateOut,
-                       'earlyOut'=>  $time->earlyOut,
-            ]);
-            }
+                });
+        });
+    }
+
+    public function generateDaily(): void
+    {
+        $day = $this->actualDay;
+        Personnel::get('userid')->map(function ($user) use ($day) {
+            return Inout::whereDay('date', $day)
+                ->where('userid', 352)
+                ->get('date')
+                ->map(function ($date) use ($user) {
+
+                    $time = (new TimeService($user->userid, $date->date));
+
+                    if (Statistic::where('userid', $user->userid)
+                        ->where('date', $date->date)
+                        ->exists()) {
+                        StatisticUpdater::dispatch($time->earlyIn, $time->delayIn, $time->lateOut, $time->earlyOut, $user->userid, $date->date)
+                            ->delay(10);
+                    } else
+                        StatisticCreator::dispatch($time->earlyIn, $time->delayIn, $time->lateOut, $time->earlyOut, $user->userid, $date->date)
+                            ->delay(10);
+
+                });
         });
     }
 }
+
