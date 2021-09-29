@@ -39,6 +39,8 @@ class TimeConstructor extends TimeExploder
 
         $this->start   = DateTimeFormater::time($inout->schedule()->value('start'));
         $this->end     = DateTimeFormater::time($inout->schedule()->value('end'));
+        $this->in24    = Worktype::where('code', $inout->schedule()->value('selectedWorktype'))
+                                 ->value('in24hours');
 
     }
 
