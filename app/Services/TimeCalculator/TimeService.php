@@ -19,23 +19,23 @@ class TimeService
     {
         if (
             Schedule::where('userid', $userid)->where('date', $date)->exists() &&
-            Inout::where('userid', $userid)->where('date', $date)->value('att_in') !== Null &&
+            Inout::where('userid', $userid)->where('date', $date)->value('att_in')  !== Null &&
             Inout::where('userid', $userid)->where('date', $date)->value('att_out') !== Null
 
         ) {
 
-            $time = new TimeConstructor($userid, $date);
-            $att = new AttExploder($time->att_in, $time->att_out);
-            $worktype = new TimeExploder($time->start, $time->end);
+            $time      = new TimeConstructor($userid, $date);
+            $att       = new AttExploder($time->att_in, $time->att_out);
+            $worktype  = new TimeExploder($time->start, $time->end);
 
 
             $this->conditionValidationIn($time, $att, $worktype);
             $this->conditionValidationOut($time, $att, $worktype);
         } else {
 
-            $this->earlyIn = 0;
-            $this->delayIn = 0;
-            $this->lateOut = 0;
+            $this->earlyIn  = 0;
+            $this->delayIn  = 0;
+            $this->lateOut  = 0;
             $this->earlyOut = 0;
         }
     }
@@ -43,31 +43,15 @@ class TimeService
 
     public function conditionValidationIn($time, $att, $worktype)
     {
-        if ($att->att_inHour > $worktype->startHour && $time->in24 == 1) {
+        if ($att->att_inHour > $worktype->startHour) {
             $this->DelayIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour > $worktype->startHour && $time->in24 == 0) {
+        } elseif ($att->att_inHour < $worktype->startHour) {
             $this->EarlyIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour < $worktype->startHour && $time->in24 == 1) {
-            $this->EarlyIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour < $worktype->startHour && $time->in24 == 0) {
+        } elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin > $worktype->startMin) {
             $this->DelayIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour == $worktype->startHour
-            && $att->att_inMin > $worktype->startMin
-            && $time->in24 == 1) {
-            $this->DelayIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour == $worktype->startHour
-            && $att->att_inMin > $worktype->startMin
-            && $time->in24 == 0) {
+        } elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin < $worktype->startMin) {
             $this->EarlyIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour == $worktype->startHour
-            && $att->att_inMin < $worktype->startMin
-            && $time->in24 == 1) {
-            $this->EarlyIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour == $worktype->startHour
-            && $att->att_inMin < $worktype->startMin
-            && $time->in24 == 0) {
-            $this->DelayIn($time->att_in, $time->start);
-        } elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin == $worktype->startMin) {
+        }elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin == $worktype->startMin) {
             $this->EarlyIn($time->att_in, $time->start);
         }
 
@@ -78,29 +62,29 @@ class TimeService
 
         if ($att->att_outHour > $worktype->endHour && $time->in24 == 1) {
             $this->LateOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour > $worktype->endHour && $time->in24 == 0) {
+        }elseif ($att->att_outHour > $worktype->endHour && $time->in24 == 0) {
             $this->EarlyOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour < $worktype->endHour && $time->in24 == 1) {
+        }elseif ($att->att_outHour < $worktype->endHour  && $time->in24 == 1) {
             $this->EarlyOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour < $worktype->endHour && $time->in24 == 0) {
+        }elseif ($att->att_outHour < $worktype->endHour  && $time->in24 == 0) {
             $this->LateOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour == $worktype->endHour
+        }elseif ($att->att_outHour == $worktype->endHour
             && $att->att_outMin > $worktype->endMin
             && $time->in24 == 1) {
             $this->LateOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour == $worktype->endHour
+        }elseif ($att->att_outHour == $worktype->endHour
             && $att->att_outMin > $worktype->endMin
             && $time->in24 == 0) {
             $this->EarlyOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour == $worktype->endHour
-            && $att->att_outMin < $worktype->endMin
+        }elseif ($att->att_outHour == $worktype->endHour
+            && $att->att_outMin  < $worktype->endMin
             && $time->in24 == 1) {
             $this->EarlyOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour == $worktype->endHour
-            && $att->att_outMin < $worktype->endMin
+        }elseif ($att->att_outHour == $worktype->endHour
+            && $att->att_outMin  < $worktype->endMin
             && $time->in24 == 0) {
             $this->LateOut($time->att_out, $time->end);
-        } elseif ($att->att_outHour == $worktype->endHour && $att->att_outMin == $worktype->endMin) {
+        }elseif($att->att_outHour == $worktype->endHour && $att->att_outMin  == $worktype->endMin){
             $this->LateOut($time->att_out, $time->end);
         }
     }
@@ -110,8 +94,8 @@ class TimeService
     {
         $this->delayIn =
             DateTimeFormater::timeFormat($inHour)
-                ->diff(DateTimeFormater::timeFormat($startHour))
-                ->format('%H:%i');
+            ->diff(DateTimeFormater::timeFormat($startHour))
+            ->format('%H:%i');
 
         $this->earlyIn = 0;
     }
@@ -121,8 +105,8 @@ class TimeService
     {
         $this->earlyIn =
             DateTimeFormater::timeFormat($startHour)
-                ->diff(DateTimeFormater::timeFormat($inHour))
-                ->format('%H:%i');
+            ->diff(DateTimeFormater::timeFormat($inHour))
+            ->format('%H:%i');
 
         $this->delayIn = 0;
     }
@@ -131,8 +115,8 @@ class TimeService
     {
         $this->lateOut =
             DateTimeFormater::timeFormat($endHour)
-                ->diff(DateTimeFormater::timeFormat($outHour))
-                ->format('%H:%i');
+            ->diff(DateTimeFormater::timeFormat($outHour))
+            ->format('%H:%i');
 
         $this->earlyOut = 0;
     }
@@ -142,8 +126,8 @@ class TimeService
     {
         $this->earlyOut =
             DateTimeFormater::timeFormat($outHour)
-                ->diff(DateTimeFormater::timeFormat($endHour))
-                ->format('%H:%i');
+            ->diff(DateTimeFormater::timeFormat($endHour))
+            ->format('%H:%i');
 
         $this->lateOut = 0;
     }
