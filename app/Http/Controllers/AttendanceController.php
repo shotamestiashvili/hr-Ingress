@@ -4,18 +4,39 @@ namespace App\Http\Controllers;
 
 
 use App\Jobs\ScheduleDateColumnFormater;
+use App\Models\ActiveSchedule;
+use App\Models\Personnel;
 use App\Models\Worktype;
 use App\Services\DateTime\DateTimeFormater;
 use App\Services\DateTime\WorkTypeFormater;
 use App\Services\Statistics\AttendanceService;
+use App\Services\TimeCalculator\ActiveScheduleUpdater;
+use App\Services\TimeCalculator\AttendanceFilter;
 use App\Services\TimeCalculator\StatisticGenerator;
 use App\Services\TimeCalculator\TimeConstructor;
-use App\Services\TimeCalculator\TimeService;
 use Carbon\Carbon;
 
 
 class AttendanceController extends Controller
 {
+
+    public function human()
+    {
+        $human = new AttendanceFilter();
+        $human->humanAttendanceRunner();
+    }
+
+    public function test()
+    {
+        $startTime  = '05:00';
+        $finishTime = '01:00';
+
+       return Carbon::parse($startTime)->diff($finishTime)->format('%H:%I');
+//        return $finishTime->diff($startTime)->format('%H:%I');
+//        return Carbon::createFromDate('07:00')->addHour('05:00')->toTimeString();
+    }
+
+
     public function timeService()
     {
         $time = new TimeConstructor(352, date('2021-09-09'));
@@ -67,8 +88,6 @@ class AttendanceController extends Controller
         $statistic = new  StatisticGenerator();
         $statistic->generateMonthly();
     }
-
-
 
 
 }

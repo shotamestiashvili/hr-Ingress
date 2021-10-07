@@ -6,6 +6,21 @@
                     <div class="card-header">
                         <div class="card-body">
                             <br/>
+                            <div>
+                                <select
+                                    class="form-select"
+                                    v-model="row"
+                                    aria-label=".form-select-sm example"
+                                >
+                                    <option selected>Select Row N</option>
+                                    <option value="20">20</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                    <option value="60">60</option>
+                                    <option value="65">65</option>
+                                </select>
+                            </div>
+                            <hr>
                             <b-button
                                 v-b-modal.importModal
                                 variant="warning"
@@ -140,8 +155,8 @@ export default {
 
     data() {
         return {
-            scheduledData: [],
-            apiData: "",
+            scheduledData: {},
+            apiData: {},
             search: "",
             monthDays: [],
             schedule: {
@@ -151,6 +166,7 @@ export default {
             selectedYear: "2021",
             selectedMonth: "",
             updateKey: 0,
+            row: 31,
         };
     },
 
@@ -164,9 +180,14 @@ export default {
         selectedMonth() {
             this.getDayNames();
             this.showSchedule();
+            this.runAxiosGet();
         },
 
         search(after, before) {
+            this.runAxiosGet();
+        },
+
+        row(after, before) {
             this.runAxiosGet();
         },
 
@@ -242,11 +263,15 @@ export default {
                     params: {
                         page,
                         search: this.search,
+                        row:    this.row,
+                        year:   this.selectedYear,
+                        month:  this.selectedMonth,
                     },
                 })
                 .then((res) => {
                     console.log(res.data);
                     this.apiData = res.data;
+
                 })
                 .catch((error) => {
                     console.log(error);

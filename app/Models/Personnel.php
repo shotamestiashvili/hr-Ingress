@@ -51,4 +51,9 @@ class Personnel extends Model
         return $this->hasMany(Schedule::class, 'userid', 'userid');
     }
 
+    public function msos()
+    {
+        return $this->hasMany(Mso::class, 'userid', 'userid');
+    }
+
 }

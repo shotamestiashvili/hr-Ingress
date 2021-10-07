@@ -15,14 +15,19 @@ class InoutController extends Controller
 {
     public function index()
     {
-        $inout = Inout::when(request('search') != '', function ($query) {
+        if(request('row') == ''){
+            $row = 31;
+        }else{
+            $row = request('row');
+        }
+        $inout = Inout::when(request('search') != '', function ($query) use ($row) {
             return  $query->where('userid', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('date', 'LIKE', '%' . request('search') . '%')
                 ->orderBy('updated_at', "desc")
-                ->paginate(31);
+                ->paginate($row);
         })
-            ->when(request('search') == '', function ($query) {
-                return $query->orderBy('updated_at', "desc")->paginate(31);
+            ->when(request('search') == '', function ($query) use ($row) {
+                return $query->orderBy('updated_at', "desc")->paginate($row);
             });
 
         return  InoutResource::collection($inout);

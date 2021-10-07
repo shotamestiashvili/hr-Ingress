@@ -27,11 +27,6 @@ class TimeConstructor extends TimeExploder
 
     public function timeFetcher($userid, $date)
     {
-        $inout = Inout::with(['schedule', 'personnel', 'statistic'])
-                     ->where('date', $date)
-                     ->where('userid', $userid)
-                     ->first();
-
 
 
         $this->att_in  = DateTimeFormater::time(($inout->att_in));
@@ -41,7 +36,6 @@ class TimeConstructor extends TimeExploder
         $this->end     = DateTimeFormater::time($inout->schedule()->value('end'));
         $this->in24    = Worktype::where('code', $inout->schedule()->value('selectedWorktype'))
                                  ->value('in24hours');
-
     }
 
 }

@@ -28,12 +28,12 @@ class StatisticUpdater implements ShouldQueue
      */
     public function __construct($earlyIn, $delayIn, $lateOut, $earlyOut, $userid, $date)
     {
-        $this->earlyIn = $earlyIn;
-        $this->delayIn = $delayIn;
-        $this->lateOut = $lateOut;
+        $this->earlyIn  = $earlyIn;
+        $this->delayIn  = $delayIn;
+        $this->lateOut  = $lateOut;
         $this->earlyOut = $earlyOut;
-        $this->userid = $userid;
-        $this->date = $date;
+        $this->userid   = $userid;
+        $this->date     = $date;
     }
 
     /**
@@ -46,7 +46,6 @@ class StatisticUpdater implements ShouldQueue
         Statistic::where('userid', $this->userid)
                  ->where('date', $this->date)
                  ->update([
-
             'earlyIn'  => $this->earlyIn,
             'delayIn'  => $this->delayIn,
             'lateOut'  => $this->lateOut,

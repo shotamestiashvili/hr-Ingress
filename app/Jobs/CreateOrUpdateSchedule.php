@@ -23,6 +23,7 @@ class CreateOrUpdateSchedule implements ShouldQueue
     private $month;
 
     public $tries = 3;
+    public $timeout = 360;
 
     /**
      * Create a new job instance.
@@ -49,10 +50,10 @@ class CreateOrUpdateSchedule implements ShouldQueue
 
             for ($s = 3; $s < $countOfDays; $s++) {
 
-                ScheduleCreatorUpdater::dispatch($array, $i, $s, $year, $month)->delay(now()->addMinute(3));
+                ScheduleCreatorUpdater::dispatch($array, $i, $s, $year, $month)->delay(now()->addMinute(5));
             }
         }
-        Artisan::command('queue:work --daemon --tries=5 --timeout=10', 'OK');
+
     }
 
 }

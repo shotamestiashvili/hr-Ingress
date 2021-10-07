@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\ActiveScheduleEngine;
 use App\Jobs\DailyInout;
 use App\Jobs\DailyStatistic;
 use App\Jobs\InoutRefresh;
@@ -34,12 +35,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new DailyInout())->everyFourHours();
-        $schedule->job(new DailyStatistic())->everySixHours();
-        $schedule->job(new MonthlyInout())->monthly();
-        $schedule->job(new MonthlyStatistic())->everyTenMinutes();
-
-        $schedule->command('queue:work --daemon')->everyFifteenMinutes();
+//        $schedule->job(new DailyInout())->everyFourHours();
+//        $schedule->job(new ActiveScheduleEngine())->hourly();
+//        $schedule->job(new DailyStatistic())->everySixHours();
+//        $schedule->job(new MonthlyInout())->monthly();
+//        $schedule->job(new MonthlyStatistic())->everyTenMinutes();
+//
+//        $schedule->command('queue:work --daemon')->everyFifteenMinutes();
     }
     /**
      * Register the commands for the application.

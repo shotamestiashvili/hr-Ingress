@@ -34,15 +34,17 @@ Route::get('/test', function () {
 Route::post('/upload-file', [\App\Http\Controllers\Api\ImportController::class, 'importSchedule'])->name('fileUpload');
 
 
+Route::get('/test',    [AttendanceController::class, 'test']);
 Route::get('/time',    [AttendanceController::class, 'timeService']);
 Route::get('/job',         [AttendanceController::class, 'test']);
 Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);
 Route::get('/export',      [ExportController::class, 'exportSchedule']);
+
 
 Route::get('/dailyinout',       [AttendanceController::class, 'dailyinout']);
 Route::get('/monthlyinout',     [AttendanceController::class, 'monthlyinout']);
 Route::get('/dailystatistic',   [AttendanceController::class, 'dailyGenerate']);
 Route::get('/monthlystatistic', [AttendanceController::class, 'monthlyGenerate']);
 Route::get('/monthlygrid',      [AttendanceController::class, 'monthlygrid']);
-
+Route::get('/human',            [AttendanceController::class, 'human']);
 

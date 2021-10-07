@@ -43,6 +43,21 @@
                         <br>
                         <hr>
                         <br>
+                        <div>
+                            <select
+                                class="form-select"
+                                v-model="row"
+                                aria-label=".form-select-sm example"
+                            >
+                                <option selected>Select Row N</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <hr>
 
                         <table class="table table-sm table-hover">
                             <thead>
@@ -111,6 +126,7 @@
                             <span slot="next-nav">Next &gt;</span>
                         </pagination>
 
+
                         <!-- <pagination
                           :data="filteredAbsence"
                           @pagination-change-page="runAxiosGet"
@@ -159,9 +175,10 @@ export default {
         return {
             showing: "",
             editing: null,
-            apiData: [],
+            apiData: {},
             filterText: null,
             search: "",
+            row: 31,
         };
     },
 
@@ -169,6 +186,9 @@ export default {
 
     watch: {
         search(after, before) {
+            this.runAxiosGet();
+        },
+        row(after, before) {
             this.runAxiosGet();
         },
     },
@@ -196,6 +216,7 @@ export default {
                     params: {
                         page,
                         search: this.search,
+                        row:    this.row
                     },
                 })
                 .then((res) => {

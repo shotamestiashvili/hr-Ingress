@@ -15,19 +15,28 @@ use App\Services\Creator;
 
 class PersonnelController extends Controller
 {
-    public function index(): Object
+    public function index(): object
     {
-        $personnel = Personnel::with('schedule')->when(request('search') != '', function ($query) {
+        if(request('row') == ''){
+            $row = 31;
+        }else{
+            $row = request('row');
+        }
+
+        $year   = request('year');
+        $month  = request('month');
+
+        $personnel = Personnel::with(['schedule' => function ($q) use ($year, $month, $row) {
+            $q->whereYear('date', $year)->whereMonth('date', $month)->get();
+        }])->when(request('search') != '', function ($query) use ($row) {
             return $query->where('first_name', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('last_name', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('department', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('userid', 'LIKE', '%' . request('search') . '%')
-
-                ->paginate(31);
-        })
-            ->when(request('search') == '', function ($query) {
-                return $query->paginate(31);
-            });
+                ->paginate($row);
+        })->when(request('search') == '', function ($query) use ($row) {
+            return $query->paginate($row);
+        });
 
 
         return PersonnelResource::collection($personnel);

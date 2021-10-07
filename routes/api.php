@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\ImportController;
 use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\Api\MsoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,8 @@ Route::GET('/inout/generate',                 [InoutController::class, 'generate
 Route::GET('/inout/montlyInout',              [InoutController::class, 'montlyInout']);
 Route::GET('/inout/newUserInout',             [InoutController::class, 'newUserInout']);
 
+Route::GET('/mso/personnel/index',               [MsoController::class, 'index']);
+Route::POST('/mso/personnel/store',              [MsoController::class, 'store']);
 
 
 Route::resource('personnel/personnellist',   PersonnelController::class)

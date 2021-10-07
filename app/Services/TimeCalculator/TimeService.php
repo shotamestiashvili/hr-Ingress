@@ -2,8 +2,7 @@
 
 namespace App\Services\TimeCalculator;
 
-use App\Models\Inout;
-use App\Models\Schedule;
+
 use App\Services\DateTime\DateTimeFormater;
 
 
@@ -15,22 +14,20 @@ class TimeService
     public $earlyOut;
 
 
-    public function __construct($userid, $date)
+    public function __construct($active_schedule, $in24)
     {
+
+//        dd($active_schedule->intime, $in24);
         if (
-            Schedule::where('userid', $userid)->where('date', $date)->exists() &&
-            Inout::where('userid', $userid)->where('date', $date)->value('att_in')  !== Null &&
-            Inout::where('userid', $userid)->where('date', $date)->value('att_out') !== Null
+            $active_schedule->inttime  !== null &&
+            $active_schedule->outtime  !== null        ) {
 
-        ) {
+            $att       = new AttExploder($active_schedule->intime, $active_schedule->outtime);
+            $worktype  = new TimeExploder($active_schedule->starttime, $active_schedule->endtime);
 
-            $time      = new TimeConstructor($userid, $date);
-            $att       = new AttExploder($time->att_in, $time->att_out);
-            $worktype  = new TimeExploder($time->start, $time->end);
+            $this->conditionValidationIn($active_schedule, $att, $worktype, $in24);
+            $this->conditionValidationOut( $active_schedule, $att, $worktype, $in24);
 
-
-            $this->conditionValidationIn($time, $att, $worktype);
-            $this->conditionValidationOut($time, $att, $worktype);
         } else {
 
             $this->earlyIn  = 0;
@@ -41,51 +38,50 @@ class TimeService
     }
 
 
-    public function conditionValidationIn($time, $att, $worktype)
+    public function conditionValidationIn($active_schedule, $att, $worktype)
     {
         if ($att->att_inHour > $worktype->startHour) {
-            $this->DelayIn($time->att_in, $time->start);
+            $this->DelayIn($active_schedule->intime,$active_schedule->starttime);
         } elseif ($att->att_inHour < $worktype->startHour) {
-            $this->EarlyIn($time->att_in, $time->start);
+            $this->EarlyIn($active_schedule->intime, $active_schedule->starttime);
         } elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin > $worktype->startMin) {
-            $this->DelayIn($time->att_in, $time->start);
+            $this->DelayIn($active_schedule->intime, $active_schedule->starttime);
         } elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin < $worktype->startMin) {
-            $this->EarlyIn($time->att_in, $time->start);
+            $this->EarlyIn($active_schedule->intime, $active_schedule->starttime);
         }elseif ($att->att_inHour == $worktype->startHour && $att->att_inMin == $worktype->startMin) {
-            $this->EarlyIn($time->att_in, $time->start);
+            $this->EarlyIn($active_schedule->intime, $active_schedule->starttime);
         }
-
     }
 
-    public function conditionValidationOut($time, $att, $worktype)
+    public function conditionValidationOut($active_schedule, $att, $worktype, $in24)
     {
 
-        if ($att->att_outHour > $worktype->endHour && $time->in24 == 1) {
-            $this->LateOut($time->att_out, $time->end);
-        }elseif ($att->att_outHour > $worktype->endHour && $time->in24 == 0) {
-            $this->EarlyOut($time->att_out, $time->end);
-        }elseif ($att->att_outHour < $worktype->endHour  && $time->in24 == 1) {
-            $this->EarlyOut($time->att_out, $time->end);
-        }elseif ($att->att_outHour < $worktype->endHour  && $time->in24 == 0) {
-            $this->LateOut($time->att_out, $time->end);
+        if ($att->att_outHour > $worktype->endHour && $in24 == 1) {
+            $this->LateOut($active_schedule->outtime, $active_schedule->endtime);
+        }elseif ($att->att_outHour > $worktype->endHour && $in24 == 0) {
+            $this->EarlyOut($active_schedule->outtime, $active_schedule->endtime);
+        }elseif ($att->att_outHour < $worktype->endHour  && $in24 == 1) {
+            $this->EarlyOut($active_schedule->outtime, $active_schedule->endtime);
+        }elseif ($att->att_outHour < $worktype->endHour  && $in24 == 0) {
+            $this->LateOut($active_schedule->outtime, $active_schedule->endtime);
         }elseif ($att->att_outHour == $worktype->endHour
             && $att->att_outMin > $worktype->endMin
-            && $time->in24 == 1) {
-            $this->LateOut($time->att_out, $time->end);
+            && $in24 == 1) {
+            $this->LateOut($active_schedule->outtime, $active_schedule->endtime);
         }elseif ($att->att_outHour == $worktype->endHour
             && $att->att_outMin > $worktype->endMin
-            && $time->in24 == 0) {
-            $this->EarlyOut($time->att_out, $time->end);
+            && $in24 == 0) {
+            $this->EarlyOut($active_schedule->outtime, $active_schedule->endtime);
         }elseif ($att->att_outHour == $worktype->endHour
             && $att->att_outMin  < $worktype->endMin
-            && $time->in24 == 1) {
-            $this->EarlyOut($time->att_out, $time->end);
+            && $in24 == 1) {
+            $this->EarlyOut($active_schedule->outtime, $active_schedule->endtime);
         }elseif ($att->att_outHour == $worktype->endHour
             && $att->att_outMin  < $worktype->endMin
-            && $time->in24 == 0) {
-            $this->LateOut($time->att_out, $time->end);
+            && $in24 == 0) {
+            $this->LateOut($active_schedule->outtime,  $active_schedule->endtime);
         }elseif($att->att_outHour == $worktype->endHour && $att->att_outMin  == $worktype->endMin){
-            $this->LateOut($time->att_out, $time->end);
+            $this->LateOut($active_schedule->outtime, $active_schedule->endtime);
         }
     }
 

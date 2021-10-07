@@ -10,8 +10,9 @@ window.Vue = require('vue').default;
 
 import Vue from 'vue';
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 Vue.component('pagination', require('laravel-vue-pagination'));
+import VueSweetalert2 from "vue-sweetalert2";
 
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -27,7 +28,7 @@ Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue)
     // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-
+Vue.use(VueSweetalert2)
 
 
 import VCalendar from 'v-calendar';

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\ActiveSchedule;
 use App\Models\Schedule;
 use App\Models\Worktype;
 use Illuminate\Bus\Queueable;
@@ -23,6 +24,7 @@ class ScheduleCreatorUpdater implements ShouldQueue
     private $year;
     private $month;
     private $day;
+    private $nextday;
 
     /**
      * Create a new job instance.
@@ -37,7 +39,7 @@ class ScheduleCreatorUpdater implements ShouldQueue
         $this->year = $year;
         $this->month = $month;
         $this->day = $this->s - 2;
-
+        $this->nextday = $this->day + 1;
 
 
     }
@@ -49,16 +51,54 @@ class ScheduleCreatorUpdater implements ShouldQueue
      */
     public function handle()
     {
-        Schedule::updateOrCreate(
-                ['userid'       => $this->array[0][$this->i][0],
-                'selectedDay'   => ($this->day),
-                'selectedMonth' => $this->month,
-                'selectedYear'  => $this->year,],
 
-               ['selectedWorktype' => $this->array[0][$this->i][$this->s],
-                'date'  => $this->year . '-' . $this->month . '-' .$this->day,
-                'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
-                'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
-        );
+
+        if (Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == 1) {
+            Schedule::updateOrCreate(
+                [   'userid'        => $this->array[0][$this->i][0],
+                    'selectedDay'   => ($this->day),
+                    'selectedMonth' => $this->month,
+                    'selectedYear'  => $this->year,],
+
+                [   'selectedWorktype' => $this->array[0][$this->i][$this->s],
+                    'date'  => $this->year . '-' . $this->month . '-' . $this->day,
+                    'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
+                    'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
+            );
+
+            ActiveSchedule::create(
+                [   'userid'    => $this->array[0][$this->i][0],
+                    'worktype'  => $this->array[0][$this->i][$this->s],
+                    'starttime' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
+                    'startdate' => date($this->year . '-' . $this->month . '-' . $this->day),
+                    'endtime'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),
+                    'enddate'   => date($this->year . '-' . $this->month . '-' . $this->day),
+                ]
+            );
+        } elseif(Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == 0) {
+            Schedule::updateOrCreate(
+                [   'userid'        => $this->array[0][$this->i][0],
+                    'selectedDay'   => ($this->day),
+                    'selectedMonth' => $this->month,
+                    'selectedYear'  => $this->year,],
+
+                [   'selectedWorktype' => $this->array[0][$this->i][$this->s],
+                    'date'  => $this->year . '-' . $this->month . '-' . $this->day,
+                    'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
+                    'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
+            );
+
+            ActiveSchedule::create(
+                [   'userid'    => $this->array[0][$this->i][0],
+                    'worktype'  => $this->array[0][$this->i][$this->s],
+                    'starttime' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
+                    'startdate' => date($this->year . '-' . $this->month . '-' . $this->day),
+                    'endtime'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),
+                    'enddate'   => date($this->year . '-' . $this->month . '-' . $this->nextday),
+                ]
+            );
+
+        }
+
     }
 }
