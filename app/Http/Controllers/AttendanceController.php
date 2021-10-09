@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Imports\ImportSchedule;
+use App\Jobs\CreateOrUpdateSchedule;
 use App\Jobs\ScheduleDateColumnFormater;
 use App\Models\ActiveSchedule;
 use App\Models\Personnel;
@@ -15,6 +17,8 @@ use App\Services\TimeCalculator\AttendanceFilter;
 use App\Services\TimeCalculator\StatisticGenerator;
 use App\Services\TimeCalculator\TimeConstructor;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class AttendanceController extends Controller
@@ -22,9 +26,24 @@ class AttendanceController extends Controller
 
     public function human()
     {
-        $human = new AttendanceFilter();
-        $human->humanAttendanceRunner();
+//        $human = new AttendanceFilter();
+//        $human->humanAttendanceRunner();
+       return  Carbon::create('2012', '05')->daysInMonth;
+
     }
+
+    public function import(Request $request)
+    {
+
+//        Excel::import(new ImportSchedule(), $request->import_file);
+//        return response()->json(['message' => 'uploaded successfully'], 200);
+
+        $collection = Excel::toCollection(new ImportSchedule, $request->import_file);
+
+        dd($collection);
+        new CreateOrUpdateSchedule($collection, $request->selectedYear, $request->selectedMonth);
+    }
+
 
     public function test()
     {

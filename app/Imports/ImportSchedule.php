@@ -4,11 +4,12 @@ namespace App\Imports;
 
 use App\Models\Schedule;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Row;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class ImportSchedule implements  ToModel
+class ImportSchedule implements  ToModel, WithChunkReading
 {
     use Importable;
 
@@ -21,6 +22,11 @@ class ImportSchedule implements  ToModel
             'row4' => $row[4],
             'row5' => $row[5],
         ]);
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 
 

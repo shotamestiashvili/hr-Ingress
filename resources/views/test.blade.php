@@ -22,7 +22,7 @@
 <body>
 
 <div class="container mt-5">
-    <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('import')}}" method="POST" enctype="multipart/form-data">
         <h3 class="text-center mb-5">Upload File in Laravel</h3>
         @csrf
         @if ($message = Session::get('success'))
@@ -42,7 +42,7 @@
         @endif
 
         <div class="custom-file">
-            <input type="file" name="file" class="custom-file-input" id="chooseFile">
+            <input type="file" name="import_file" class="custom-file-input" id="chooseFile">
             <label class="custom-file-label" for="chooseFile">Select file</label>
         </div>
 

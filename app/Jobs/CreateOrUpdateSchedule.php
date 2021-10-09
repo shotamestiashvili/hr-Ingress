@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Schedule;
 use App\Models\Worktype;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -40,20 +41,17 @@ class CreateOrUpdateSchedule implements ShouldQueue
      *
      * @return void
      */
-    public function handle($array, $year, $month)
+    public function handle($collection, $year, $month)
     {
-        $countOfUsers = $array[0]->count(); // cell of the userid's name
-        $countOfDays  = $array[0][0]->count(); //cells of the users, dep and positions
-
+        $countOfUsers = $collection[0]->count(); // cell of the userid's name
+//        $countOfDays  = $array[0][0]->count(); //cells of the users, dep and positions
+        $daysInMonth  = Carbon::create($year, $month)->daysInMonth + 3;
 
         for ($i = 1; $i < $countOfUsers; $i++) {
-
-            for ($s = 3; $s < $countOfDays; $s++) {
-
-                ScheduleCreatorUpdater::dispatch($array, $i, $s, $year, $month)->delay(now()->addMinute(5));
+            for ($s = 3; $s < $daysInMonth; $s++) {
+                ScheduleCreatorUpdater::dispatch($collection, $i, $s, $year, $month)
+                    ->delay(now()->addMinute(1));
             }
         }
-
     }
-
 }

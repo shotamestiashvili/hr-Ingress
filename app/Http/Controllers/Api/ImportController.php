@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\ImportSchedule;
 use App\Jobs\CreateOrUpdateSchedule;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportPersonnel;
 use App\Imports\ImportPosition;
@@ -36,15 +37,14 @@ class ImportController extends Controller
         return response()->json(['message' => 'uploaded successfully'], 200);
     }
 
-    public function importSchedule(Request $request)
+    public function importSchedule(Request $request) :void
     {
-
         $array = Excel::toCollection(new ImportSchedule, $request->import_file);
 
         new CreateOrUpdateSchedule($array, $request->selectedYear, $request->selectedMonth);
 
-        return response()->json(['data' => 'Data is uploading, please wait'], 200);
-
     }
+
+
 
 }

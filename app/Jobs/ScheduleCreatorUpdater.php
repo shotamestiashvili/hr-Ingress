@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\ActiveSchedule;
 use App\Models\Schedule;
 use App\Models\Worktype;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,10 +39,15 @@ class ScheduleCreatorUpdater implements ShouldQueue
         $this->s = $s;
         $this->year = $year;
         $this->month = $month;
-        $this->day = $this->s - 2;
-        $this->nextday = $this->day + 1;
 
+        if ($s === 3){
+            $this->day = 1;
+        }else{
+            $this->day = ($s - 2);
+        }
 
+//        $date =  Carbon::create($this->year, $this->month, $this->day, 0));
+//        $this->nextday = $date->addDay(1)->toDateString();
     }
 
     /**
@@ -51,7 +57,16 @@ class ScheduleCreatorUpdater implements ShouldQueue
      */
     public function handle()
     {
-
+        if($this->array[0][$this->i][$this->s] !== null){
+            $start = Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start');
+        }else {
+            $start = 0;
+        }
+        if(Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end') !== null){
+            $end = Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end');
+        }else {
+            $end = 0;
+        }
 
         if (Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == 1) {
             Schedule::updateOrCreate(
@@ -59,46 +74,39 @@ class ScheduleCreatorUpdater implements ShouldQueue
                     'selectedDay'   => ($this->day),
                     'selectedMonth' => $this->month,
                     'selectedYear'  => $this->year,],
-
                 [   'selectedWorktype' => $this->array[0][$this->i][$this->s],
-                    'date'  => $this->year . '-' . $this->month . '-' . $this->day,
-                    'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
-                    'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
-            );
-
+                    'date'  => date($this->year . '-' . $this->month . '-' . $this->day),
+                    'start' => $start,
+                    'end'   => $end,]);
             ActiveSchedule::create(
                 [   'userid'    => $this->array[0][$this->i][0],
                     'worktype'  => $this->array[0][$this->i][$this->s],
-                    'starttime' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
-                    'startdate' => date($this->year . '-' . $this->month . '-' . $this->day),
-                    'endtime'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),
-                    'enddate'   => date($this->year . '-' . $this->month . '-' . $this->day),
-                ]
-            );
+                    'starttime' => $start,
+                    'startdate' => ($this->year . '-' . $this->month . '-' . $this->day),
+                    'endtime'   => $end,
+                    'enddate'   => ($this->year . '-' . $this->month . '-' . $this->day),]);
+
         } elseif(Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == 0) {
+
             Schedule::updateOrCreate(
                 [   'userid'        => $this->array[0][$this->i][0],
                     'selectedDay'   => ($this->day),
                     'selectedMonth' => $this->month,
                     'selectedYear'  => $this->year,],
-
                 [   'selectedWorktype' => $this->array[0][$this->i][$this->s],
-                    'date'  => $this->year . '-' . $this->month . '-' . $this->day,
-                    'start' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
-                    'end'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),]
-            );
+                    'date'  => ($this->year . '-' . $this->month . '-' . $this->day),
+                    'start' => $start,
+                    'end'   => $end,]);
 
             ActiveSchedule::create(
                 [   'userid'    => $this->array[0][$this->i][0],
                     'worktype'  => $this->array[0][$this->i][$this->s],
-                    'starttime' => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('start'),
-                    'startdate' => date($this->year . '-' . $this->month . '-' . $this->day),
-                    'endtime'   => Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end'),
-                    'enddate'   => date($this->year . '-' . $this->month . '-' . $this->nextday),
+                    'starttime' => $start,
+                    'startdate' => ($this->year . '-' . $this->month . '-' . $this->day),
+                    'endtime'   => $end,
+                    'enddate'   => Carbon::create($this->year, $this->month, $this->day, 0)->addDay(1)->toDateString(),
                 ]
             );
-
         }
-
     }
 }

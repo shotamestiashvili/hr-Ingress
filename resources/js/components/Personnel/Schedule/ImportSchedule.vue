@@ -91,7 +91,7 @@ export default {
                     // code here when an upload is not valid
                     this.uploading = false;
                     this.error = error.response.data;
-                    console.log("check error: ", this.error);
+                    console.log(error.response.data);
                 });
         },
     },
