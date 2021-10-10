@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PersonnelResource;
 use App\Http\Resources\ScheduleResource;
+use App\Models\Personnel;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Services\Updater;
@@ -26,17 +28,17 @@ class ScheduleController extends Controller
             ->where('selectedDay', request('selectedDay'))
             ->where('selectedMonth', request('selectedMonth'))
             ->where('selectedYear', request('selectedYear'))
-
                 ->get();
+
 
         })->when(request('userid') == '', function ($query) {
            return $query->where('selectedMonth', request('selectedMonth'))
             ->where('selectedYear', request('selectedYear'))
-
                ->get();
         });
         return ScheduleResource::collection($schedule);
     }
+
 
 
     /**

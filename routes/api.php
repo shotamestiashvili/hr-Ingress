@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\MsoController;
+use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,7 @@ Route::POST('/import/schedule',    [ImportController::class, 'importSchedule']);
 Route::GET('/export/personnel',    [ExportController::class, 'exportPersonnel']);
 Route::GET('/export/worktype',     [ExportController::class, 'exportWorktype']);
 Route::GET('/export/position',     [ExportController::class, 'exportPosition']);
+Route::GET('/export/schedule',     [ExportController::class, 'exportSchedule']);
 //Import /Export files end here //
 
 
@@ -58,6 +60,7 @@ Route::GET('/inout/newUserInout',             [InoutController::class, 'newUserI
 Route::GET('/mso/personnel/index',               [MsoController::class, 'index']);
 Route::POST('/mso/personnel/store',              [MsoController::class, 'store']);
 
+Route::GET('/schedule/search',  [SearchController::class, 'search']);
 
 Route::resource('personnel/personnellist',   PersonnelController::class)
     ->only(['index', 'store', 'destroy',]);

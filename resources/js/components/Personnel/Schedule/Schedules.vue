@@ -7,28 +7,43 @@
                         <div class="card-body">
                             <br/>
                             <div>
-                                <select
-                                    class="form-select"
-                                    v-model="row"
-                                    aria-label=".form-select-sm example"
-                                >
-                                    <option selected>Select Row N</option>
-                                    <option value="20">20</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                    <option value="60">60</option>
-                                    <option value="65">65</option>
-                                </select>
+
                             </div>
-                            <hr>
+
+                            <select
+                                class="form-select"
+                                v-model="row"
+                                aria-label=".form-select-sm example"
+                            >Select Row Number
+                                <option selected>Select Row N</option>
+                                <option value="40">40</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="85">85</option>
+                                <option value="100">100</option>
+                            </select>
+                            &nbsp;
                             <b-button
                                 v-b-modal.importModal
                                 variant="warning"
                                 ref="btnShow"
                                 size="sm"
-                            >Import Schedule
+                            >Import
                             </b-button
                             >
+
+                            <input
+                                type="text"
+                                placeholder="Department"
+                                v-model="searchDepartments"
+                            />
+
+                            <b-button
+                                @click="exportSchedule"
+                                variant="success"
+                                size="sm">
+                                Export
+                            </b-button>
 
                             <input
                                 type="text"
@@ -70,6 +85,7 @@
                                 <thead>
                                 <tr>
                                     <th width="17%">UserName</th>
+                                    <th width="15%">Departments</th>
                                     <th
                                         width="4%"
                                         v-for="(days, index) in monthDays"
@@ -91,6 +107,7 @@
                                 <tbody v-for="(data, index) in apiData.data" :key="index">
                                 <tr>
                                     <td>{{ data.first_name.concat(" ", data.last_name) }}</td>
+                                    <td>{{ data.department }}</td>
                                     <td
                                         v-for="(days, i) in monthDays"
                                         :key="i"
@@ -158,6 +175,7 @@ export default {
             scheduledData: {},
             apiData: {},
             search: "",
+            searchDepartments: "",
             monthDays: [],
             schedule: {
                 index: "",
@@ -186,6 +204,9 @@ export default {
         search(after, before) {
             this.runAxiosGet();
         },
+        searchDepartments(after, before) {
+            this.showDepartmentsSchedule()
+        },
 
         row(after, before) {
             this.runAxiosGet();
@@ -208,6 +229,13 @@ export default {
     },
 
     methods: {
+
+        exportSchedule() {
+
+            window.open('/api/export/schedule/?selectedYear='+this.selectedYear+'&selectedMonth='+this.selectedMonth+'&selectedDep='+this.searchDepartments);
+
+        },
+
         update() {
             this.$forceUpdate();
         },
@@ -280,6 +308,29 @@ export default {
                 });
         },
 
+        showDepartmentsSchedule(page = 1) {
+            axios
+                .get("api/schedule/search", {
+                    params: {
+                        page,
+                        searchDepartments: this.searchDepartments,
+                        row:    this.row,
+                        year:   this.selectedYear,
+                        month:  this.selectedMonth,
+                    },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    this.apiData = res.data;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                });
+        },
+
         showSchedule() {
             axios
                 .get("api/personnel/schedules", {
@@ -298,6 +349,7 @@ export default {
                 .finally(() => {
                 });
         },
+
     },
 };
 </script>

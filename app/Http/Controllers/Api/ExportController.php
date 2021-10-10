@@ -28,11 +28,15 @@ class ExportController extends Controller
         return Excel::download(new ExportPosition, 'position_list.xlsx');
     }
 
-    public function exportSchedule()
+    public function exportSchedule(Request $request)
     {
-        return Excel::download(new ExportSchedule, 'position_list.xlsx');
-    }
+        return Excel::download(new ExportSchedule(
+            $request->selectedDep,
+            $request->selectedYear,
+            $request->selectedMonth,
+        ), 'schedule.xlsx');
 
+    }
 
 
 }
