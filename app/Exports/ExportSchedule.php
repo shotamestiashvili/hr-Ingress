@@ -23,7 +23,7 @@ class ExportSchedule implements FromCollection, WithMapping, WithHeadings, WithS
         $this->department = $department;
         $this->year = $year;
         $this->month = $month;
-        $this->monthdays = Carbon::create($this->year, $this->month)->daysInMonth;
+        $this->monthdays = Carbon::create($this->year, $this->month)->daysInMonth +1;
     }
 
     public function collection()
@@ -31,7 +31,6 @@ class ExportSchedule implements FromCollection, WithMapping, WithHeadings, WithS
         return Personnel::with(['schedule'])
             ->where('department', $this->department)
             ->get();
-
     }
 
     public function map($personnel): array
@@ -48,14 +47,10 @@ class ExportSchedule implements FromCollection, WithMapping, WithHeadings, WithS
 
     public function headings(): array
     {
-
-
         $informationalArrya = [
             'Userid',
             'Department',
             'Name',
-
-
         ];
 
         for($i=1; $i < $this->monthdays; $i++){
