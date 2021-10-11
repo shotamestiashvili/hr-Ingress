@@ -14,4 +14,5 @@ class CreateHoliday implements CreatorInterface
             'date' => $request->date,
         ]);
     }
+
 }

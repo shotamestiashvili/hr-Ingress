@@ -19,8 +19,9 @@ class CreateMsosTable extends Migration
             $table->string('position');
             $table->string('type');
             $table->string('mso_position');
-            $table->date(  'date');
+            $table->date(  'startdate');
             $table->string('starttime');
+            $table->date(  'enddate');
             $table->string('endtime');
             $table->string('total_hours');
             $table->string('breaktime');

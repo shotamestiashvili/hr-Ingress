@@ -37,68 +37,68 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //Import /Export files start here //
-Route::POST('/upload',   [FileUploadController::class, 'store']);
+Route::POST('/upload', [FileUploadController::class, 'store']);
 
 
-Route::POST('/import/personnel',   [ImportController::class, 'importPersonnel']);
-Route::POST('/import/worktype',    [ImportController::class, 'importWorktype']);
-Route::POST('/import/position',    [ImportController::class, 'importPosition']);
-Route::POST('/import/schedule',    [ImportController::class, 'importSchedule']);
-Route::GET('/export/personnel',    [ExportController::class, 'exportPersonnel']);
-Route::GET('/export/worktype',     [ExportController::class, 'exportWorktype']);
-Route::GET('/export/position',     [ExportController::class, 'exportPosition']);
-Route::GET('/export/schedule',     [ExportController::class, 'exportSchedule']);
+Route::POST('/import/personnel', [ImportController::class, 'importPersonnel']);
+Route::POST('/import/worktype', [ImportController::class, 'importWorktype']);
+Route::POST('/import/position', [ImportController::class, 'importPosition']);
+Route::POST('/import/schedule', [ImportController::class, 'importSchedule']);
+Route::GET('/export/personnel', [ExportController::class, 'exportPersonnel']);
+Route::GET('/export/worktype', [ExportController::class, 'exportWorktype']);
+Route::GET('/export/position', [ExportController::class, 'exportPosition']);
+Route::GET('/export/schedule', [ExportController::class, 'exportSchedule']);
 //Import /Export files end here //
 
 
-Route::GET('/inout/index',                    [InoutController::class, 'index']);
-Route::GET('/inout/refresh',                  [InoutController::class, 'refresh']);
-Route::GET('/inout/generate',                 [InoutController::class, 'generate']);
-Route::GET('/inout/montlyInout',              [InoutController::class, 'montlyInout']);
-Route::GET('/inout/newUserInout',             [InoutController::class, 'newUserInout']);
+Route::GET('/inout/index', [InoutController::class, 'index']);
+Route::GET('/inout/refresh', [InoutController::class, 'refresh']);
+Route::GET('/inout/generate', [InoutController::class, 'generate']);
+Route::GET('/inout/montlyInout', [InoutController::class, 'montlyInout']);
+Route::GET('/inout/newUserInout', [InoutController::class, 'newUserInout']);
 
-Route::GET('/mso/personnel/index',               [MsoController::class, 'index']);
-Route::POST('/mso/personnel/store',              [MsoController::class, 'store']);
+Route::GET('/mso/personnel/index', [MsoController::class, 'index']);
+Route::POST('/mso/personnel/store', [MsoController::class, 'store']);
 
-Route::GET('/schedule/search',  [SearchController::class, 'search']);
+Route::GET('/schedule/search', [SearchController::class, 'search']);
 
-Route::resource('personnel/personnellist',   PersonnelController::class)
+Route::resource('personnel/personnellist', PersonnelController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('personnel/schedules',    ScheduleController::class)
+Route::resource('personnel/schedules', ScheduleController::class)
     ->only(['index', 'store', 'destroy',]);
 
 
-Route::resource('references/absences',      AbsenceController::class)
+Route::resource('references/absences', AbsenceController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('/references/contracts',    ContractController::class)
+Route::resource('/references/contracts', ContractController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/departments',   DepartmentController::class)
+Route::resource('references/departments', DepartmentController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/educations',    EducationController::class)
+Route::resource('references/educations', EducationController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/family',        FamilyController::class)
+Route::resource('references/family', FamilyController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/holidays',   HolidayController::class)
+Route::resource('references/holidays', HolidayController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/positions',   PositionController::class)
+Route::resource('references/positions', PositionController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/qualifications',   QualificationController::class)
+Route::resource('references/qualifications', QualificationController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/salarydates',   SalarydateController::class)
+Route::resource('references/salarydates', SalarydateController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/trainings',   TrainingController::class)
+Route::resource('references/trainings', TrainingController::class)
     ->only(['index', 'store', 'destroy',]);
 
-Route::resource('references/worktypes',   WorktypeController::class)
+Route::resource('references/worktypes', WorktypeController::class)
     ->only(['index', 'store', 'destroy',]);
 //References routes end here//

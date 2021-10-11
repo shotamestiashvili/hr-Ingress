@@ -13,7 +13,8 @@ import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 Vue.component('pagination', require('laravel-vue-pagination'));
 import VueSweetalert2 from "vue-sweetalert2";
-
+import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
+import VueTimepicker from 'vue2-timepicker'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -36,6 +37,11 @@ import VCalendar from 'v-calendar';
 Vue.use(VCalendar, {
     componentPrefix: 'vc', // Use <vc-calendar /> instead of <v-calendar />
 });
+
+Vue.use(VueMdb);
+// Optionally, install the MDBootstrap Axios plugin
+// only requires if using BsGrid, BsTreeGrid, BsModel, BsStore, BsTreeStore or needs to perform HTTP Request
+Vue.use(AxiosPlugin);
 
 
 import App from './components/App.vue'

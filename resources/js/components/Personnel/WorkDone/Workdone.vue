@@ -20,29 +20,24 @@
                                                 </option>
                                             </select>
                                         </div>
-
                                         <div class="col-sm-6 form-group">
-                                            <label>Calendar</label>
-                                            <div>
-                                                <input id="calendar" name="calendar" type="date" v-model="form.date">
-                                            </div>
+
+
                                         </div>
                                     </div>
                                     <br>
                                     <br>
 
                                     <div class="row">
-                                        <div class="col-sm-4 form-group">
-                                            <label>Start Time</label>
-                                            <input
-                                                type="time"
-                                                class="form-control"
-                                                v-model="form.starttime"
-                                            />
+                                        <div class="col-sm-2 form-group">
+                                            <input id="calendar" name="calendar" type="date" v-model="form.startdate">
                                         </div>
+                                        &nbsp;
+                                        <div class="col-sm-2 form-group">
+                                            <vue-timepicker v-model="form.starttime" format="HH:mm"></vue-timepicker>
+                                        </div>
+                                        <div class="col-sm-2 form-group">
 
-                                        <div class="col-sm-4 form-group">
-                                            <label>Break Time</label>
                                             <input
                                                 type="text"
                                                 placeholder="Userid"
@@ -50,15 +45,18 @@
                                                 v-model="form.breaktime"
                                             />
                                         </div>
-                                        <div class="col-sm-4 form-group">
-                                            <label>End Time</label>
-                                            <input
-                                                type="time"
-                                                placeholder="Personal ID"
-                                                class="form-control"
-                                                v-model="form.endtime"
-                                            />
+
+                                        <div class="col-sm-2 form-group">
+                                            <input id="calendar" name="calendar" type="date" v-model="form.enddate">
                                         </div>
+                                        &nbsp;
+                                        <div class="col-sm-2 form-group">
+
+                                            <vue-timepicker  v-model="form.endtime" format="HH:mm"></vue-timepicker>
+                                        </div>
+
+
+
                                     </div>
                                     <br/>
                                     <div class="row">
@@ -114,11 +112,17 @@
 
 import axios from "axios";
 import Swal from 'sweetalert2';
+// Main JS (in UMD format)
+import VueTimepicker from 'vue2-timepicker'
+
+// CSS
+import 'vue2-timepicker/dist/VueTimepicker.css'
 
 export default {
 
     components: {
         swal: Swal,
+        VueTimepicker: VueTimepicker,
     },
 
     data() {
@@ -134,7 +138,8 @@ export default {
                 endtime: "",
                 type: "",
                 description: "",
-                date: "",
+                startdate: "",
+                enddate: "",
             },
         };
     },
@@ -183,6 +188,7 @@ export default {
                 .post("api/mso/personnel/store", this.form)
                 .then((res) => {
                     this.form = {};
+                    this.form.breaktime = "1:00";
                     this.$swal.fire({icon: 'success', title: 'Created Successfully'});
                     console.log(res);
                 })
