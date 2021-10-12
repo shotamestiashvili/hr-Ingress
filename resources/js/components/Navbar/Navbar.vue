@@ -33,7 +33,7 @@
                     <b-dropdown-item href="#">Paid Leave</b-dropdown-item>
                     <b-dropdown-item href="#">Sick Leave</b-dropdown-item>
                     <b-dropdown-item href="#">Overtime</b-dropdown-item>
-                    <b-dropdown-item href="#">MSO</b-dropdown-item>
+                    <b-dropdown-item @click.prevent="showMso">MSO</b-dropdown-item>
                 </b-nav-item-dropdown>
 
                 <b-nav-item-dropdown text="References" right>
@@ -121,6 +121,8 @@ import ShowSalarydates from "../References/SalaryDates/ShowSalarydates.vue";
 import ShowTrainings from "../References/Trainings/ShowTrainings.vue";
 import ShowWorktypes from "../References/WorkTypes/ShowWorktypes.vue";
 import WorkDone from "../Personnel/WorkDone/Workdone.vue";
+import ShowMso from "../Accounting/MSO/Mso.vue";
+
 // References component  ends here
 
 export default {
@@ -146,6 +148,7 @@ export default {
         showTrainings: ShowTrainings,
         showWorktypes: ShowWorktypes,
         workDone: WorkDone,
+        showMso: ShowMso,
     },
 
     methods: {
@@ -193,6 +196,10 @@ export default {
         },
         workDone() {
             this.selectedComponent = "workDone";
+        },
+
+        showMso() {
+            this.selectedComponent = "showMso";
         },
     },
 };

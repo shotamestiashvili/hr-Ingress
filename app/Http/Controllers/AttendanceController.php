@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Resources\MsoResource;
 use App\Imports\ImportSchedule;
 use App\Jobs\CreateOrUpdateSchedule;
 use App\Jobs\ScheduleDateColumnFormater;
 use App\Models\ActiveSchedule;
 use App\Models\Personnel;
 use App\Models\Worktype;
+use App\Services\Accounting\MSO\MsoCalculation;
 use App\Services\DateTime\DateTimeFormater;
 use App\Services\DateTime\WorkTypeFormater;
 use App\Services\Statistics\AttendanceService;
@@ -17,6 +19,7 @@ use App\Services\TimeCalculator\AttendanceFilter;
 use App\Services\TimeCalculator\StatisticGenerator;
 use App\Services\TimeCalculator\TimeConstructor;
 use Carbon\Carbon;
+use App\Models\Mso;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -26,9 +29,14 @@ class AttendanceController extends Controller
 
     public function human()
     {
-//        $human = new AttendanceFilter();
-//        $human->humanAttendanceRunner();
-       return  Carbon::create('2012', '05')->daysInMonth;
+
+        $msoHourCalc = new MsoCalculation();
+
+        $personnel = Personnel::with('msos')->get();
+
+        return $personnel->map(function($personnel) use ($msoHourCalc){
+            return $personnel->first_name.' '.$personnel->last_name.'-'.$msoHourCalc->msoHours($personnel->userid, 2021, 10);
+        });
 
     }
 
@@ -45,14 +53,11 @@ class AttendanceController extends Controller
     }
 
 
-    public function test()
+    public function mso(Request  $request)
     {
-        $startTime  = '05:00';
-        $finishTime = '01:00';
+        $personnel = Personnel::with('msos')->get();
 
-       return Carbon::parse($startTime)->diff($finishTime)->format('%H:%I');
-//        return $finishTime->diff($startTime)->format('%H:%I');
-//        return Carbon::createFromDate('07:00')->addHour('05:00')->toTimeString();
+        return MsoResource::collection($personnel);
     }
 
 

@@ -39,6 +39,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Import /Export files start here //
 Route::POST('/upload', [FileUploadController::class, 'store']);
 
+Route::GET('/mso', [\App\Http\Controllers\AttendanceController::class, 'mso']);
 
 Route::POST('/import/personnel', [ImportController::class, 'importPersonnel']);
 Route::POST('/import/worktype', [ImportController::class, 'importWorktype']);
@@ -59,6 +60,7 @@ Route::GET('/inout/newUserInout', [InoutController::class, 'newUserInout']);
 
 Route::GET('/mso/personnel/index', [MsoController::class, 'index']);
 Route::POST('/mso/personnel/store', [MsoController::class, 'store']);
+Route::GET('/mso/show',   [MsoController::class, 'show']);
 
 Route::GET('/schedule/search', [SearchController::class, 'search']);
 
