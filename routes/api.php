@@ -49,6 +49,7 @@ Route::GET('/export/personnel', [ExportController::class, 'exportPersonnel']);
 Route::GET('/export/worktype', [ExportController::class, 'exportWorktype']);
 Route::GET('/export/position', [ExportController::class, 'exportPosition']);
 Route::GET('/export/schedule', [ExportController::class, 'exportSchedule']);
+Route::GET('/export/mso',     [ExportController::class, 'exportMso']);
 //Import /Export files end here //
 
 

@@ -30,7 +30,9 @@
 
                                     <div class="row">
                                         <div class="col-sm-2 form-group">
-                                            <input id="calendar" name="calendar" type="date" v-model="form.startdate">
+                                            <vc-calendar mode="date" v-model="form.startdate"></vc-calendar>
+
+<!--                                            <input id="calendar" name="calendar" type="date" v-model="form.startdate">-->
                                         </div>
                                         &nbsp;
                                         <div class="col-sm-2 form-group">
@@ -47,7 +49,8 @@
                                         </div>
 
                                         <div class="col-sm-2 form-group">
-                                            <input id="calendar" name="calendar" type="date" v-model="form.enddate">
+                                            <vc-calendar mode="date" v-model="form.enddate"></vc-calendar>
+<!--                                            <input id="calendar" name="calendar" type="date" v-model="form.enddate">-->
                                         </div>
                                         &nbsp;
                                         <div class="col-sm-2 form-group">
@@ -114,15 +117,15 @@ import axios from "axios";
 import Swal from 'sweetalert2';
 // Main JS (in UMD format)
 import VueTimepicker from 'vue2-timepicker'
+import VCalendar from 'v-calendar';
 
-// CSS
-import 'vue2-timepicker/dist/VueTimepicker.css'
 
 export default {
 
     components: {
         swal: Swal,
         VueTimepicker: VueTimepicker,
+        'vc-calendar': VCalendar,
     },
 
     data() {

@@ -16,10 +16,10 @@
                                 aria-label=".form-select-sm example"
                             >Select Row Number
                                 <option selected>Select Row N</option>
+                                <option value="20">20</option>
                                 <option value="40">40</option>
                                 <option value="60">60</option>
-                                <option value="70">70</option>
-                                <option value="85">85</option>
+                                <option value="80">80</option>
                                 <option value="100">100</option>
                             </select>
                             &nbsp;
@@ -231,9 +231,7 @@ export default {
     methods: {
 
         exportSchedule() {
-
             window.open('/api/export/schedule/?selectedYear='+this.selectedYear+'&selectedMonth='+this.selectedMonth+'&selectedDep='+this.searchDepartments);
-
         },
 
         update() {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\ExportMso;
 use App\Exports\ExportPersonnel;
 use App\Exports\ExportWorktype;
 use App\Exports\ExportPosition;
@@ -35,6 +36,12 @@ class ExportController extends Controller
             $request->selectedYear,
             $request->selectedMonth,
         ), 'schedule.xlsx');
+
+    }
+
+    public function exportMso(Request $request)
+    {
+        return Excel::download(new ExportMso(), 'mso.xlsx');
 
     }
 

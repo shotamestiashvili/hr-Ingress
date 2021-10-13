@@ -8,62 +8,54 @@
                     </div>
                     <div class="card-body">
 
+                        <select
+                            class="form-select"
+                            v-model="row"
+                            aria-label=".form-select-sm example"
+                        >
+                            <option selected>Select Year</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+                            <option value="80">80</option>
+                            <option value="100">100</option>
+                        </select>
+                        &nbsp;
                         <b-button
-                            @click="downloadFile"
+                            @click="exportMso"
                             variant="dark"
                             ref="btnShow"
                             size="sm"
                         >Export MSO
                         </b-button
                         >
-
+                        &nbsp;
                         <input
                             type="text"
-                            placeholder="Search by Name"
-                            v-model="searchName"
+                            placeholder="Search ..."
+                            v-model="search"
                         />
-                        <input
-                            type="text"
-                            placeholder="Search by Department"
-                            v-model="searchDep"
-                        />
-                        <br>
                         <hr>
                         <br>
-                        <div>
-                            <select
-                                class="form-select"
-                                v-model="row"
-                                aria-label=".form-select-sm example"
-                            >
-                                <option selected>Select Year</option>
-                                <option value="20">20</option>
-                                <option value="40">40</option>
-                                <option value="60">60</option>
-                                <option value="80">80</option>
-                                <option value="100">100</option>
-                            </select>
-                        </div>
-                        <hr>
 
                         <table class="table table-sm table-hover">
                             <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Jan 21</th>
-                                <th scope="col">Feb 21</th>
-                                <th scope="col">Mar 21</th>
-                                <th scope="col">Apr 21</th>
-                                <th scope="col">May 21</th>
-                                <th scope="col">Jun 21</th>
-                                <th scope="col">Jul 21</th>
-                                <th scope="col">Aug 21</th>
-                                <th scope="col">Sep 21</th>
-                                <th scope="col">Oct 21</th>
-                                <th scope="col">Nov 21</th>
-                                <th scope="col">Dec 21</th>
-                                <th scope="col">Total 2021</th>
+                                <th width="17%">Name</th>
+                                <th width="15%">Position</th>
+                                <th width="7%">Jan 21</th>
+                                <th width="7%">Feb 21</th>
+                                <th width="7%">Mar 21</th>
+                                <th width="7%">Apr 21</th>
+                                <th width="7%">May 21</th>
+                                <th width="7%">Jun 21</th>
+                                <th width="7%">Jul 21</th>
+                                <th width="7%">Aug 21</th>
+                                <th width="7%">Sep 21</th>
+                                <th width="7%">Oct 21</th>
+                                <th width="7%">Nov 21</th>
+                                <th width="7%">Dec 21</th>
+                                <th width="7%">Total 2021</th>
                             </tr>
                             </thead>
                             <tbody v-for="(data, index) in msoApi.data" :key="index">
@@ -114,8 +106,7 @@ export default {
 
     data() {
         return {
-            searchName: "",
-            searchDep: "",
+            search: "",
             msoApi : "",
             row: 30,
         };
@@ -137,12 +128,9 @@ export default {
     },
 
     methods: {
-        closeModal() {
 
-        },
-
-        downloadFile() {
-            window.open("/api/export/personnel");
+        exportMso() {
+            window.open('/api/export/mso');
         },
 
         runAxiosGet(page = 1) {
@@ -168,6 +156,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 table {
     margin-left: auto;
@@ -178,17 +167,16 @@ table {
 }
 
 td {
-    border: 1px solid black;
+    /*border: 0.5px solid black;*/
     text-align: center;
     padding: 1px;
-    font-size: 12px;
 }
 
 th {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     text-align: center;
-    padding: 1px;
-    font-size: 14px;
+    padding: 3px;
+    font-size: 10px;
 }
 
 tr:nth-child(even) {
@@ -198,13 +186,5 @@ tr:nth-child(even) {
 h1 {
     color: green;
 }
-
-/* #createModal {
-  border: none;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-} */
 </style>
+

@@ -35,16 +35,17 @@ class MsoController extends Controller
         $row = $request->row;
 //        $personnel = Personnel::with('msos')->paginate($request->row);
 
-        $personnel = Personnel::with('msos')->when(request('search') != '', function ($query) use ($row) {
+        $personnel = Personnel::with('msos')
+            ->when(request('search') != '', function ($query) use ($row)
+            {
             return $query->where('first_name', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('last_name', 'LIKE', '%' . request('search') . '%')
                 ->orWhere('department', 'LIKE', '%' . request('search') . '%')
                 ->paginate($row);
+
         })->when(request('search') == '', function ($query) use ($row) {
             return $query->paginate($row);
         });
-
-
         return MsoResource::collection($personnel);
     }
 }
