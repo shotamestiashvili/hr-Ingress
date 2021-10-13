@@ -9,7 +9,6 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 import Vue from 'vue';
-
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 Vue.component('pagination', require('laravel-vue-pagination'));
 import VueSweetalert2 from "vue-sweetalert2";
@@ -25,13 +24,13 @@ import { store } from './store/store';
 import VueMoment from 'vue-moment'
 import VCalendar from 'v-calendar';
 Vue.use(require('vue-moment'));
-
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
     // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(VueSweetalert2)
 Vue.use(VCalendar);
+Vue.use(VueTimepicker);
 Vue.use(VueMdb);
 // Optionally, install the MDBootstrap Axios plugin
 // only requires if using BsGrid, BsTreeGrid, BsModel, BsStore, BsTreeStore or needs to perform HTTP Request
