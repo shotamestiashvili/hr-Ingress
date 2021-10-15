@@ -5,153 +5,119 @@
                 <div class="container">
                     <div class="col-lg-12 well">
                         <div class="row">
-
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label>Personnel</label>
-                                            <select v-model="form.selectedPersonnel">
-                                                <option
-                                                    v-for="personnel in personnels"
-                                                    v-bind:key="personnel.id"
-                                                    v-bind:value="personnel.userid"
-                                                >
-                                                    {{ personnel.first_name }} - {{ personnel.last_name }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-
-                                        </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label>Personnel</label>
+                                        <select v-model="form.selectedPersonnel">
+                                            <option
+                                                v-for="personnel in personnels"
+                                                v-bind:key="personnel.id"
+                                                v-bind:value="personnel.userid"
+                                            >
+                                                {{ personnel.first_name }} - {{ personnel.last_name }}
+                                            </option>
+                                        </select>
                                     </div>
-                                    <br>
-                                    <br>
-
-                                    <div class="row">
-                                        <date-picker class="inline-block h-full" v-model="form.startdate">
-                                            <template v-slot="{ inputValue, togglePopover }">
-                                                <div class="flex items-center">
-                                                    <button
-                                                        class="p-2 bg-blue-100 border border-blue-200 hover:bg-blue-200 text-blue-600 rounded-l focus:bg-blue-500 focus:text-white focus:border-blue-500 focus:outline-none"
-                                                        @click="togglePopover()"
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 20 20"
-                                                            class="w-4 h-4 fill-current"
-                                                        >
-                                                            <path
-                                                                d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
-                                                    <input
-                                                        :value="inputValue"
-                                                        class="bg-white text-gray-700 w-full py-1 px-2 appearance-none border rounded-r focus:outline-none focus:border-blue-500"
-                                                        readonly
-                                                    />
-                                                </div>
-                                            </template>
-                                        </date-picker>
-                                        &nbsp;
-                                        <div>
-                                            <vue-timepicker v-model="form.starttime"></vue-timepicker>
-                                        </div>
-
-                                        <div class="col-sm-2 form-group">
-
-                                            <input
-                                                type="text"
-                                                placeholder="Userid"
-                                                class="form-control"
-                                                v-model="form.breaktime"
-                                            />
-                                        </div>
-
-                                        <date-picker class="inline-block h-full" v-model="form.enddate">
-                                            <template v-slot="{ inputValue, togglePopover }">
-                                                <div class="flex items-center">
-                                                    <button
-                                                        class="p-2 bg-blue-100 border border-blue-200 hover:bg-blue-200 text-blue-600 rounded-l focus:bg-blue-500 focus:text-white focus:border-blue-500 focus:outline-none"
-                                                        @click="togglePopover()"
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 20 20"
-                                                            class="w-4 h-4 fill-current"
-                                                        >
-                                                            <path
-                                                                d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
-                                                    <input
-
-                                                        :value="form.enddate"
-                                                        class="bg-white text-gray-700 w-full py-1 px-2 appearance-none border rounded-r focus:outline-none focus:border-blue-500"
-                                                        readonly
-                                                    />
-                                                </div>
-                                            </template>
-                                        </date-picker>
-                                        &nbsp;
-                                        <div>
-                                            <vue-timepicker  v-model="form.endtime"></vue-timepicker>
-                                        </div>
-
-
+                                    <div class="col-sm-6 form-group">
 
                                     </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-sm-4 form-group">
-                                            <label>Position</label>
-                                            <br>
-                                            <select v-model="form.selectedPosition">
-                                                <option
-                                                    v-for="position in positions"
-                                                    v-bind:key="position.id"
-                                                    v-bind:value="position.id">
-                                                    {{ position.position_name }}
-                                                </option>
-                                            </select>
-                                        </div>
+                                </div>
+                                <br>
+                                <br>
 
-                                        <div class="col-sm-4 form-group">
-                                            <label>Type</label>
-                                            <br>
-                                            <input type="radio" v-model="form.type" value="1" checked> &nbsp; MSO
-                                            <br>
-                                            <input type="radio" v-model="form.type" value="2"> &nbsp; Overtime
-                                        </div>
+                                <div class="row">
 
-                                        <div class="row">
-                                            <div class="col-sm-12 form-group">
-                                                <label> Description</label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Description"
-                                                    class="form-control"
-                                                    v-model="form.description"
-                                                />
-                                            </div>
-                                        </div>
+                                    <label for="start"> Start </label>
+                                    <div class="col-sm-3 form-group" id="start">
+                                        <vue-timepicker v-model="form.starttime"></vue-timepicker>
+                                    </div>
+
+                                    <label for="break"> Break </label>
+                                    <div class="col-sm-3 form-group" id="break">
+                                        <vue-timepicker v-model="form.breaktime"></vue-timepicker>
+                                    </div>
+                                    <label for="end"> End </label>
+                                    <div class="col-sm-3 form-group" id="end">
+                                        <vue-timepicker v-model="form.endtime"></vue-timepicker>
                                     </div>
                                 </div>
 
-                                <br>
 
-                                <br>
+                                <div class="row">
+                                    <label for="startdate"> Start Date </label>
+                                    <div class="col-sm-6 form-group">
+                                        <date-picker mode="date" v-model="form.startdate">
+                                            <template #default="{ inputValue, inputEvents }">
+                                                <input class="px-3 py-1 border rounded" :value="inputValue"
+                                                       v-on="inputEvents"/>
+                                            </template>
+                                        </date-picker>
+                                    </div>
 
-                                <button type="submit" @click.prevent="submitForm" class="btn btn-lg btn-info">
-                                    Submit
-                                </button>
-                            {{startdate}}  - {{enddate}}
+                                    <div class="col-sm-6 form-group">
+                                        <label for="enddate"> End Date </label>
+                                        <date-picker mode="date" v-model="form.enddate">
+                                            <template #default="{ inputValue, inputEvents }">
+                                                <input class="px-3 py-1 border rounded" :value="inputValue"
+                                                       v-on="inputEvents"/>
+                                            </template>
+                                        </date-picker>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4 form-group">
+                                        <label>Position</label>
+                                        <br>
+
+                                        <select v-model="form.selectedPosition">
+                                            <option
+                                                v-for="position in positions"
+                                                v-bind:key="position.id"
+                                                v-bind:value="position.id">
+                                                {{ position.position_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4 form-group">
+                                        <label>Type</label>
+                                        <br>
+                                        <input type="radio" v-model="form.type" value="1" checked> &nbsp; MSO
+                                        <br>
+                                        <input type="radio" v-model="form.type" value="2"> &nbsp; Overtime
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12 form-group">
+                                            <label> Description</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Description"
+                                                class="form-control"
+                                                v-model="form.description"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <br>
+
+                            <button type="submit" @click.prevent="submitForm" class="btn btn-lg btn-info">
+                                Submit
+                            </button>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {{ form }}
     </div>
 </template>
 
@@ -164,7 +130,9 @@ import VueTimepicker from 'vue2-timepicker'
 import 'vue2-timepicker/dist/VueTimepicker.css'
 import VCalendar from 'v-calendar';
 import Calendar from 'v-calendar/lib/components/calendar.umd'
- import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+import moment from 'vue-moment';
+import VueMoment from "vue-moment";
 //
 
 export default {
@@ -175,19 +143,20 @@ export default {
         // 'calendar': Calendar,
         'date-picker': DatePicker,
         vcalendar: VCalendar,
+        moment: moment,
     },
 
     data() {
         return {
-            personnels: "",
-            positions: "",
+            date: new Date(),
+            personnels: [],
+            positions: [],
             form: {
-                selectedPersonnel: [],
-                selectedPosition: [],
-                position: "",
-                starttime: "",
-                breaktime: "1:00",
-                endtime: "",
+                selectedPersonnel: "",
+                selectedPosition: "",
+                starttime: {HH: '00', mm: '00'},
+                breaktime: {HH: '01', mm: '00'},
+                endtime: {HH: '00', mm: '00'},
                 type: "",
                 description: "",
                 startdate: "",
@@ -201,12 +170,17 @@ export default {
         this.Position();
     },
 
-    watch: {},
+    watch: {
+        form: function () {
+            this.form.startdate = moment(this.form.startdate, "MM-DD-YYYY");
+            this.form.enddate = moment(this.form.enddate, "MM-DD-YYYY");
+
+        },
+    },
 
     computed: {},
 
     methods: {
-
 
         Personnel() {
             axios
@@ -239,8 +213,15 @@ export default {
             axios
                 .post("api/mso/personnel/store", this.form)
                 .then((res) => {
-                    this.form = {};
-                    this.form.breaktime = "1:00";
+                    this.form.selectedPersonnel = '';
+                    this.form.selectedPosition = '';
+                    this.form.starttime =  {HH: '00', mm: '00'};
+                    this.form.breaktime = {HH: '01', mm: '00'};
+                    this.form.endtime =  {HH: '00', mm: '00'};
+                    this.form.type = '';
+                    this.form.description = '';
+                    this.form.startdate = '';
+                    this.form.enddate = '';
                     this.$swal.fire({icon: 'success', title: 'Created Successfully'});
                     console.log(res);
                 })

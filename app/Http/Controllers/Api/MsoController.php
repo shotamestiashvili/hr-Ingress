@@ -27,6 +27,7 @@ class MsoController extends Controller
     public function store(Request $request)
     {
         new Creator((new CreateMso()), $request);
+        return response()->json(['Success']);
     }
 
     public function show(Request $request)

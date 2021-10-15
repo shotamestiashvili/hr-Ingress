@@ -14,24 +14,44 @@ class CreateMso implements CreatorInterface
 
     public function create($request)
     {
-        $startTime = Carbon::parse($request->startdate. ' '. $request->starttime);
-        $endTime =  Carbon::parse($request->enddate. ' '. $request->endtime);
+        $startDate = Carbon::parse( ($request->startdate))->format('Y-m-d');
+        $endDate   = Carbon::parse( ($request->enddate))->format('Y-m-d');
+        $starttime = $request->starttime['HH'].':'.$request->starttime['mm'];
+        $endtime   = $request->endtime['HH'].':'. $request->endtime['mm'];
+        $breaktime = $request->breaktime['HH'].':'. $request->breaktime['mm'];
 
-        $totalDuration =  $startTime->diff($endTime)->format('%H:%I');
+
+        $startTime     = Carbon::createFromFormat('Y-m-d H:i',  $startDate.' '. $starttime);
+        $endTime       = Carbon::createFromFormat('Y-m-d H:i',  $endDate.' '. $endtime);
+        $breakTime     = Carbon::createFromFormat('Y-m-d H:i',  $startDate.' '.$breaktime);
+        $breakTimeFrom = Carbon::createFromFormat('Y-m-d H:i',  $startDate.' '.'00:00');
+
+        $minutes      = ($startTime->diffInMinutes($endTime));
+        $breakMinute = ($breakTimeFrom->diffInMinutes($breakTime));
+
+        $minute = $minutes - $breakMinute;
+
+        $hoursFromMin      = intdiv( $minute, 60).':'. ( $minute % 60);
+
+        $explodedFromMin = explode(':', $hoursFromMin);
+        $hours  = $explodedFromMin[0];
+        $minutes= $explodedFromMin[1];
+
+        $totalDuration = $hours.':'.$minutes;
 
         Mso::create([
             'userid' => $request->selectedPersonnel,
-            'mso_position' => $request->selectedPosition,
-            'position' => Personnel::where('userid', $request->selectedPersonnel)->value('position'),
-            'startdate' => $request->startdate,
-            'starttime' => $request->starttime,
-            'breaktime' => $request->breaktime,
-            'enddate' => $request->enddate,
-            'endtime' => $request->endtime,
-            'type' => $request->type,
+            'mso_position'=> $request->selectedPosition,
+            'position'    => Personnel::where('userid', $request->selectedPersonnel)->value('position'),
+            'startdate'   => $startDate,
+            'starttime'   => $starttime,
+            'breaktime'   => $breaktime,
+            'enddate'     => $endDate,
+            'endtime'     => $endtime,
+            'type'        => $request->type,
             'description' => $request->description,
-            'total_hours' =>  $totalDuration,
-//                Carbon::parse($request->starttime)->diff($request->endtime)->format('%H:%I'),
+            'total_hours' => $totalDuration,
+
         ]);
     }
 
