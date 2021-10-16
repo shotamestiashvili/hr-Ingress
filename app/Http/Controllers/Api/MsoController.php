@@ -26,8 +26,8 @@ class MsoController extends Controller
 
     public function store(Request $request)
     {
-        new Creator((new CreateMso()), $request);
-        return response()->json(['Success']);
+         new Creator((new CreateMso()), $request);
+
     }
 
     public function show(Request $request)
@@ -37,16 +37,15 @@ class MsoController extends Controller
 //        $personnel = Personnel::with('msos')->paginate($request->row);
 
         $personnel = Personnel::with('msos')
-            ->when(request('search') != '', function ($query) use ($row)
-            {
-            return $query->where('first_name', 'LIKE', '%' . request('search') . '%')
-                ->orWhere('last_name', 'LIKE', '%' . request('search') . '%')
-                ->orWhere('department', 'LIKE', '%' . request('search') . '%')
-                ->paginate($row);
+            ->when(request('search') != '', function ($query) use ($row) {
+                return $query->where('first_name', 'LIKE', '%' . request('search') . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . request('search') . '%')
+                    ->orWhere('department', 'LIKE', '%' . request('search') . '%')
+                    ->paginate($row);
 
-        })->when(request('search') == '', function ($query) use ($row) {
-            return $query->paginate($row);
-        });
+            })->when(request('search') == '', function ($query) use ($row) {
+                return $query->paginate($row);
+            });
         return MsoResource::collection($personnel);
     }
 }

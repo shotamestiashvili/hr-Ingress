@@ -45,9 +45,10 @@
 
 
                                 <div class="row">
-                                    <label for="startdate"> Start Date </label>
-                                    <div class="col-sm-6 form-group">
-                                        <date-picker mode="date" v-model="form.startdate">
+
+                                    <div class="col-sm-6 form-group" id="startdate">
+                                        <label for="startdate"> Start Date </label>
+                                        <date-picker  mode="date" v-model="form.startdate">
                                             <template #default="{ inputValue, inputEvents }">
                                                 <input class="px-3 py-1 border rounded" :value="inputValue"
                                                        v-on="inputEvents"/>
@@ -55,7 +56,7 @@
                                         </date-picker>
                                     </div>
 
-                                    <div class="col-sm-6 form-group">
+                                    <div class="col-sm-6 form-group" id="enddate">
                                         <label for="enddate"> End Date </label>
                                         <date-picker mode="date" v-model="form.enddate">
                                             <template #default="{ inputValue, inputEvents }">
@@ -64,14 +65,12 @@
                                             </template>
                                         </date-picker>
                                     </div>
-
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-4 form-group">
                                         <label>Position</label>
                                         <br>
-
                                         <select v-model="form.selectedPosition">
                                             <option
                                                 v-for="position in positions"
@@ -117,10 +116,8 @@
                 </div>
             </div>
         </div>
-        {{ form }}
     </div>
 </template>
-
 <script>
 
 import axios from "axios";
@@ -172,15 +169,35 @@ export default {
 
     watch: {
         form: function () {
-            this.form.startdate = moment(this.form.startdate, "MM-DD-YYYY");
-            this.form.enddate = moment(this.form.enddate, "MM-DD-YYYY");
+            this.form.startdate = moment(this.form.startdate, "YYYY-MM-DD");
+            this.form.enddate = moment(this.form.enddate, "YYYY-MM-DD");
+        },
 
+        endDate : function(){
+            if ((( this.form.startdate) > Date.parse(this.form.enddate))) {
+                alert("End date should be greater than Start date");
+                this.form.enddate = "";
+            }else{
+                console.log('Validated Date');
+            }
+        }
+    },
+
+    computed: {
+        endDate(){
+            return this.form.enddate;
         },
     },
 
-    computed: {},
-
     methods: {
+
+        // validateDates: function()
+        // {
+        //     if ((moment(this.form.startdate) > moment(this.form.enddate))) {
+        //         alert("End date should be greater than Start date");
+        //         console.log("End date should be greater than Start date")
+        //     }
+        // },
 
         Personnel() {
             axios
@@ -222,8 +239,10 @@ export default {
                     this.form.description = '';
                     this.form.startdate = '';
                     this.form.enddate = '';
+                    console.log(res.data.data);
+                    console.log(res.data);
                     this.$swal.fire({icon: 'success', title: 'Created Successfully'});
-                    console.log(res);
+
                 })
                 .catch((error) => {
                     this.$swal({icon: 'error', title: error});
