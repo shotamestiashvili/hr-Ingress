@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Exports\ExportMso;
+use App\Exports\ExportOvertime;
 use App\Exports\ExportPersonnel;
 use App\Exports\ExportWorktype;
 use App\Exports\ExportPosition;
@@ -42,7 +43,11 @@ class ExportController extends Controller
     public function exportMso(Request $request)
     {
         return Excel::download(new ExportMso(), 'mso.xlsx');
+    }
 
+    public function exportOvertime(Request $request)
+    {
+        return Excel::download(new ExportOvertime(), 'overtime.xlsx');
     }
 
 

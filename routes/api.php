@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\MsoController;
 use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OvertimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::GET('/export/worktype', [ExportController::class, 'exportWorktype']);
 Route::GET('/export/position', [ExportController::class, 'exportPosition']);
 Route::GET('/export/schedule', [ExportController::class, 'exportSchedule']);
 Route::GET('/export/mso',     [ExportController::class, 'exportMso']);
+Route::GET('/export/overtime',     [ExportController::class, 'exportOvertime']);
 //Import /Export files end here //
 
 
@@ -62,6 +64,11 @@ Route::GET('/inout/newUserInout', [InoutController::class, 'newUserInout']);
 Route::GET('/mso/personnel/index', [MsoController::class, 'index']);
 Route::POST('/mso/personnel/store', [MsoController::class, 'store']);
 Route::GET('/mso/show',   [MsoController::class, 'show']);
+
+Route::GET('/overtime/personnel/index', [OvertimeController::class, 'index']);
+Route::GET('/overtime/show',            [OvertimeController::class, 'show']);
+
+
 
 Route::GET('/schedule/search', [SearchController::class, 'search']);
 
