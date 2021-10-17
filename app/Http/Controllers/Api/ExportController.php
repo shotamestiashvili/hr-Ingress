@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Exports\ExportMso;
 use App\Exports\ExportOvertime;
+use App\Exports\ExportPaidleave;
 use App\Exports\ExportPersonnel;
+use App\Exports\ExportSickleave;
 use App\Exports\ExportWorktype;
 use App\Exports\ExportPosition;
 use App\Exports\ExportSchedule;
@@ -50,5 +52,14 @@ class ExportController extends Controller
         return Excel::download(new ExportOvertime(), 'overtime.xlsx');
     }
 
+    public function exportPaidleave(Request $request)
+    {
+        return Excel::download(new ExportPaidleave(), 'paidleave.xlsx');
+    }
+
+    public function exportSickleave(Request $request)
+    {
+        return Excel::download(new ExportSickleave(), 'sickleave.xlsx');
+    }
 
 }

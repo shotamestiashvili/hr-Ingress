@@ -38,7 +38,6 @@ class PersonnelController extends Controller
             return $query->paginate($row);
         });
 
-
         return PersonnelResource::collection($personnel);
     }
 

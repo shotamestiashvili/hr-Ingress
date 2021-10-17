@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Schedule as ModelsSchedule;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 
 
 class Personnel extends Model
@@ -45,15 +42,21 @@ class Personnel extends Model
     {
         return $this->hasMany(Inout::class, 'userid', 'userid');
     }
-
     public function schedule()
     {
         return $this->hasMany(Schedule::class, 'userid', 'userid');
     }
-
     public function msos()
     {
         return $this->hasMany(Mso::class, 'userid', 'userid');
+    }
+    public function paidleave()
+    {
+        return $this->hasMany(PaidLeave::class, 'userid', 'userid');
+    }
+    public function sickleave()
+    {
+        return $this->hasMany(SickLeave::class, 'userid', 'userid');
     }
 
 }

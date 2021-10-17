@@ -13,6 +13,9 @@ use App\Models\Worktype;
 use App\Services\Accounting\MSO\MsoCalculation;
 use App\Services\DateTime\DateTimeFormater;
 use App\Services\DateTime\WorkTypeFormater;
+use App\Services\PaidLeave\PaidLeave;
+use App\Services\PaidLeave\PaidLeaveService;
+use App\Services\Schedule\ScheduleArrayMaker;
 use App\Services\Statistics\AttendanceService;
 use App\Services\TimeCalculator\ActiveScheduleUpdater;
 use App\Services\TimeCalculator\AttendanceFilter;
@@ -30,14 +33,9 @@ class AttendanceController extends Controller
     public function human()
     {
 
-        $msoHourCalc = new MsoCalculation();
+//        $paidLeave =  (new PaidLeaveService());
 
-        $personnel = Personnel::with('msos')->get();
-
-        return $personnel->map(function($personnel) use ($msoHourCalc){
-            return $personnel->first_name.' '.$personnel->last_name.'-'.$msoHourCalc->msoHours($personnel->userid, 2021, 10);
-        });
-
+        return PaidLeaveService::calcRemainDays(352, '2021');
     }
 
     public function import(Request $request)
