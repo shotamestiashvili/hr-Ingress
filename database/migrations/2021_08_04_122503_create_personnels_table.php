@@ -28,6 +28,11 @@ class CreatePersonnelsTable extends Migration
             $table->string('contact_info');
             $table->string('position');
             $table->string('department');
+            $table->string('work_category');
+            $table->string('dept2')->nullable();
+            $table->string('dept3')->nullable();
+            $table->string('dept4')->nullable();
+            $table->string('qty')->nullable();
             $table->string('head')->nullable();
             $table->string('food')->nullable();
             $table->string('companyid')->nullable();
@@ -38,8 +43,10 @@ class CreatePersonnelsTable extends Migration
             $table->string('registration_date')->nullable()->default('Null');
             $table->string('author')->nullable();
             $table->string('ensuarence')->nullable();
+            $table->string('pension')->nullable();
             $table->string('additional')->nullable();
             $table->string('bank_account')->nullable()->default('Null');
+            $table->string('cost_center')->nullable();
             $table->string('avatar_url')->nullable();
             $table->timestamps();
         });

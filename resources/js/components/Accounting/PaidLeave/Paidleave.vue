@@ -4,29 +4,39 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <strong>Overtime List </strong>
+                        <strong>Paidleave List </strong>
                     </div>
                     <div class="card-body">
-
                         <select
                             class="form-select"
                             v-model="row"
                             aria-label=".form-select-sm example"
                         >
-                            <option selected>Select Year</option>
-                            <option value="20">20</option>
+                            <option selected>Select Row</option>
                             <option value="40">40</option>
+                            <option value="50">40</option>
                             <option value="60">60</option>
                             <option value="80">80</option>
                             <option value="100">100</option>
                         </select>
                         &nbsp;
+                        <select
+                            class="form-select"
+                            v-model="year"
+                            aria-label=".form-select-sm example"
+                        >
+                            <option selected>Select Year</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                        </select>
+                        &nbsp;
                         <b-button
-                            @click="exportOvertime"
+                            @click="exportPaidleave"
                             variant="dark"
                             ref="btnShow"
                             size="sm"
-                        >Export Overtime
+                        >Export Paidleave
                         </b-button
                         >
                         &nbsp;
@@ -43,6 +53,7 @@
                             <tr>
                                 <th width="17%">Name</th>
                                 <th width="15%">Position</th>
+                                <th width="7%">Total Allowed</th>
                                 <th width="7%">Jan 21</th>
                                 <th width="7%">Feb 21</th>
                                 <th width="7%">Mar 21</th>
@@ -55,32 +66,35 @@
                                 <th width="7%">Oct 21</th>
                                 <th width="7%">Nov 21</th>
                                 <th width="7%">Dec 21</th>
-                                <th width="7%">Total 2021</th>
+                                <th width="7%">Total Used</th>
+                                <th width="7%">Total Balance</th>
                             </tr>
                             </thead>
-                            <tbody v-for="(data, index) in overtimeApi.data" :key="index">
+                            <tbody v-for="(data, index) in paidleaveApi.data" :key="index">
                             <tr>
-                                <td>{{data.name}}</td>
-                                <td>{{data.position}}</td>
-                                <td>{{data.jan}}</td>
-                                <td>{{data.feb}}</td>
-                                <td>{{data.mar}}</td>
-                                <td>{{data.apr}}</td>
-                                <td>{{data.may}}</td>
-                                <td>{{data.jun}}</td>
-                                <td>{{data.jul}}</td>
-                                <td>{{data.aug}}</td>
-                                <td>{{data.sep}}</td>
-                                <td>{{data.oct}}</td>
-                                <td>{{data.nov}}</td>
-                                <td>{{data.dec}}</td>
-                                <td>{{data.total}}</td>
+                                <td>{{ data.name }}</td>
+                                <td>{{ data.position }}</td>
+                                <td>{{ data.total_allowed }}</td>
+                                <td>{{ data.jan }}</td>
+                                <td>{{ data.feb }}</td>
+                                <td>{{ data.mar }}</td>
+                                <td>{{ data.apr }}</td>
+                                <td>{{ data.may }}</td>
+                                <td>{{ data.jun }}</td>
+                                <td>{{ data.jul }}</td>
+                                <td>{{ data.aug }}</td>
+                                <td>{{ data.sep }}</td>
+                                <td>{{ data.oct }}</td>
+                                <td>{{ data.nov }}</td>
+                                <td>{{ data.dec }}</td>
+                                <td>{{ data.total_used }}</td>
+                                <td>{{ data.total_remain }}</td>
                             </tr>
                             </tbody>
                         </table>
 
                         <pagination
-                            :data="overtimeApi"
+                            :data="paidleaveApi"
                             @pagination-change-page="runAxiosGet"
                             :limit="5"
                         >
@@ -107,8 +121,9 @@ export default {
     data() {
         return {
             search: "",
-            overtimeApi : "",
+            paidleaveApi: "",
             row: 30,
+            year: 2021
         };
     },
 
@@ -129,21 +144,22 @@ export default {
 
     methods: {
 
-        exportOvertime() {
-            window.open('/api/export/overtime');
+        exportMso() {
+            window.open('/api/export/paidleave');
         },
 
         runAxiosGet(page = 1) {
             axios
-                .get("api/overtime/show/", {
+                .get("api/paidleave", {
                     params: {
                         page,
                         search: this.search,
-                        row:    this.row
+                        row: this.row,
+                        year: this.year,
                     },
                 })
                 .then((res) => {
-                    this.overtimeApi = res.data;
+                    this.paidleaveApi = res.data;
                 })
                 .catch((error) => {
                     console.log(error);

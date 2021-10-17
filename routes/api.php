@@ -22,6 +22,8 @@ use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OvertimeController;
+use App\Http\Controllers\Api\PaidLeaveController;
+use App\Http\Controllers\Api\SickLeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,8 @@ Route::GET('/export/position', [ExportController::class, 'exportPosition']);
 Route::GET('/export/schedule', [ExportController::class, 'exportSchedule']);
 Route::GET('/export/mso',     [ExportController::class, 'exportMso']);
 Route::GET('/export/overtime',     [ExportController::class, 'exportOvertime']);
+Route::GET('/export/paidleave',     [ExportController::class, 'exportPaidleave']);
+Route::GET('/export/sickleave',     [ExportController::class, 'exportSickleave']);
 //Import /Export files end here //
 
 
@@ -68,9 +72,13 @@ Route::GET('/mso/show',   [MsoController::class, 'show']);
 Route::GET('/overtime/personnel/index', [OvertimeController::class, 'index']);
 Route::GET('/overtime/show',            [OvertimeController::class, 'show']);
 
-
+Route::resource('paidleave', PaidLeaveController::class)
+    ->only(['index',]);
+Route::resource('sickleave', SickLeaveController::class)
+    ->only(['index',]);
 
 Route::GET('/schedule/search', [SearchController::class, 'search']);
+
 
 Route::resource('personnel/personnellist', PersonnelController::class)
     ->only(['index', 'store', 'destroy',]);

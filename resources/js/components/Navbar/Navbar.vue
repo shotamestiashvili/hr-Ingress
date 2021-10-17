@@ -30,8 +30,8 @@
                 </b-nav-item-dropdown>
 
                 <b-nav-item-dropdown text="Accounting" right>
-                    <b-dropdown-item href="#">Paid Leave</b-dropdown-item>
-                    <b-dropdown-item href="#">Sick Leave</b-dropdown-item>
+                    <b-dropdown-item @click.prevent="showPaidleave">Paid Leave</b-dropdown-item>
+                    <b-dropdown-item @click.prevent="showSickleave">Sick Leave</b-dropdown-item>
                     <b-dropdown-item  @click.prevent="showOvertime">Overtime</b-dropdown-item>
                     <b-dropdown-item @click.prevent="showMso">MSO</b-dropdown-item>
                 </b-nav-item-dropdown>
@@ -123,6 +123,8 @@ import ShowWorktypes from "../References/WorkTypes/ShowWorktypes.vue";
 import WorkDone from "../Personnel/WorkDone/Workdone.vue";
 import ShowMso from "../Accounting/MSO/Mso.vue";
 import ShowOvertime from "../Accounting/Overtime/Overtime.vue";
+import ShowPaidleave from "../Accounting/PaidLeave/Paidleave.vue";
+import ShowSickleave from "../Accounting/SickLeave/Sickleave.vue";
 // References component  ends here
 
 export default {
@@ -149,7 +151,9 @@ export default {
         showWorktypes: ShowWorktypes,
         workDone: WorkDone,
         showMso: ShowMso,
-        showOvertime: ShowOvertime,
+        showOvertime:  ShowOvertime,
+        showPaidleave: ShowPaidleave,
+        showSickleave: ShowSickleave,
     },
 
     methods: {
@@ -198,13 +202,17 @@ export default {
         workDone() {
             this.selectedComponent = "workDone";
         },
-
         showMso() {
             this.selectedComponent = "showMso";
         },
-
         showOvertime() {
             this.selectedComponent = "showOvertime";
+        },
+        showPaidleave() {
+            this.selectedComponent = "showPaidleave";
+        },
+        showSickleave() {
+            this.selectedComponent = "showSickleave";
         },
     },
 };

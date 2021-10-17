@@ -31,6 +31,7 @@ class MsoResource extends JsonResource
             'oct' =>  $msoHourCalc->msoHours($this->userid, 2021, 10),
             'nov' =>  $msoHourCalc->msoHours($this->userid, 2021, 11),
             'dec' =>  $msoHourCalc->msoHours($this->userid, 2021, 12),
+            'total' => $msoHourCalc->msoYearly($this->userid, 2021),
         ];
     }
 }

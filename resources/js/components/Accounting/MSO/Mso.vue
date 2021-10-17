@@ -74,7 +74,7 @@
                                 <td>{{data.oct}}</td>
                                 <td>{{data.nov}}</td>
                                 <td>{{data.dec}}</td>
-                                <td>Total</td>
+                                <td>{{data.total}}</td>
                             </tr>
                             </tbody>
                         </table>
