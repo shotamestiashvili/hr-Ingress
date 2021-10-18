@@ -11,7 +11,7 @@ class OvertimeCalculation
     {
 
         $from = Carbon::create($year . '-' . ($month - 1) . '-' . '21');
-        $to   = Carbon::create($year . '-' . $month . '-' . '21');
+        $to   = Carbon::create($year . '-' . $month . '-' . '20');
 
 
             $getPersonnel = Mso::where('userid', $userid)
