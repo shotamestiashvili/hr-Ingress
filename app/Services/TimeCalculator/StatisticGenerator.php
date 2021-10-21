@@ -33,12 +33,24 @@ class StatisticGenerator extends ActualDate
                     if (Statistic::where('userid', $user->userid)
                         ->where('date', $date->date)
                         ->exists()) {
-                        StatisticUpdater::dispatch($time->earlyIn, $time->delayIn, $time->lateOut, $time->earlyOut, $user->userid, $date->date)
+
+                        StatisticUpdater::dispatch(
+                            $time->earlyIn,
+                            $time->delayIn,
+                            $time->lateOut,
+                            $time->earlyOut,
+                            $user->userid,
+                            $date->date)
                             ->delay(10);
                     } else
-                        StatisticCreator::dispatch($time->earlyIn, $time->delayIn, $time->lateOut, $time->earlyOut, $user->userid, $date->date)
+                        StatisticCreator::dispatch(
+                            $time->earlyIn,
+                            $time->delayIn,
+                            $time->lateOut,
+                            $time->earlyOut,
+                            $user->userid,
+                            $date->date)
                             ->delay(10);
-
                 });
         });
     }
@@ -75,7 +87,7 @@ class StatisticGenerator extends ActualDate
                             $user->userid,
                             $today)
                             ->delay(10);
-                    } else{
+                    } else {
 
                         StatisticCreator::dispatch(
                             $time->earlyIn,

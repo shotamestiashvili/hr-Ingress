@@ -44,4 +44,5 @@ Route::get('/dailystatistic',   [AttendanceController::class, 'dailyGenerate']);
 Route::get('/monthlystatistic', [AttendanceController::class, 'monthlyGenerate']);
 Route::get('/monthlygrid',      [AttendanceController::class, 'monthlygrid']);
 Route::get('/human',            [AttendanceController::class, 'human']);
+Route::get('/filter',           [AttendanceController::class, 'attendanceFilter']);
 

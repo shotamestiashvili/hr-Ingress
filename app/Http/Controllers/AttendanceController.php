@@ -110,5 +110,11 @@ class AttendanceController extends Controller
         $statistic->generateMonthly();
     }
 
+    public function attendanceFilter()
+    {
+        $attendanceFilter = new  AttendanceFilter();
+        $attendanceFilter->humanAttendanceRunnerMonthly();
+    }
+
 
 }
