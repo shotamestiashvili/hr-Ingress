@@ -62,13 +62,14 @@ class ScheduleCreatorUpdater implements ShouldQueue
         }else {
             $start = 0;
         }
+
         if(Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end') !== null){
             $end = Worktype::where('code', $this->array[0][$this->i][$this->s])->value('end');
         }else {
             $end = 0;
         }
 
-        if (Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == 1) {
+        if (Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == '1') {
             Schedule::updateOrCreate(
                 [   'userid'        => $this->array[0][$this->i][0],
                     'selectedDay'   => ($this->day),
@@ -86,7 +87,7 @@ class ScheduleCreatorUpdater implements ShouldQueue
                     'endtime'   => $end,
                     'enddate'   => ($this->year . '-' . $this->month . '-' . $this->day),]);
 
-        } elseif(Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == 0) {
+        } elseif(Worktype::where('code', $this->array[0][$this->i][$this->s])->value('in24hours') == '0') {
 
             Schedule::updateOrCreate(
                 [   'userid'        => $this->array[0][$this->i][0],

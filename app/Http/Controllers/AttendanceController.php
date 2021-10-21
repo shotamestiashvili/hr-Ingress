@@ -46,8 +46,7 @@ class AttendanceController extends Controller
 
         $collection = Excel::toCollection(new ImportSchedule, $request->import_file);
 
-        dd($collection);
-        new CreateOrUpdateSchedule($collection, $request->selectedYear, $request->selectedMonth);
+        new CreateOrUpdateSchedule($collection, 2021, 10);
     }
 
 
