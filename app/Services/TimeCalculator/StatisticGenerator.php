@@ -45,9 +45,9 @@ class StatisticGenerator extends ActualDate
 
     public function generateDaily()
     {
-//        $today = Carbon::now()->toDateString();
+        $today = Carbon::now()->toDateString();
 
-        $today = Carbon::parse('2021-10-19')->toDateString();
+//        $today = Carbon::parse('2021-10-19')->toDateString();
 //        $today = DateTimeFormater::date($today);
 //        $user = 205;
 

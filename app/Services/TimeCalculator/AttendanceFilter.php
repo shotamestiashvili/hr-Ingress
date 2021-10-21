@@ -11,8 +11,8 @@ class AttendanceFilter
 {
     public function humanAttendanceRunner()
     {
-//       $today = (Carbon::now())->toDateTimeString();
-        $today = date('2021-10-02');
+       $today = (Carbon::now())->toDateTimeString();
+//        $today = date('2021-10-02');
       Personnel::get('userid')->map(function ($user) use ($today) {
            ActiveSchedule::with('worktypes')
                 ->where('startdate', $today)
