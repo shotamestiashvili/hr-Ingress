@@ -113,8 +113,8 @@
                                         :key="i"
                                         @dblclick="dbclickTd(i + 1, data)"
                                     >
-                                        <div v-for="(worktype, ind) in data.selectedWorktype" :key="index">
-                                            {{ worktype[i] }}
+                                        <div v-for="(codes, ind) in data.selectedWorktype" :key="index">
+                                            {{ codes[i] }}
                                         </div>
 
                                     </td>
