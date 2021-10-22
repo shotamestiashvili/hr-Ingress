@@ -117,6 +117,20 @@ export default {
 
     },
 
+    watch: {
+        attendanceRangeStart: function () {
+            this.attendanceRangeStart = moment(this.attendanceRangeStart, "YYYY-MM-DD");
+        },
+
+        attendanceRangeEnd: function () {
+            this.attendanceRangeEnd = moment(this.attendanceRangeEnd, "YYYY-MM-DD");
+        },
+
+        customStatistic: function () {
+            this.customStatistic = moment(this.customStatistic, "YYYY-MM-DD");
+        },
+    },
+
 
     methods: {
 
@@ -170,8 +184,8 @@ export default {
             axios
                 .get("attendances", {
                     params: {
-                        start:  this.attendanceRangeStart,
-                        end:    this.attendanceRangeEnd
+                        start: this.attendanceRangeStart,
+                        end: this.attendanceRangeEnd
                     },
                 })
                 .then((res) => {
