@@ -19,7 +19,7 @@ class StatisticGenerator extends ActualDate
 {
     public function generateCustomDate($date)
     {
-        $today = Carbon::createFromDate($date)->toDateString();
+        $today = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
 
         return Personnel::get('userid')->map(function ($user) use ($today) {
             return ActiveSchedule::with('worktypes')

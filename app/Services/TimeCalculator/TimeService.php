@@ -19,11 +19,13 @@ class TimeService
         if (
 
             $active_schedule->intime  !== null &&
-            $active_schedule->outtime  !== null        ) {
+            $active_schedule->outtime  !== null)
+        {
 
             $att       = new AttExploder($active_schedule->intime, $active_schedule->outtime);
             $worktype  = new TimeExploder($active_schedule->starttime, $active_schedule->endtime);
 
+            dd($worktype);
             $this->conditionValidationIn($active_schedule, $att, $worktype, $in24);
             $this->conditionValidationOut( $active_schedule, $att, $worktype, $in24);
 
