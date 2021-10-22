@@ -11,27 +11,30 @@ use App\Models\Statistic;
 use App\Models\Worktype;
 use App\Services\DateTime\DateTimeFormater;
 use App\Services\Statistics\ActualDate;
-use Carbon\Carbon;
 use App\Services\TimeCalculator\TimeService;
+use Carbon\Carbon;
+
 
 class StatisticGenerator extends ActualDate
 {
-    public function generateMonthly(): void
+    public function generateCustomDate($date)
     {
-        $month = $this->actualMonth;
-        $year = $this->actualYear;
+        $today = Carbon::createFromDate($date)->toDateString();
 
-        Personnel::get('userid')->map(function ($user) use ($month, $year) {
-            return Inout::whereMonth('date', $month)
-                ->whereYear('date', $year)
-                ->where('userid', 352)
-                ->get('date')
-                ->map(function ($date) use ($user) {
+        return Personnel::get('userid')->map(function ($user) use ($today) {
+            return ActiveSchedule::with('worktypes')
+                ->where('enddate', $today)
+                ->where('userid', $user->userid)
+                ->get()
+                ->map(function ($active_schedule) use ($user, $today) {
 
-                    $time = (new TimeService($user->userid, $date->date));
+                    $in24 = Worktype::where('code', $active_schedule->worktype)
+                        ->value('in24hours');
 
-                    if (Statistic::where('userid', $user->userid)
-                        ->where('date', $date->date)
+                    $time = (new TimeService($active_schedule, $in24));
+
+                    if (Statistic::where('userid', $user)
+                        ->where('date', date($today))
                         ->exists()) {
 
                         StatisticUpdater::dispatch(
@@ -40,17 +43,20 @@ class StatisticGenerator extends ActualDate
                             $time->lateOut,
                             $time->earlyOut,
                             $user->userid,
-                            $date->date)
+                            $today)
                             ->delay(10);
-                    } else
+                    } else {
+
                         StatisticCreator::dispatch(
                             $time->earlyIn,
                             $time->delayIn,
                             $time->lateOut,
                             $time->earlyOut,
                             $user->userid,
-                            $date->date)
+                            $today)
                             ->delay(10);
+                    }
+
                 });
         });
     }
@@ -58,10 +64,6 @@ class StatisticGenerator extends ActualDate
     public function generateDaily()
     {
         $today = Carbon::now()->toDateString();
-
-//        $today = Carbon::parse('2021-10-19')->toDateString();
-//        $today = DateTimeFormater::date($today);
-//        $user = 205;
 
         return Personnel::get('userid')->map(function ($user) use ($today) {
             return ActiveSchedule::with('worktypes')

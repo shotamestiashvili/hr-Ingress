@@ -53,7 +53,6 @@ class AttendanceController extends Controller
     public function mso(Request  $request)
     {
         $personnel = Personnel::with('msos')->get();
-
         return MsoResource::collection($personnel);
     }
 
@@ -98,22 +97,28 @@ class AttendanceController extends Controller
         $att->monthlyGrid();
     }
 
-    public function dailyGenerate()
+    public function dailyStatistic()
     {
         $statistic = new  StatisticGenerator();
         $statistic->generateDaily();
     }
 
-    public function monthlyGenerate()
+    public function monthlyStatistic(Request $request)
     {
         $statistic = new  StatisticGenerator();
-        $statistic->generateMonthly();
+        $statistic->generateCustomDate($request->date);
     }
 
-    public function attendanceFilter()
+    public function attendance()
     {
         $attendanceFilter = new  AttendanceFilter();
-        $attendanceFilter->humanAttendanceRunnerMonthly();
+        $attendanceFilter->humanAttendanceRunner();
+    }
+
+    public function attendances(Request $request)
+    {
+        $attendanceFilter = new  AttendanceFilter();
+        $attendanceFilter->humanAttendanceRunnerMonthly($request->from, $request->to);
     }
 
 

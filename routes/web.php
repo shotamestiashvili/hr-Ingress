@@ -32,17 +32,17 @@ Route::post('/upload-file', [\App\Http\Controllers\Api\ImportController::class, 
 
 
 //Route::get('/test',    [AttendanceController::class, 'test']);
-Route::get('/time',    [AttendanceController::class, 'timeService']);
-Route::get('/job',         [AttendanceController::class, 'test']);
-Route::get('/workhour',    [AttendanceController::class, 'worktypeTime']);
-Route::get('/export',      [ExportController::class, 'exportSchedule']);
+Route::get('/time',         [AttendanceController::class, 'timeService']);
+Route::get('/job',          [AttendanceController::class, 'test']);
+Route::get('/workhour',     [AttendanceController::class, 'worktypeTime']);
+Route::get('/export',       [ExportController::class, 'exportSchedule']);
 Route::POST('/import',      [AttendanceController::class, 'import'])->name('import');
 
-Route::get('/dailyinout',       [AttendanceController::class, 'dailyinout']);
-Route::get('/monthlyinout',     [AttendanceController::class, 'monthlyinout']);
-Route::get('/dailystatistic',   [AttendanceController::class, 'dailyGenerate']);
-Route::get('/monthlystatistic', [AttendanceController::class, 'monthlyGenerate']);
-Route::get('/monthlygrid',      [AttendanceController::class, 'monthlygrid']);
-Route::get('/human',            [AttendanceController::class, 'human']);
-Route::get('/filter',           [AttendanceController::class, 'attendanceFilter']);
+Route::get('/dailyinout',            [AttendanceController::class, 'dailyinout']);
+Route::get('/monthlyinout',          [AttendanceController::class, 'monthlyinout']);
+Route::get('/dailystatistic',        [AttendanceController::class, 'dailyStatistic']);
+Route::get('/monthlystatistic',      [AttendanceController::class, 'monthlyStatistic']);
+Route::get('/monthlygrid',           [AttendanceController::class, 'monthlygrid']);
+Route::get('/attendance',            [AttendanceController::class, 'attendance']);
+Route::get('/attendances',           [AttendanceController::class, 'attendances']);
 

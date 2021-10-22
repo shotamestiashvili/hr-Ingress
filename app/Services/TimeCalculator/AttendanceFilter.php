@@ -35,11 +35,11 @@ class AttendanceFilter
         });
     }
 
-    public function humanAttendanceRunnerMonthly()
+    public function humanAttendanceRunnerMonthly($from,$to)
     {
-        $from = '2021-10-1';
-        $to   = '2021-10-31';
-//        $today = date('2021-10-02');
+        $from = Carbon::createFromDate($from)->toDateString();
+        $to   = Carbon::createFromDate($to)->toDateString();
+
         Personnel::get('userid')->map(function ($user) use ($from, $to) {
             ActiveSchedule::with('worktypes')
                 ->whereBetween('startdate', [$from, $to])

@@ -84,6 +84,7 @@
                 </b-nav-item-dropdown>
 
                 <b-nav-item-dropdown text="Administrations" right>
+                    <b-dropdown-item @click.prevent="showGenerator">Generator</b-dropdown-item>
                     <b-dropdown-item href="#">Configuration</b-dropdown-item>
                     <b-dropdown-item href="#">Messages</b-dropdown-item>
                     <b-dropdown-item href="#">Syncronisation</b-dropdown-item>
@@ -125,6 +126,9 @@ import ShowMso from "../Accounting/MSO/Mso.vue";
 import ShowOvertime from "../Accounting/Overtime/Overtime.vue";
 import ShowPaidleave from "../Accounting/PaidLeave/Paidleave.vue";
 import ShowSickleave from "../Accounting/SickLeave/Sickleave.vue";
+import ShowGenerator from "../Administration/Generator/Generator.vue"
+
+
 // References component  ends here
 
 export default {
@@ -154,6 +158,7 @@ export default {
         showOvertime:  ShowOvertime,
         showPaidleave: ShowPaidleave,
         showSickleave: ShowSickleave,
+        showGenerator: ShowGenerator,
     },
 
     methods: {
@@ -213,6 +218,10 @@ export default {
         },
         showSickleave() {
             this.selectedComponent = "showSickleave";
+        },
+
+        showGenerator() {
+            this.selectedComponent = "showGenerator";
         },
     },
 };
