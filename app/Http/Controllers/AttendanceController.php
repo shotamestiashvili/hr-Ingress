@@ -118,7 +118,7 @@ class AttendanceController extends Controller
     public function attendances(Request $request)
     {
         $attendanceFilter = new  AttendanceFilter();
-        $attendanceFilter->humanAttendanceRunnerMonthly($request->from, $request->to);
+        $attendanceFilter->humanAttendanceRunnerMonthly($request->start, $request->end);
     }
 
 
