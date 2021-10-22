@@ -103,7 +103,7 @@ class AttendanceController extends Controller
         $statistic->generateDaily();
     }
 
-    public function monthlyStatistic(Request $request)
+    public function customStatistic(Request $request)
     {
         $statistic = new  StatisticGenerator();
         $statistic->generateCustomDate($request->date);

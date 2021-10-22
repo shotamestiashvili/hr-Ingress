@@ -114,8 +114,7 @@ export default {
     },
 
     mounted() {
-        this.Personnel();
-        this.Position();
+
     },
 
 

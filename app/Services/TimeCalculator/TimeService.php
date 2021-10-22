@@ -16,10 +16,9 @@ class TimeService
 
     public function __construct($active_schedule, $in24)
     {
-
-//        dd($active_schedule->intime, $in24);
         if (
-            $active_schedule->inttime  !== null &&
+
+            $active_schedule->intime  !== null &&
             $active_schedule->outtime  !== null        ) {
 
             $att       = new AttExploder($active_schedule->intime, $active_schedule->outtime);

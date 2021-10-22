@@ -90,7 +90,6 @@ class StatisticGenerator extends ActualDate
                             $today)
                             ->delay(10);
                     } else {
-
                         StatisticCreator::dispatch(
                             $time->earlyIn,
                             $time->delayIn,

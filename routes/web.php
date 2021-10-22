@@ -41,7 +41,7 @@ Route::POST('/import',      [AttendanceController::class, 'import'])->name('impo
 Route::get('/dailyinout',            [AttendanceController::class, 'dailyinout']);
 Route::get('/monthlyinout',          [AttendanceController::class, 'monthlyinout']);
 Route::get('/dailystatistic',        [AttendanceController::class, 'dailyStatistic']);
-Route::get('/monthlystatistic',      [AttendanceController::class, 'monthlyStatistic']);
+Route::get('/monthlystatistic',      [AttendanceController::class, 'customStatistic']);
 Route::get('/monthlygrid',           [AttendanceController::class, 'monthlygrid']);
 Route::get('/attendance',            [AttendanceController::class, 'attendance']);
 Route::get('/attendances',           [AttendanceController::class, 'attendances']);
