@@ -34,6 +34,8 @@ class StatisticUpdater implements ShouldQueue
         $this->earlyOut = $earlyOut;
         $this->userid   = $userid;
         $this->date     = $date;
+
+
     }
 
     /**

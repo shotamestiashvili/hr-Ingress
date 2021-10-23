@@ -19,11 +19,12 @@ class StatisticGenerator extends ActualDate
 {
     public function generateCustomDate($date)
     {
-        $today = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
+        $today = DateTimeFormater::dateFormat($date)->toDateString();
 
+//        dd($today);
         return Personnel::get('userid')->map(function ($user) use ($today) {
             return ActiveSchedule::with('worktypes')
-                ->where('enddate', $today)
+                ->where('enddate', ($today))
                 ->where('userid', $user->userid)
                 ->get()
                 ->map(function ($active_schedule) use ($user, $today) {
@@ -33,7 +34,7 @@ class StatisticGenerator extends ActualDate
 
                     $time = (new TimeService($active_schedule, $in24));
 
-                    if (Statistic::where('userid', $user)
+                    if (Statistic::where('userid', $user->userid)
                         ->where('date', date($today))
                         ->exists()) {
 
@@ -43,8 +44,8 @@ class StatisticGenerator extends ActualDate
                             $time->lateOut,
                             $time->earlyOut,
                             $user->userid,
-                            $today)
-                            ->delay(10);
+                            $today);
+//                            ->delay(10);
                     } else {
 
                         StatisticCreator::dispatch(
@@ -53,8 +54,8 @@ class StatisticGenerator extends ActualDate
                             $time->lateOut,
                             $time->earlyOut,
                             $user->userid,
-                            $today)
-                            ->delay(10);
+                            $today);
+//                            ->delay(10);
                     }
 
                 });

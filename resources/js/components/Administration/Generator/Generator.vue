@@ -28,7 +28,7 @@
                                         <label for="attendanceDateStart"> Attendance Date Range </label>
                                         <div class="col-sm-6 form-group" id="attendanceDateStart">
                                             <label for="attendanceDateStart"> Start Date </label>
-                                            <date-picker mode="date" v-model="attendanceRangeStart">
+                                            <date-picker mode="date" v-model="attendanceRangeStart" >
                                                 <template #default="{ inputValue, inputEvents }">
                                                     <input class="px-3 py-1 border rounded" :value="inputValue"
                                                            v-on="inputEvents"/>
@@ -38,7 +38,7 @@
 
                                         <div class="col-sm-6 form-group" id="attendanceDateEnd">
                                             <label for="attendanceDateEnd"> End Date </label>
-                                            <date-picker mode="date" v-model="attendanceRangeEnd">
+                                            <date-picker mode="date" v-model="attendanceRangeEnd" >
                                                 <template #default="{ inputValue, inputEvents }">
                                                     <input class="px-3 py-1 border rounded" :value="inputValue"
                                                            v-on="inputEvents"/>
@@ -55,7 +55,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 form-group" id="customStatistic">
 
-                                        <date-picker mode="date" v-model="customStatistic">
+                                        <date-picker mode="date" v-model="customStatistic" >
                                             <template #default="{ inputValue, inputEvents }">
                                                 <input class="px-3 py-1 border rounded" :value="inputValue"
                                                        v-on="inputEvents"/>
@@ -70,6 +70,9 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{attendanceRangeStart}}
+                            {{customStatistic}}
                             <br>
                             <br>
                         </div>
@@ -109,7 +112,9 @@ export default {
             attendanceRangeStart: "",
             attendanceRangeEnd: "",
             customStatistic: "",
-
+            // masks: {
+            //     input: 'YYYY-MM-DD',
+            // },
         };
     },
 
@@ -118,17 +123,21 @@ export default {
     },
 
     watch: {
-        attendanceRangeStart: function () {
-            this.attendanceRangeStart = moment(this.attendanceRangeStart, "YYYY-MM-DD");
+        attendanceRangeStart: function(val) {
+            this.attendanceRangeStart = moment(this.attendanceRangeStart).format('YYYY-MM-DD');
         },
 
-        attendanceRangeEnd: function () {
-            this.attendanceRangeEnd = moment(this.attendanceRangeEnd, "YYYY-MM-DD");
+        attendanceRangeEnd: function (val) {
+            this.attendanceRangeStart = moment(String(val)).format('YYYY-MM-DD');
         },
 
-        customStatistic: function () {
-            this.customStatistic = moment(this.customStatistic, "YYYY-MM-DD");
+        customStatistic: function (val) {
+            this.attendanceRangeStart = moment(String(val)).format('YYYY-MM-DD');
         },
+    },
+
+    computed: {
+
     },
 
 

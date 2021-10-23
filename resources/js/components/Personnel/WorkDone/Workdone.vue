@@ -170,7 +170,7 @@ export default {
     watch: {
         form: function () {
             this.form.startdate = moment(this.form.startdate, "YYYY-MM-DD");
-            this.form.enddate = moment(this.form.enddate, "YYYY-MM-DD");
+            this.form.enddate   = moment(this.form.enddate, "YYYY-MM-DD");
         },
 
         endDate : function(){

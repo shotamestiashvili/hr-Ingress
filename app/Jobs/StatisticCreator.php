@@ -34,6 +34,7 @@ class StatisticCreator implements ShouldQueue
         $this->earlyOut = $earlyOut;
         $this->userid = $userid;
         $this->date = $date;
+
     }
 
     /**
