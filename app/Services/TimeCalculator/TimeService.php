@@ -26,7 +26,6 @@ class TimeService
             $this->conditionValidationIn($active_schedule, $att, $worktype, $in24);
 
             $this->conditionValidationOut( $active_schedule, $att, $worktype, $in24);
-//            dd($this->lateOut, $this->earlyOut);
 
         } else {
 
@@ -55,14 +54,6 @@ class TimeService
 
     public function conditionValidationOut($active_schedule, $att, $worktype, $in24)
     {
-//     dd($att, $worktype, $in24);
-//
-//        if($att->att_outHour > $worktype->endHour && ($in24 == 1) ){
-//            dd('1 cond');
-//        }else {
-//            dd('second');
-//    }
-
         if (($att->att_outHour > $worktype->endHour) && ($in24 == 1)) {
             $this->LateOut($active_schedule->outtime, $active_schedule->endtime);
         }elseif ($att->att_outHour > $worktype->endHour && $in24 == 0) {

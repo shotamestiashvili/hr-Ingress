@@ -28,22 +28,14 @@
                                         <label for="attendanceDateStart"> Attendance Date Range </label>
                                         <div class="col-sm-6 form-group" id="attendanceDateStart">
                                             <label for="attendanceDateStart"> Start Date </label>
-                                            <date-picker mode="date" v-model="attendanceRangeStart" >
-                                                <template #default="{ inputValue, inputEvents }">
-                                                    <input class="px-3 py-1 border rounded" :value="inputValue"
-                                                           v-on="inputEvents"/>
-                                                </template>
-                                            </date-picker>
+                                            <input type="date" v-model="attendanceRangeStart" >
+                                            </input>
                                         </div>
 
                                         <div class="col-sm-6 form-group" id="attendanceDateEnd">
                                             <label for="attendanceDateEnd"> End Date </label>
-                                            <date-picker mode="date" v-model="attendanceRangeEnd" >
-                                                <template #default="{ inputValue, inputEvents }">
-                                                    <input class="px-3 py-1 border rounded" :value="inputValue"
-                                                           v-on="inputEvents"/>
-                                                </template>
-                                            </date-picker>
+                                            <input type="date" v-model="attendanceRangeEnd" >
+                                            </input>
                                         </div>
 
                                         <button type="button" @click="attendanceMonthly"> Attendance Submit</button>
@@ -55,12 +47,8 @@
                                 <div class="row">
                                     <div class="col-sm-6 form-group" id="customStatistic">
 
-                                        <date-picker mode="date" v-model="customStatistic" >
-                                            <template #default="{ inputValue, inputEvents }">
-                                                <input class="px-3 py-1 border rounded" :value="inputValue"
-                                                       v-on="inputEvents"/>
-                                            </template>
-                                        </date-picker>
+                                        <input type="date" v-model="customStatistic">
+                                        </input>
                                         <button type="button" @click="customStatisticMethod"> Custom Date Statistic
                                         </button>
                                     </div>
@@ -71,7 +59,6 @@
                                 </div>
                             </div>
 
-                            {{attendanceRangeStart}}
                             {{customStatistic}}
                             <br>
                             <br>
@@ -94,6 +81,7 @@ import Calendar from 'v-calendar/lib/components/calendar.umd'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import moment from 'vue-moment';
 import VueMoment from "vue-moment";
+import Datepicker from 'vuejs-datepicker';
 //
 
 export default {
@@ -102,9 +90,10 @@ export default {
         swal: Swal,
         VueTimepicker: VueTimepicker,
         // 'calendar': Calendar,
-        'date-picker': DatePicker,
+        // 'date-picker': DatePicker,
         vcalendar: VCalendar,
         moment: moment,
+        Datepicker
     },
 
     data() {
@@ -123,17 +112,7 @@ export default {
     },
 
     watch: {
-        attendanceRangeStart: function(val) {
-            this.attendanceRangeStart = moment(this.attendanceRangeStart).format('YYYY-MM-DD');
-        },
 
-        attendanceRangeEnd: function (val) {
-            this.attendanceRangeStart = moment(String(val)).format('YYYY-MM-DD');
-        },
-
-        customStatistic: function (val) {
-            this.attendanceRangeStart = moment(String(val)).format('YYYY-MM-DD');
-        },
     },
 
     computed: {
@@ -142,6 +121,8 @@ export default {
 
 
     methods: {
+
+
 
         monthlyGrid() {
             axios
