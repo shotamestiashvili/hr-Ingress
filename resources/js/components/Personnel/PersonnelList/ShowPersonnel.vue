@@ -7,56 +7,47 @@
                         <strong> Personnel List </strong>
                     </div>
                     <div class="card-body">
+
                         <b-button
                             v-b-modal.createModal
                             variant="info"
-                            ref="btnShow"
-                            size="sm"
-                            id="createModal"
-                        >Create Personnel
+                        >ADD
                         </b-button
                         >
 
                         <b-button
                             v-b-modal.importModal
                             variant="warning"
-                            ref="btnShow"
-                            size="sm"
-                        >Import Personnel
+                        >IMP
                         </b-button
                         >
-
                         <b-button
                             @click="downloadFile"
                             variant="dark"
-                            ref="btnShow"
-                            size="sm"
-                        >Export Personnel
+                        >EXP
                         </b-button
                         >
-
+                        &nbsp;
                         <input
                             type="text"
                             placeholder="Filter the table"
                             v-model="search"
                         />
-                        <br>
-                        <hr>
-                        <br>
-                        <div>
-                            <select
-                                class="form-select"
-                                v-model="row"
-                                aria-label=".form-select-sm example"
-                            >
-                                <option selected>Select Row N</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="25">25</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
+                        &nbsp;
+
+                        <select
+                            class="form-select"
+                            v-model="row"
+                            aria-label=".form-select-sm example"
+                        >
+                            <option selected>Select Row N</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+                            <option value="80">80</option>
+                            <option value="100">100</option>
+                        </select>
+
                         <hr>
 
                         <table class="table table-sm table-hover">
@@ -67,7 +58,7 @@
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Position</th>
                                 <th scope="col">Department</th>
-                                <th scope="col">Mobile Number</th>
+                                <th scope="col">Phone</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Show</th>
                                 <th scope="col">Edit</th>
@@ -88,8 +79,7 @@
                                         v-b-modal.showModal
                                         variant="success"
                                         @click="showingData(data)"
-                                        size="sm"
-                                    >Show
+                                    >SHOW
                                     </b-button
                                     >
                                 </td>
@@ -98,7 +88,6 @@
                                         v-b-modal.editModal
                                         variant="warning"
                                         @click="editData(data)"
-                                        size="sm"
                                     >Edit
                                     </b-button
                                     >
@@ -108,8 +97,7 @@
                                         v-b-modal.deleteModal
                                         variant="danger"
                                         @click="runAxiosDelete(data.id)"
-                                        size="sm"
-                                    >Delete
+                                    >DEL
                                     </b-button
                                     >
                                 </td>
@@ -125,8 +113,6 @@
                             <span slot="prev-nav">&lt; Previous</span>
                             <span slot="next-nav">Next &gt;</span>
                         </pagination>
-
-
                         <!-- <pagination
                           :data="filteredAbsence"
                           @pagination-change-page="runAxiosGet"
@@ -216,7 +202,7 @@ export default {
                     params: {
                         page,
                         search: this.search,
-                        row:    this.row
+                        row: this.row
                     },
                 })
                 .then((res) => {
@@ -255,26 +241,34 @@ export default {
 };
 </script>
 
+
 <style scoped>
+
 table {
     margin-left: auto;
     margin-right: auto;
-    font-size: 9px;
+    font-size: 12px;
     height: 100%;
     table-layout: fixed;
 }
 
 td {
-    border: 1px solid black;
+
     text-align: center;
-    padding: 1px;
+    /*padding: 3px;*/
     font-size: 12px;
 }
 
+.btn {
+    height: 25px;
+    width: 57px;
+    font-size: 10px;
+    border-radius: 3px;
+}
+
 th {
-    border: 1px solid black;
+
     text-align: center;
-    padding: 1px;
     font-size: 14px;
 }
 
@@ -285,13 +279,46 @@ tr:nth-child(even) {
 h1 {
     color: green;
 }
-
-/* #createModal {
-  border: none;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-} */
 </style>
+
+
+<!--<style scoped>-->
+<!--table {-->
+<!--    margin-left: auto;-->
+<!--    margin-right: auto;-->
+<!--    font-size: 9px;-->
+<!--    height: 100%;-->
+<!--    table-layout: fixed;-->
+<!--}-->
+
+<!--td {-->
+<!--    border: 1px solid black;-->
+<!--    text-align: center;-->
+<!--    padding: 1px;-->
+<!--    font-size: 12px;-->
+<!--}-->
+
+<!--th {-->
+<!--    border: 1px solid black;-->
+<!--    text-align: center;-->
+<!--    padding: 1px;-->
+<!--    font-size: 14px;-->
+<!--}-->
+
+<!--tr:nth-child(even) {-->
+<!--    background-color: #00cf45;-->
+<!--}-->
+
+<!--h1 {-->
+<!--    color: green;-->
+<!--}-->
+
+<!--/* #createModal {-->
+<!--  border: none;-->
+<!--  padding: 8px 10px;-->
+<!--  text-align: center;-->
+<!--  text-decoration: none;-->
+<!--  display: inline-block;-->
+<!--  font-size: 16px;-->
+<!--} */-->
+<!--</style>-->

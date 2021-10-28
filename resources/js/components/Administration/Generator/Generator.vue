@@ -40,6 +40,10 @@
 
                                         <button type="button" @click="attendanceMonthly"> Attendance Submit</button>
                                     </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <button type="button" @click="attendanceToday"> Attendance Today</button>
+                                    </div>
                                 </div>
                                 <br>
                                 <br>
@@ -210,6 +214,21 @@ export default {
         },
 
         dailyStatistic() {
+            axios
+                .get("dailystatistic")
+                .then((res) => {
+                    console.log(res.data.data);
+                    this.$swal.fire({icon: 'success', title: 'Created Successfully'});
+                })
+                .catch((error) => {
+                    this.$swal({icon: 'error', title: error});
+                    console.log(error);
+                })
+                .finally(() => {
+                });
+        },
+
+        attendanceToday() {
             axios
                 .get("attendance")
                 .then((res) => {

@@ -8,9 +8,11 @@ use App\Models\Personnel;
 use App\Services\Personnel\UpdatePersonnel;
 use App\Services\Personnel\CreatePersonnel;
 use App\Services\Statistics\AttendanceService;
+use Illuminate\Filesystem\Cache;
 use Illuminate\Http\Request;
 use App\Services\Updater;
 use App\Services\Creator;
+use Carbon\Carbon;
 
 
 class PersonnelController extends Controller
@@ -26,6 +28,12 @@ class PersonnelController extends Controller
         $year   = request('year');
         $month  = request('month');
 
+
+//        Cache()->store('key', 'value', now()->addSecond(30));
+
+
+
+
         $personnel = Personnel::with(['schedule' => function ($q) use ($year, $month, $row) {
             $q->whereYear('date', $year)->whereMonth('date', $month)->get();
         }])->when(request('search') != '', function ($query) use ($row) {
@@ -37,6 +45,8 @@ class PersonnelController extends Controller
         })->when(request('search') == '', function ($query) use ($row) {
             return $query->paginate($row);
         });
+
+
 
         return PersonnelResource::collection($personnel);
     }
