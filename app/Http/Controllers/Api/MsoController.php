@@ -19,7 +19,9 @@ class MsoController extends Controller
 {
     public function index(): object
     {
-        $personnel = Personnel::get();
+        $personnel = Personnel::with('schedule')
+        ->select(['id', 'userid', 'first_name', 'last_name'])
+        ->get();
 
         return PersonnelResource::collection($personnel);
     }
