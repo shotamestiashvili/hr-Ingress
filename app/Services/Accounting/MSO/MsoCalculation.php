@@ -12,7 +12,8 @@ class MsoCalculation
         $from = Carbon::create($year . '-' . ($month - 1) . '-' . '21');
         $to   = Carbon::create($year . '-' . $month . '-' . '20');
 
-        $getPersonnel = Mso::where('userid', $userid)
+        $getPersonnel = Mso::with('personnel')
+            ->where('userid', $userid)
             ->where('type', 1)
             ->whereBetween('enddate', [$from, $to])
             ->get('total_hours');
@@ -39,7 +40,8 @@ class MsoCalculation
 
     public function msoYearly($userid, $year)
     {
-        $getPersonnel = Mso::where('userid', $userid)
+        $getPersonnel = Mso::with('personnel')
+         ->where('userid', $userid)
             ->where('type', 1)
             ->whereYear('enddate', $year)
             ->get('total_hours');
